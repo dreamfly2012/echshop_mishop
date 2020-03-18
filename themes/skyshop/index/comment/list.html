@@ -1,0 +1,18 @@
+<div class="breadcrumb">评论列表：</div>
+<style>
+.comment-list .item{margin-bottom:10px;}
+.comment-list .item .hd{height:30px; line-height:30px; background-color:#f0f0f0; padding:0px 8px 0px 5px;}
+.comment-list .item .hd .time{color:#aaa; float:right;}
+.comment-list .item .hd .comment_reply_btn{color:#F60;}
+.comment-list .item .content{padding:10px; border:1px solid #ccc; background-color:#fff;}
+</style>
+<div id="comment_list" class="comment-list">
+{foreach item=c from=$data}
+<div class="item">
+	<div class="hd"><span class="comment_sortkey red"></span>.{if $c.nickname}{$c.nickname}{else}游客{/if}  <span class="time">时间：{$c.dateline|timeago} <a href="javascript:;" class="comment_reply_btn" pid="{$c.id}" title="回复@{$c.nickname}" reply_text="回复@{$c.nickname}" >回复</a></span></div>
+    <div class="content pd-5">{$c.content}</div>
+     
+</div>
+{/foreach}
+<div>{$pagelist}</div>
+</div>

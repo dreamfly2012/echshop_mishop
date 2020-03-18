@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page">
+{include file="header.html"}
+<div class="main-body">
+<div class="box960">
+<div class="row">
+{include file="search/nav.html"}
+<div class="span12">
+{if get('keyword')}<h3 style="margin:10px 0px;">搜索“<span style="color:red;">{$smarty.get.keyword|html}</span>”的相关信息</h3>{/if}
+
+{if $data}
+<div class="pd-5">
+{foreach item=c key=k from=$data}
+{if get('type') eq 'product'}
+{include file="search/product.html"}
+{else}
+<div style="border-bottom:1px solid #DDD; margin-bottom:5px; ">
+<p>{$k+1}.<a href="{R("/index.php?m=show&id=$c.id")}" target="_blank">{$c.title}</a> {if $c.userid}<span class="right">作者：<a href="{R("/index.php?m=member&userid=$c.userid")}" class="user_card" ajax-href="/index.php?m=member&a=userinfo&userid={$c.userid}">{$c.nickname}</a></span>{/if}</p>
+<p style="color:#929292">{$c.description}</p>
+<div style="line-height:24px;">发布时间：{$c.dateline|date:Y-m-d H:i:s}  所属类别：<a href="{R("/index.php?m=list&catid=$c.catid")}" target="_blank">{$c.cname}</a></div>
+</div>
+{/if}
+
+{/foreach}
+</div>
+<div>{$pagelist}</div>
+{else}
+<h1>暂无相关搜索</h1>
+{/if}
+</div>
+<div class="span3"></div>
+</div>
+</div>
+</div>
+{include file="footer.html"}
+</div>
+</body>
+</html>

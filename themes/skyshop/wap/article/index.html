@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page">
+
+{include file="article/panel.html"}
+<div class="header" style="">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">文章中心</div>
+<div class="right-btn panel-btn"><span class="iconfont icon-menu"></span></div>
+</div>
+<div class="main-body">
+<ul class="data-list">
+{api data=t_d control=articleapi fun=recommend(0,24)} 
+          {foreach item=c from=$t_d}
+          {include file="li_item.html"}
+          {/foreach}
+</ul>
+</div>
+
+{include file="footer.html"}
+</div>
+</body>
+</html>

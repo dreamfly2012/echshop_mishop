@@ -1,0 +1,147 @@
+{include file="header.html"} 
+<script language="javascript" src="/plugin/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+ 
+<script language="javascript">
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&id={$data.id}"
+		 
+};
+var editor=UE.getEditor('content',options)
+</script>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#loading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=uploadtao&dir=product&id={$data.id}&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='/"+data.imgurl+".100x100.jpg' width='100'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+<div class="row">
+  <div class="span12"> {include file='specialtopic/nav.html'}
+    <form method='post' action='admin.php?m=specialtopic&a=save'>
+      <input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+      <table class='table table-bordered' width='100%'>
+        <tr>
+          <td>名称：</td>
+          <td><input type='text' name='title' id='title' value='{$data.title}' ></td>
+        </tr>
+        
+        <tr>
+    <td align="right">图片：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="upimg" onChange="uploadgoodsimg()">
+      </div>
+      <label  id="loading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="imgurl" id="imgurl" value="{$data.imgurl}">
+      <span id="imgShow">
+      {if $data.imgurl}
+          <img src="{$data.imgurl|images_site}.100x100.jpg">
+          {/if}
+      </span>
+      </td>
+  </tr>
+        
+        <tr>
+          <td>关键字：</td>
+          <td><input type='text' name='keywords' id='keywords' value='{$data.keywords}' ></td>
+        </tr>
+        
+        <tr>
+        	<td>作者：</td>
+            <td><input type="text" name="author" value="{$data.author}" /></td>
+        </tr>
+        
+        <tr>
+          <td>简介：</td>
+          <td><textarea type='text' name='info' id='info' style="width:600px; height:200px;"  >{$data.info}</textarea></td>
+        </tr>
+        
+        <tr>
+          <td>模板：</td>
+          <td><input type="text" name="tpl" value="{$data.tpl}" /></td>
+        </tr>
+        <tr>
+          <td>状态：</td>
+          <td><input type="radio" name="status" value="1" {if $data.status eq 1} checked="checked"{/if} />
+            隐藏 &nbsp;
+            <input type="radio" name="status" value="2" {if $data.status eq 2} checked="checked"{/if} />
+            显示</td>
+        </tr>
+        {if $data.dateline}
+        <tr>
+          <td>添加时间：</td>
+          <td>{$data.dateline|date:Y-m-d H:m}</td>
+        </tr>
+        {/if}
+        <tr>
+          <td>开始时间：</td>
+          <td><input type='text' name='starttime' id='starttime' value='{if $data}{$data.starttime|date:Y-m-d H:m:s}{/if}' onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" ></td>
+        </tr>
+        <tr>
+          <td>结束时间：</td>
+          <td><input type='text' name='endtime' id='endtime' value='{if $data}{$data.endtime|date:Y-m-d H:m:s}{/if}' onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" ></td>
+        </tr>
+        
+        <tr>
+        	<td>数据：</td>
+            <td><textarea style="width:600px; height:200px;" name="data">{$data.data}</textarea></td>
+        </tr>
+        
+        <tr>
+        	<td>内容:</td>
+            <td> <script type="text/plain" id="content" name="content" style="width:760px;" >{$data.content}</script></td>
+        </tr>
+        
+        <tr>
+          <td></td>
+          <td><input type='submit' value='保存' class='btn btn-success'></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+{include file="footer.html"}

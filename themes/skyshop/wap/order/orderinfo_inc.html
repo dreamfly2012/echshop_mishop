@@ -1,0 +1,54 @@
+<h1 class="pd-5">订单详情</h1>
+<table class="table table-bordered" width="100%">
+<tr>
+	<td>订单编号：{$data.orderno}</td></tr>
+    <tr>
+    <td>订单类型：{$order_type_list[$data.type_id]}</td></tr>
+    <tr>
+    <td>订单价格：{$data.money}</td>
+</tr>
+
+<tr>
+	<td>下单时间：{$data.dateline|date:Y-m-d H:i}</td></tr>
+    <tr>
+	<td>支付状况：{$order_ispay[$data.ispay]}</td></tr>
+    <tr>
+    <td>订单状态：{$order_status_list[$data.status]}</td>
+</tr>
+
+
+
+<tr><td ><strong>联系方式:</strong>
+{$addr.p_c_t}{$addr.address} 邮编：{$addr.zip_code} 姓名：{$addr.truename} 手机：{$addr.telephone}
+</td></tr>
+
+<tr>
+<td ><strong>发货方式：</strong></td>
+</tr>
+
+<tr>
+<td ><strong>物流信息：</strong>{$data.shipping_info}</td>
+</tr>
+</table>
+
+<h1 class="pd-5">商品详情</h1>
+<table class="table table-bordered" width="100%">
+<script>
+function order_product_comment(order_id,id,obj){
+	$.get("/index.php?m=order&a=product_comment",{order_id:order_id,id:id},function(data){
+		showbox("订单评价",data,400,200);
+	})
+}
+</script>
+{foreach item=p from=$order_product}
+<tr>
+<td style="width:50px;"><a href="{R("/index.php?m=show&id=$p.id")}" ><img src="{const.IMAGES_SITE}{$p.imgurl}.100x100.jpg" width="50" /></a></td>
+<td><p><a href="{R("/index.php?m=show&id=$p.id")}" >{$p.title}</a><br />
+{if $p.attr}<span style="color:red">{$p.attr}</span><br>{/if}
+原价：￥{$p.price} {if $p.lower_price > 0} 促销价：{$p.lower_price} {/if}</p></td>
+<td>下单价：{$p.order_price}</td>
+<td>共{$p.amount}件</td>
+<td>  {if $p.iscomment}已评价(<span style="color:red">+{$p.rating_grade}</span>){elseif $data.status eq 3}<a href="javascript:;" onClick="order_product_comment({$data.order_id},{$p.id},this)">评价</a>{else}未评价{/if}</td>
+</tr>
+{/foreach}
+</table>

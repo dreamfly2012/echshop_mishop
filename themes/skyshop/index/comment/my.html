@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+     
+    <div class="box960">
+<div class="row">
+<div class="col-6-1">{include file='inc/user_left.html'}</div>
+<div class="col-6-5">
+<ul class="nav nav-tabs">
+<li  class="active" ><a href="/index.php?m=comment&a=my&type=2">我评论的</a></li>
+</ul>
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="6%" height="24" align="center">ID</td>
+    
+    <td width="10%" align="center">时间</td>
+    <td width="47%" align="center">内容</td>
+    <td width="18%" align="center">操作</td>
+  </tr>
+  {foreach item=c from=$comment_list}
+  <tr>
+    <td align="center">{$c.id}</td>
+  
+    <td align="center">{$c.dateline|date:Y-m-d}</td>
+    <td align="left">{$c.content} &nbsp;&nbsp;<a href="{$c.referer}" target="_blank">查看</a></td>
+    <td align="center"> 
+    
+    <a href="javascript:;" class="ajax_del" url="{$appindex}?m=comment&a=delete&id={$c.id}">{$lang.delete}</a></td>
+  </tr>
+  {/foreach}
+  
+</table>
+{$pagelist}
+</div>
+</div>
+</div>
+{include file="footer.html"} </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+
+{get model=category data=c_data fun=children(0,MODEL_GOLDGOODS_ID)}
+<div class="cat-list mgb-10">
+  <div class="hd" style=""><span>栏目推荐</span></div>
+  {foreach item=c key=k from=$c_data}
+  <div  class="item {if get('catid') eq $c.catid}active{/if}"><a href="{R("/index.php?m=list&catid=$c.catid")}" >{$c.cname}</a></div>
+  {if $c.child}
+  <div class="cat-list-2nd"> {foreach item=cc from=$c.child}
+    <div  class="item {if get('catid') eq $cc.catid}active{/if}"><a href="{R("/index.php?m=list&catid=$cc.catid")}">{$cc.cname}</a></div>
+    {/foreach} </div>
+  {/if} 
+  
+  {/foreach} 
+</div>
+<div class="skypanel">
+<div class="hd">浏览历史</div>
+<div class="pd-5 mgb-10"> 
+{api data=t_c control=productapi fun=histroy(10)} 
+          {foreach item=c from=$t_c}
+         <div class="piclist-box w98 h220">
+                	<a href="/index.php?m=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}.small.jpg" class="img"></a>
+                    <div class="postxt"><a href="/index.php?m=show&id={$c.id}">{$c.title}</a></div>
+                    <div class="posprice">{if $c.lower_price >0 }{$c.lower_price}{else}{$c.price}{/if}</div>
+                </div>
+                 
+          {/foreach}
+ </div>
+</div>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page">
+	{include file="header.html"}
+    <div class="main-body box960">
+    	<div class="row">
+    	<div class="col-6-1">{include file="inc/user_left.html"}</div>
+    	<div class="col-6-5">
+        	<ul class="nav nav-tabs">
+            	<li class="active">
+                <a href="#">趣购下单记录</a>
+                </li>
+            </ul>
+            
+            <table class="table">
+            	<tr>
+                	<th>Id</th>
+                    <th>主题</th>
+                    <th>封面</th>
+                    <th>商品</th>
+                    <th>价格</th>
+                     
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+                {foreach item=c from=$data}
+                <tr>
+                	<td>{$c.id}</td>
+                    <td> <a href="/index.php?m=goldorder_shaidan&a=add&id={$c.id}" >{$c.title}</a></td>
+                    <td><img src="{$c.imgurl|IMAGES_SITE}.100x100.jpg" width="30"></td>
+                    <td><a href="/index.php?m=show&id={$c.object_id}" target="_blank">{$c.title}</a></td>
+                    <td>￥{$c.price}元</td>
+                  
+                    <td>{$c.dateline|date:Y-m-d H:i:s}</td>
+                    <td><a href="/index.php?m=goldorder_shaidan&a=show&id={$c.id}" target="_blank">查看</a> 
+                    <a href="/index.php?m=goldorder_shaidan&a=add&id={$c.id}" >编辑</a></td>
+                </tr>
+                {/foreach}
+                
+            </table>
+            <div>{$pagelist}</div>
+            
+        </div>
+    	</div>
+    
+    </div>
+    {include file="footer.html"}
+    
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="header" >
+     
+    <div class="title">每月营业额</div>
+    <a class="right-btn" href="{$appadmin}?m=stat_shoporder_month&a=chart&k={$k}">图表</a>     
+  </div>
+ 	<div class="tabs-border">
+    	<div class="item"><a href="{$appadmin}?m=stat_shoporder_day&k={$k}">每日营业额</a></div>
+        <div class="item"><a href="{$appadmin}?m=stat_shoporder_week&k={$k}">每周营业额</a></div>
+        <div class="item active"><a href="{$appadmin}?m=stat_shoporder_month&k={$k}">每月营业额</a></div>
+    </div>
+    <div class="uclist"> {foreach item=c from=$list}
+      <div class="item">
+        <div class="content pd-5">{$c.kmonth}  营业额￥<span class="money">{$c.money}</span>元   </div>
+      
+      </div>
+      {/foreach} </div>
+    <div>{$pagelist}</div>
+  
+  {include file="footer.html"} </div>
+</body>
+</html>

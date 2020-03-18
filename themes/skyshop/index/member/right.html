@@ -1,0 +1,8 @@
+<!--用户主页右边-->
+<!--用户信息-->
+<div class="lh20">
+<p><img src="{$user.user_head|IMAGES_SITE}" class="wb"></p>
+<p class="center">{$user.nickname}  </p>
+<p class="center">粉丝数 {$user.followed_num} 产品数{$user.product_num}</p>
+<p class="center"> <a href="javascript:;" class="ajax_follow btn btn-success" url="/index.php?m=follow&a=follow&t_userid={$user.userid}">关注</a></p>
+</div>

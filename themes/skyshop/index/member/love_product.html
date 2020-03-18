@@ -1,0 +1,86 @@
+{include file='header.html'}
+<div class="container"><div class="row"><div class="span12">{include file="member/nav.html"}</div></div>
+<div class="container"><div class="row">
+
+<div class="span9">  
+<div id="container">
+
+
+
+{foreach item=p key=k from=$list}
+<div class="wb-box wb3">
+<a href="/index.php?m=show&a=default&id={$p.id}" target="_blank"><img {if $p.thumbsinfo}class="lzImg" json='{$p.thumbsinfo}'{/if}  width="220" title="{$p.title}" alt="{$p.title}"     src="/{if $k gt 12}images/lazy.jpg{else}{$p.imgurl}.small.jpg{/if}" data-original="/{$p.imgurl}.small.jpg" /></a>
+{if isset($smarty.session.ssuser.userid)}
+<div class="hd" style="margin-top:10px; margin-bottom:10px; ">
+<span style="padding-left:10px; float:left;" class="btn-group">
+<span class="btn btn-danger loves" product_id='{$p.id}'  >喜欢</span> <span class="btn"> {$p.loves} </span>
+</span> 
+
+<span style="padding-right:10px; float:right;" class="btn-group">
+<span href="javascript:;" class="btn btn-warning hates" product_id='{$p.id}' >失望</span> <span class="btn">{$p.hates}</span>
+</span>
+</div>
+{/if}
+{if $smarty.session.ssadmin}
+<div style="height:40px; line-height:40px;">
+<span style="float:right; margin-right:20px;">
+<a href="javascript://" class="del btn btn-warning" pid="{$p.id}" >删除</a>
+</span>
+</div>
+{/if}
+<div class="info"><a   href="/index.php?m=show&a=default&id={$p.id}" target="_blank">{$p.title}</a>  ({$p.price}元)</div>
+</div>
+{/foreach}
+</div>
+
+<div style="clear:both;"></div>
+<div >{$pagelist}</div>
+
+</div>
+
+<div class="span3">{include file="member/right.html"}</div>
+</div>  
+
+<script>
+lzImage("lzImg",220);
+  $(function(){ 
+   //$(".box img").lazyload();
+   
+    var $container=$("#container");
+    $container.imagesLoaded(function(){
+      $container.masonry({
+        itemSelector: '.wb-box',
+         
+      });
+    });
+	
+	$(window).scroll(function(){
+		$(".box").show();
+		$container.masonry( 'reload' )
+		if($("img[src$='/images/lazy.jpg']").length>0){
+			obj=$("img[src$='/images/lazy.jpg']");
+			
+			len=obj.length;
+			
+			for(i=0;i<len;i++){
+				if(i<12){
+					obj.eq(i).attr("src",obj.eq(i).attr("data-original"));
+				}
+			}
+			
+			$container.masonry( 'reload' )
+		}
+		
+	}
+	)
+	
+	 
+	
+
+});
+
+</script>
+
+{include file="footer.html"} 
+
+

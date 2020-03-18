@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page">
+ 
+<div class="header" style="">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">商品库</div>
+<div class="right-btn" id="cl-search"><span class="iconfont icon-search"></span></div>
+</div>
+
+  <div class="search-box" id="search-box">
+    	<div class="l">
+        	<div class="mn">
+        	<input type="text" name="keyword" id="keyword" placeholder="请输入商名称">
+            </div>
+        </div>
+        <div class="r"><button class="btn" type="button" id="search-submit">搜索</button></div>
+    </div>
+    
+    <script>
+    
+	
+	$(document).on("click","#cl-search",function(){
+		$("#search-box").toggle();
+		 
+	});
+	 
+	$(document).on("click","#search-submit",function(){
+		window.location='/index.php?m=product&keyword='+encodeURI($("#keyword").val());
+	});
+    </script>
+
+<div class="main-body">
+	 
+	
+     {php $this->_var['orderbys']=array('default'=>"智能排序",'buy_num'=>'销量最高','price'=>'价格');}
+    {php $this->_var['filters']=array('cuxiao'=>'促销','isnew'=>'新品');}
+    <div class="tab-select-section">
+    <div class="tab-select ">
+    		<div class="item" id="tab-category"><span class="t">{if $cat}{$cat.cname}{else}全部分类{/if}</span> <i class="t3down "></i><b></b></div>
+            
+            
+            	
+    		<div class="item" id="tab-order"><span class="t">{if get('orderby')}{$orderbys[get('orderby')]}{else}智能排序{/if}</span> <i class="t3down"></i><b></b></div>
+    		<div class="item" id="tab-choice"><span class="t">{if get('filter')}{$filters[get('filter')]}{else}筛选{/if}</span> <i class="t3down"></i></div>
+    </div>
+     
+    <div id="category-box" class="category-box tab-select-box">
+    	<div class="box1">
+        	{foreach item=c from=$catlist}
+        	<div   to="c{$c.catid}" class="box1item item {if $c.catid eq get('catid') or $cat.pid eq $c.catid}active{/if}">{$c.cname}</div>
+            {/foreach} 
+        </div>
+        <div class="box2">
+         
+        	{foreach item=c from=$catlist}
+            <div   v="{$c.catid}" class="box2item item c{$c.catid} {if $c.catid eq $c.catid}show{/if} ">{$c.cname}</div>
+            {foreach item=cc from=$c.child}
+        	<div   v="{$cc.catid}" class="box2item item c{$c.catid} {if $cat.catid eq $c.catid}show{/if} ">{$cc.cname}</div>
+            {/foreach}
+            {/foreach} 
+             
+        </div>
+    </div>
+    <div id="order-box" class="order-box tab-select-box">
+    	 
+         {foreach item=c key=k from=$orderbys}
+        <a class="item" v="{$k}">{$c}</a>
+        {/foreach} 
+        
+    
+    </div>
+    
+     
+    
+    <div id="choice-box" class="choice-box tab-select-box">
+    	<a class="item" v="0">全部</a>
+    	 {foreach item=c key=k from=$filters}
+        <a class="item" v="{$k}">{$c}</a>
+        {/foreach} 
+    </div>
+ </div>
+     <div class="row-box">
+ 	<div class="prolist" id="prolist">
+    	{foreach item=c key=k from=$list}
+        	<div class="row item">
+            	<div class="g-sd1">
+                <a href="{R("/index.php?m=show&id=$c.id")}" ><img class="img" src="{const.IMAGES_SITE}{$c.imgurl}.100x100.jpg"  ></a>
+                </div>
+                <div class="g-mn1">
+                	<div class="g-mn1c">
+                    	<div class="title"><a href="{R("/index.php?m=show&id=$c.id")}"  >{$c.title|cutstr:36}</a></div>
+                        <div class="row-price"><span class="price">￥{$c.price}</span></div>
+                        <div class="row-sold"><span class="lower_price">￥{$c.lower_price}</span> <span class="right">{$c.buy_num}件已售</span></div>
+                    </div>
+                </div>
+            </div>
+        {/foreach}
+    </div>
+    
+    
+      
+    <div class="pullup" id="loadmore">加载更多</div>
+    </div>
+</div>
+
+
+</div>
+{include file="footer.html"}
+<script id="prolist-tpl" type="text/html">
+	
+ 
+	<%for(var i=0;i<list.length;i++){%>
+        	<div class="row item">
+            	<div class="g-sd1">
+                <a href="/index.php?m=show&id=<%=list[i].id%>" ><img class="img" src="<%=list[i].imgurl%>.100x100.jpg"  ></a>
+                </div>
+                <div class="g-mn1">
+                	<div class="g-mn1c">
+                    	<div class="title"><a href="/index.php?m=show&id=<%=list[i].id%>" ><%=list[i].title%></a></div>
+                        <div class="row-price"><span class="price">￥<%=list[i].price%></span></div>
+                        <div class="row-sold">
+							<span class="lower_price">￥<%=list[i].lower_price%></span> 
+							<span class="right"><%=list[i].buy_num%>件已售</span>
+						</div>
+                    </div>
+                </div>
+            </div>
+      <%}%>
+
+</script>
+<script  src="/plugin/jquery/template-native.js"></script>
+ <script src="/plugin/skyweb/listload.js"></script>
+<script>
+	 var orderby='price',filter='',ind="desc";
+	 var per_page="{$per_page}";
+	 var catid="0";
+	 var first=false;
+	 function prolist(){
+		 if(per_page==0 && !first){
+			 
+			return false; 
+		 }
+		$.get("/index.php?m=product&ajax=1&catid="+catid+"&orderby="+orderby+"&filter="+filter+"&index="+ind+"&per_page="+per_page,function(data){
+			per_page=data.data.per_page;
+			if(per_page==0){
+				//skyToast('没有数据了');
+				$("#loadmore").hide();
+			}else{
+				$("#loadmore").show();
+			}
+			var html=template("prolist-tpl",data.data);
+			if(first){
+				$("#prolist").html(html);
+				first=false;
+			}else{
+				$("#prolist").append(html);
+			}
+			 
+		},"json")
+	 }
+
+	   $(function(){
+			 listload.loadid="#loadmore";
+			 listload.showload(function(){
+				prolist();
+			 });
+			 $(document).on("click","#tab-category",function(){
+ 
+				$("#category-box").toggle().siblings(".tab-select-box").hide();
+				
+			});
+			
+			$(document).on("click",".box1item",function(e){
+				e.preventDefault();
+				
+				$(".box1item").removeClass("active");
+				$(this).addClass("active");
+				$(".box2item").hide();
+				$(".box2item."+$(this).attr("to")).css({display:"block"});
+			});
+			
+			$(document).on("click",".box2item",function(){
+				catid=$(this).attr("v");
+				per_page=0;
+				first=true;
+				$(".box2item").removeClass("active");
+				$(this).addClass("active");
+				$("#tab-category .t").text($(this).text());
+				prolist();
+				$("#category-box").hide();
+			});
+			
+			 
+			
+			$(document).on("click","#tab-order",function(){
+			 
+			 
+				$("#order-box").toggle().siblings(".tab-select-box").hide();
+				 
+			});
+			
+			
+			
+			
+			$(document).on("click","#order-box .item",function(){
+				orderby=$(this).attr("v");
+				$("#order-box").hide();
+				per_page=0;
+				first=true;
+				$("#order-box .item").removeClass("active");
+				$(this).addClass("active");
+				$("#tab-order .t").text($(this).text());
+				prolist();
+			});
+			
+			$(document).on("click","#tab-choice",function(){
+				$("#choice-box").toggle().siblings(".tab-select-box").hide();
+			});
+			
+			$(document).on("click","#choice-box .item",function(){
+				filter=$(this).attr("v");
+				$("#choice-box").hide();
+				$("#tab-choice .t").text($(this).text());
+				$("#choice-box .item").removeClass("active");
+				$(this).addClass("active");
+				per_page=0;
+				first=true;
+				prolist();
+			});
+
+		 
+
+	   });
+</script>
+</body>
+</html>

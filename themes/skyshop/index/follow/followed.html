@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+<body>
+<div class="page">
+	{include file="u_header.html"}
+    <div class="main-body">
+    <div class="box960">
+    <div class="row">
+	<div class="col-7-1">
+    	{include file="member/left.html"}
+    </div>
+	<div class="col-7-6">
+    <div class="w98 right">
+    	 
+        	
+             
+            <div class="skypanel mgb-10">
+            	<div class="hd">Ta的粉丝</div>
+            	 
+            	<div class="pd-5">
+                	{foreach item=c  from=$data}
+                    <div class="col-6-1">
+                    	<div class="w98">
+                    	<div class="piclist-box pcb140">
+                        	<a href="{R("/index.php?m=member&userid=$c.t_userid")}"><img src="{$c.t_user_head|IMAGES_SITE}.middle.jpg" onerror="err_user_head(this)" class="img" /></a>
+                            <div class="postxt">{$c.t_nickname}</div>
+                        </div>
+                        </div>
+                    </div>
+                    {/foreach}
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+             
+         
+    </div>
+    </div>
+</div>
+    </div>
+    </div>
+</div>
+
+
+
+ 
+
+{include file="footer.html"}
+</body>

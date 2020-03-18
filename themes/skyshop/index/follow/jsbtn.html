@@ -1,0 +1,11 @@
+ 
+{if $ssuser}
+	  {if $user.followed} 
+      	<a href="javascript:;" url='index.php?m=follow&a=unfollow&t_userid={$user.userid}' class="ajax_unfollow btn btn-warning" shopid="{$shop.shopid}">取消关注</a>
+      {else}
+      	<a href="javascript:;" url='index.php?m=follow&a=follow&t_userid={$user.userid}' class="ajax_follow btn btn-success" shopid="{$shop.shopid}">加关注</a>
+      {/if}
+{else}
+	<a href="javascript:;" onclick="loginbox()" class="btn">登陆关注</a>
+{/if}
+ 

@@ -1,0 +1,7 @@
+body{padding-bottom:50px;}
+.diary-list .item{border-bottom:1px solid #ccc; margin-bottom:5px; padding:5px;}
+.diary-list .item .hd{height:30px; line-height:30px; font-size:16px; }
+.diary-list .item .content{padding-bottom:10px; line-height:18px; padding-left:10px;}
+.diary-list .item .tool{height:30px; line-height:30px; color:#999;}
+.diary-list .item .do{float:right;}
+.diary-list .item .do a{color:red;}

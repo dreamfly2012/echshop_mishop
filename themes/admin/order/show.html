@@ -1,0 +1,145 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+
+{include file="order/nav.html"}
+<table class="table table-bordered" width="100%">
+<tr>
+	<td>订单编号：{$data.orderno}</td>
+    <td>订单类型：{$order_type_list[$data.type_id]}</td>
+    <td>订单价格：{$data.money} (会员优惠：{$data.discount_money})</td>
+</tr>
+
+<tr>
+	<td>下单时间：{$data.dateline|date:Y-m-d H:i}</td>
+	<td>支付状况：{$order_ispay[$data.ispay]}   {if $data.unpay}货到付款{/if}</td>
+    <td>订单状态：{$order_status_list[$data.status]} </td>
+</tr>
+
+<td colspan="3">{if $data.isreceived eq 2}<span class="btn btn-danger">用户已收货</span>{else}<span class="btn btn-danger">用户未收货</span>{/if}</td>
+</tr>
+<tr><td colspan="3">备注：{$data.comment}</td></tr>
+<tr><td colspan="3"><strong>联系方式:</strong>
+{$addr.p_c_t}{$addr.address} 邮编：{$addr.zip_code} 姓名：{$addr.truename} 手机：{$addr.telephone} &nbsp;
+{get data=fws model=options fun=showById("$addr.fwshang")}
+{if $fws}
+服务商：
+{$fws.title}
+{if $fws[child]}
+,{$fws[child][title]}
+{/if}
+{/if}
+</td></tr>
+
+<tr>
+<td colspan="3"><strong>发货方式：</strong></td>
+</tr>
+
+<tr>
+<td colspan="3"><strong>物流信息：</strong>{$data.shipping_info}</td>
+</tr>
+
+ 
+
+</table>
+
+<h3 class="index-hd">商品详情</h3>
+<table class="table table-bordered" width="100%">
+{foreach item=p from=$order_product}
+<tr>
+<td style="width:50px;"><a href="{R("/index.php?m=show&id=$p.id")}" target="_blank"><img src="{$p.imgurl}.100x100.jpg" width="50" /></a></td>
+<td><p><a href="{R("/index.php?m=show&id=$p.id")}" target="_blank">{$p.title}</a><br />
+{if $p.ks_title}<span style="color:red">{$p.ks_title}<br /></span>{/if}
+原价：￥{$p.price} 促销价：{$p.lower_price}</p></td>
+<td>下单价：{$p.order_price}</td>
+<td>共{$p.amount}件</td>
+</tr>
+{/foreach}
+</table>
+<!--订单操作-->
+<h2 class="index-hd">订单操作</h2>
+<h3 style="color:red">订单状态：{$order_status_list[$data.status]}</h3>
+{if $data.status eq 0}
+<form method="post" action="{$appadmin}?m=order&a=confirm" class="form form-inline ">
+<input type="hidden" name="order_id" value="{$data.order_id}" />
+<table class="table table-bordered">
+<tr>
+<td> 订单<br />确认 </td>
+<td>操作日志：<span class="input-append"><input type="text" name="content" value="{$admin.username}确认了订单" class="w400" /><button type="submit" class="btn btn-success">确认下单</button></span></td>
+</tr>
+</table>
+</form>
+{/if}
+{if $data.status eq 3}
+<form method="post" action="{$appadmin}?m=order&a=send" class="form form-inline ">
+<input type="hidden" name="order_id" value="{$data.order_id}" />
+<table class="table table-bordered">
+<tr>
+<td> 修改<br />物流 </td>
+<td>
+<p>物流信息：<input type="text" name="shipping_info" value="{$data.shipping_info}" class="w400" /><br /></p>
+操作日志：<span class="input-append">
+<input type="text" name="content" value="{$admin.username}确认发货了" class="w400" /><button type="submit" class="btn btn-success">确认修改</button></span></td>
+</tr>
+</table>
+</form>
+{/if}
+
+{if $data.status<3}
+<form method="post" action="{$appadmin}?m=order&a=send" class="form form-inline ">
+<input type="hidden" name="order_id" value="{$data.order_id}" />
+<table class="table table-bordered">
+<tr>
+<td> 确认<br />发货 </td>
+<td>
+<p>物流信息：<input type="text" name="shipping_info" value="{$data.shipping_info}" class="w400" /><br /></p>
+操作日志：<span class="input-append">
+<input type="text" name="content" value="{$admin.username}确认发货了" class="w400" /><button type="submit" class="btn btn-success">确认发货</button></span></td>
+</tr>
+</table>
+</form>
+
+
+<form method="post" action="{$appadmin}?m=order&a=finish" class="form form-inline " onsubmit="return confirm('订单确认完成后订单不能再编辑，确认完成吗？');">
+<input type="hidden" name="order_id" value="{$data.order_id}" />
+<table class="table table-bordered">
+<tr>
+<td> 订单<br />完成 </td>
+<td>操作日志：<span class="input-append"><input type="text" name="content" value="{$admin.username}确认订单完成了" class="w400" /><button type="submit" class="btn btn-success">确认完成</button></span></td>
+</tr>
+</table>
+</form>
+
+<form method="post" action="{$appadmin}?m=order&a=cancel" class="form form-inline " onsubmit="return confirm('订单取消后不可恢复，并且会将订单金额返还给客户，确认取消吗？');">
+<input type="hidden" name="order_id" value="{$data.order_id}" />
+<table class="table table-bordered">
+<tr>
+<td> 取消<br />订单 </td>
+<td>
+<p>原因：<input type="text" name="message" value="" class="w400" />
+<br /></p>
+操作日志：<span class="input-append"><input type="text" name="content" value="{$admin.username}取消了订单" class="w400" /><button type="submit" class="btn btn-success">订单取消</button></span></td>
+</tr>
+</table>
+</form>
+{/if}
+
+{if $data.status eq 0 or $data.status eq 10}
+<form method="post" action="{$appadmin}?m=order&a=delete" class="form form-inline " onsubmit="return confirm('订单删除后不可恢复，确认删除吗？');">
+<input type="hidden" name="order_id" value="{$data.order_id}" />
+<table class="table table-bordered">
+<tr>
+<td> 删除<br />订单 </td>
+<td>
+<p>原因：<input type="text" name="message" value="" class="w400" />
+<br /></p>
+操作日志：<span class="input-append"><input type="text" name="content" value="{$admin.username}删除了订单" class="w400" /><button type="submit" class="btn btn-success">确认删除</button></span></td>
+</tr>
+</table>
+</form>
+{/if} 
+</div>
+
+</div>
+
+{include file="footer.html"}

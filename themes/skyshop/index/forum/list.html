@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+
+<body>
+
+<div class="page">
+{include file="header.html"}
+<div class="main-body" style="background-color:#fff;">
+<div class="box960">
+
+<div class="row">
+<ul class="breadcrumb">
+  <li><a href="{R("/index.php?m=forum")}">论坛</a> <span class="divider">/</span></li>
+  <li><a href="{R("/index.php?m=list&catid=$cat_top.catid")}">{$cat_top.cname}</a> <span class="divider">/</span></li>
+  {if $cat_2nd}
+  <li><a href="{R("/index.php?m=list&catid=$cat_2nd.catid")}">{$cat_2nd.cname}</a><span class="divider">/</span></li>
+  {/if}
+  {if $cat_3nd}
+   <li><a href="{R("/index.php?m=list&catid=$cat_3nd.catid")}">{$cat_3nd.cname}</a><span class="divider">/</span></li>
+  {/if}
+  <li class="active">列表</li>
+      
+</ul>
+</div>
+
+<!--END 导航-->
+ 
+<div class="row" style="padding:10px;">
+<p><a href="{R("/index.php?m=forum&a=add&catid=$cat.catid")}" class="btn btn-success btn-larger ">发帖</a>
+<span class="clearfix"></span>
+</p>
+</div>
+ 
+
+<div class="row">
+<div class="col-6-1">{include file='forum/sidebar.html'}</div>
+<div class="col-6-5">
+
+<div class="w98 right">
+{if $children}
+<div style="margin-bottom:5px;">
+{if $cat.pid} <a href="{R("/index.php?m=list&catid=$cat.pid")}" style="display:inline-block; padding:5px 10px; border:1px solid #ccc;">全部</a>
+{else}
+<a href="{R("/index.php?m=list&catid=$cat.catid")}" style="display:inline-block; padding:5px 10px; border:1px solid #ccc;">全部</a>
+{/if}
+{foreach item=c from=$children}
+ <a href="{R("/index.php?m=list&catid=$c.catid")}" style="display:inline-block; {if $c.catid eq get('catid')} background-color:#eee;{/if} padding:5px 10px; border:1px solid #ccc;">{$c.cname}</a> 
+{/foreach}
+</div>
+{/if}
+ 
+<table width="100%" class="table table-border-row">
+<thead class="thead">
+  <tr>
+  	<th width="50"></th>
+    <th >主题</th>
+    <th width="10%" align="center">作者</th>
+    <th width="15%" align="center">回复/查看</th>
+    <th width="15%" align="center">最后发表</th>
+    </tr>
+    </thead>
+    <tbody class="" >
+    {foreach item=c from=$list}
+    
+  <tr>
+  	<td>{if $c.imgurl}<a href="/index.php?m=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}.100x100.jpg" style="width:50px; height:50px;"/></a>{/if} </td>
+    <td><a href="{R("/index.php?m=list&catid=$c.catid")}" class="text-primary">[{$c.cname}]</a> <a href="/index.php?m=show&id={$c.id}">{$c.title}</a></td>
+    <td align="center">{$c.nickname}</td>
+    <td align="center">{$c.comment_num}/{$c.view_num}</td>
+    <td align="center">{$c.last_time|timeago}</td>
+    </tr>
+    
+    {/foreach}
+   </tbody>
+</table>
+<div>{$pagelist}</div>
+</div>
+</div>
+
+</div>
+
+</div>
+{include file="footer.html"}
+</div>
+
+</body>
+</html>

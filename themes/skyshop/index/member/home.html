@@ -1,0 +1,68 @@
+{include file="header.html"}
+<div class="container"><div class="row"><div class="span12">{include file="member/nav.html"}</div></div>
+<div class="container"><div class="row">
+<div class="span9">
+
+<h3>他喜欢的产品</h3>
+<div id="my_public2">
+{api data=t_c control=loveapi fun=productByuser(get('userid'))}
+{foreach item=c from=$t_c}
+<div class="my_b wb3 center left lh20">
+<div><a href="{R("/index.php?m=show&id=$c.id")}" target="_blank"><img src="{$c.imgurl|IMAGES_SITE}" class="w200"></a></div>
+<p><br /><a href="{R("/index.php?m=show&id=$c.id")}" target="_blank">{$c.title}</a></p>
+</div>
+{foreachelse}
+<div class="my_b wb3 center left lh20">
+<h3>暂时没有</h3>
+ 
+</div>
+{/foreach}
+</div>
+<div class="clearfix"></div>
+<h3>她发布的产品</h3>
+ 
+{api data=t_c control=productapi fun=listbyuser(get('userid','i'))}
+<div id="my_public">
+{foreach item=c from=$t_c}
+<div class="my_b wb3 center left lh20">
+<div><a href="{R("/index.php?m=show&id=$c.id")}" target="_blank"><img src="{$c.imgurl|IMAGES_SITE}" class="wb"></a></div>
+<p><a href="{R("/index.php?m=show&id=$c.id")}" target="_blank">{$c.title}</a></p>
+</div>
+{foreachelse}
+<div class="my_b wb3 center left lh20">
+<h3>暂时没有</h3>
+ 
+</div>
+{/foreach}
+</div> 
+
+
+</div>
+<div class="span3">
+{include file="member/right.html"}
+</div>
+</div>
+<script language="javascript">
+$(document).ready(function(){
+	var $container=$("#my_public");
+    $container.imagesLoaded(function(){
+      $container.masonry({
+        itemSelector: '.my_b',
+        columnWidth: function( containerWidth ) {
+    		return containerWidth / 3;
+  		}
+      });
+    });
+	
+	var $container2=$("#my_public2");
+    $container2.imagesLoaded(function(){
+      $container2.masonry({
+        itemSelector: '.my_b',
+        columnWidth: function( containerWidth ) {
+    		return containerWidth / 3;
+  		}
+      });
+    });
+});
+</script>
+{include file="footer.html"}

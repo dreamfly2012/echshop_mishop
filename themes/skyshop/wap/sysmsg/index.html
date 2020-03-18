@@ -1,0 +1,43 @@
+<!DOCTYPE>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page">
+	<div class="header">
+<a  class="left-btn" href="/index.php?m=user"><span class="iconfont icon-back"></span></a>
+<div class="title">系统通知</div>
+</div> 
+    <div class="main-body">
+    <div class="box960">
+<div class="row">
+ 
+<div >
+{include file="msg_nav.html"}
+
+{if $data}
+<table class="table table-bordered">
+{foreach item=t from=$data}
+<tr>
+<td class="span6"><a href="index.php?m=sysmsg&a=show&id={$t.id}">{$t.title}</a></td>
+<td class="span2">{$t.dateline|date:Y-m-d H@i}</td>
+<td class="span2">{if $t.status}已读{else}未读{/if}</td>
+<td class="span2">
+
+<a href="javascript:;" url="index.php?m=sysmsg&a=delete&id={$t.id}" class="delete btn btn-warning">删除</a>
+ 
+</td>
+</tr>
+{/foreach}
+</table>
+{$pagelist}
+{else}
+<p>暂无消息</p>
+{/if}
+</div>
+
+</div>
+</div>
+{include file="footer.html"}
+</div>
+</body>
+</html>

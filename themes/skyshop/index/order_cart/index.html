@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+     
+    <div class="box960">
+ 
+    <div class="pd-5" id="shop_cart">
+  
+<table class="cartlist" cellspacing="0" cellpadding="0">
+<thead>
+	<tr class="hd">
+    	<th>商品图片</th>
+    	<th>商品名称</th>
+        <th>属性</th>
+        <th>数量</th>
+        <th>价格</th>
+        
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+{foreach item=c key=k from=$list}
+    <tr class="orderCart_row ">
+    	<td><a href="/index.php?m=show&id={$c.object_id}" target="_blank"><img src="{$c.imgurl|IMAGES_SITE}.100x100.jpg" width="50"></a></td>
+        <td><a href="/index.php?m=show&id={$c.object_id}" target="_blank">{$c.title}</a></td>
+          <td>{if $c.ks_title}{$c.ks_title}{else}默认{/if}</td>   
+        <td class="center"><div class="orderCartNum_row">
+        	<span><a href="javascript:;" class="orderCartNum_minus" oid="{$c.id}"><i class="icon-minus"></i></a></span>
+              <span> <input type="text" value="{$c.amount}" class="orderCartNum" readonly style="font-size:16px; width:40px;"></span> 
+            <span>
+            	<a href="javascript:;" class="orderCartNum_plus" oid="{$c.id}"><i class="icon-plus "  ></i></a></span>
+            
+            </div></td>
+        <td class="center">{$c.price}</td>
+        <td class="center"><a href="javascript:;" class="cart_delete" url="/index.php?m=order_cart&a=delete&id={$c.id}">删除</a></td>
+    </tr>
+{/foreach}
+</tbody>
+<tfoot>
+	<tr><td colspan="6">
+    	<div style="background-color:#fff; height:60px;  width:100%;">
+       <div class="mgl-10 left" style="line-height:60px;"> 共 <span id="orderCart_total_num">{$total_num}</span> 件商品</div>
+	<div class="right mgt-10">总价：￥<span id="orderCart_totalmoney">{$total_money}</span>元  &nbsp;&nbsp;<a href="{R("/index.php?m=order&a=confirm")}" class="btn" >结算</a></div>
+    </div>
+    </td>
+    </tr>
+</tfoot>
+
+
+</table>
+
+
+
+<div class="clearfix"></div>
+</div>
+ 
+
+ 
+</div>
+</div>
+<script src="/static/js/order_cart.js"></script>
+{include file="footer.html"} </div>
+</body>
+</html>

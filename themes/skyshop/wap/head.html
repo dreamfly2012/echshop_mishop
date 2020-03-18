@@ -1,0 +1,18 @@
+<head>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="bookmark" href="/favicon.ico"/>
+{get data=site model=sites fun=selectRow(array("where"=>"siteid=".SITEID))}
+<title>{if $seo.title}{$seo.title}{else}{$site.title} {/if}</title>
+
+<meta name="keywords" content="{if $seo.keywords}{$seo.keywords}{else}{$site.keywords}{/if}" />
+<meta name="description" content="{if $seo.description}{$seo.description}{else}{$site.description}{/if}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+ <script src="/plugin/jquery/jquery-2.1.3.min.js"></script>
+<script language="javascript" src="/plugin/skyweb/skyweb.js?v=1"></script>
+<script language="javascript" src="/static/js/user.js"></script>
+<script language="javascript" src="/static/js/appwap.js?v=24"></script>
+<link href="/plugin/iconfont/iconfont.css?v=2s13x" rel="stylesheet">
+<link href="/plugin/skyweb/skyweb.css?v=2s13x" rel="stylesheet">
+<link href="/static/css/wapapp.css?v={$smarty.now}" rel="stylesheet">
+
+</head>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+    <div class="box960">
+    	 
+       
+       {get model=category data=c_data fun=children(0,MODEL_PICTURE_ID,1)}
+         <div class="row row-cat-list">
+         	<div class="pd">
+          {foreach item=c key=k from=$c_data}
+              <div  class="item">
+              	<div class="pd">
+              	<div class="hd  {if get('catid') eq $c.catid}active{/if}"><a href="{R("/index.php?m=list&catid=$c.catid")}" >{$c.cname}</a></div>
+                {if $c.child}
+                <div class="row-cat-child">
+                  {foreach item=cc from=$c.child}
+                  <div  class="child {if get('catid') eq $cc.catid}active{/if}"><a href="{R("/index.php?m=list&catid=$cc.catid")}">{$cc.cname}</a></div>
+                  {/foreach}
+                </div>
+                {/if} 
+                </div>
+              </div>   
+              {/foreach}
+              </div>
+         </div>
+           
+       <div class="index-hd">图片列表</div>
+        <div class="piclist" id="pic-list">
+         
+        	 
+            {foreach item=c from=$list}
+            	<div class="item">
+                <div class="pd">
+            	<div class="img">
+                	<a href="{R("/index.php?m=show&id=$c.id")}"  target="_blank"><img src="{$c.imgurl|IMAGES_SITE}.small.jpg" class="img"></a>
+                    
+                </div>
+                <div class="title h30"><a href="{R("/index.php?m=show&id=$c.id")}"  target="_blank">{$c.title}</a></div>
+                </div>
+                </div>
+            {/foreach}
+        </div>
+       <div class="row">{$pagelist}</div>
+        </div>
+      
+  </div>
+  <script src="/plugin/jquery/masonry.pkgd.min.js"></script>
+       <script src="/plugin/jquery/imagesloaded.pkgd.min.js"></script>
+       <script>
+	   $(function(){
+		   var c=$('#pic-list').masonry({	  
+		 		 itemSelector: '.item'
+			});
+			c.imagesLoaded( function() {
+			 	 c.masonry();
+			});
+	   });
+       </script> 
+  {include file="footer.html"} </div>
+</body>
+</html>

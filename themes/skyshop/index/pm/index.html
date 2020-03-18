@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page">
+	{include file="header.html"}
+    <div class="main-body">
+    <div class="box960">
+<div class="row">
+<div class="col-6-1">{include file="inc/user_left.html"}</div>
+<div class="col-6-5">
+{include file="inc/msg_nav.html"}
+<div class="breadcrumb">我的私信<small>(已有{$rscount}个联系人)</small></div>
+ <div style="height:40px;">
+<a href="index.php?m=pm&a=send" class="btn btn-success">发私信</a>
+ </div>
+ 
+
+{if $msglist}   
+{foreach item=msg  from=$msglist}
+<table class="table table-bordered">
+    <tr>
+        <td width="60" rowspan="2">
+        
+        
+        
+        <a href="{R("/index.php?m=member&userid=$msg.userid")}"  data-toggle="popover" data-placement="left" data-html="true" ajax-href="/index.php?m=member&a=userinfo&userid={$msg.userid}" class="user_card"><img src="{if $msg.t_user_head}{$msg.t_user_head|IMAGES_SITE}.100x100.jpg{else}/static/images/user_head.jpg.100x100.jpg{/if}" style="width:50px; height:50px;" class="userShow" url='index.php?m=friend&a=userinfo&touserid={$msg.t_userid}' /><br />{$msg.t_nickname}</a>
+        
+        </td>
+        <td height="50">
+     
+    {$msg.content} 
+        </td>
+    </tr>
+    <tr>
+      <td height="20"> &nbsp;{$msg.dateline|date:Y-m-d H@i@s}  &nbsp;&nbsp;
+    <a href="javascript:;" class="delete" url="index.php?m=pm&a=delete_index&id={$msg.id}">删除</a> |
+     
+     <a href="index.php?m=pm&a=detail&t_userid={$msg.t_userid}">共{$msg.pm_num}条私信</a> | <a href="index.php?m=pm&a=detail&t_userid={$msg.t_userid}" class='sendpm'>回复</a>
+      
+      </td>
+    </tr>
+</table>
+{/foreach}
+<p>{$pagelist}</p>
+{else}
+<h2>暂无私信</h2>
+{/if}
+ 
+ 
+{if $pagelist}
+{$pagelist}
+{/if}
+
+</div>
+ 
+</div>
+
+
+</div>
+
+{include file="footer.html"}
+</div>
+</body>
+</html>

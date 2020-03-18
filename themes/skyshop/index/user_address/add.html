@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+     
+    <div class="box960"><div class="row">
+<div class="col-6-1">{include file="inc/user_left.html"}</div>
+<div class="col-6-5">
+<ul class="nav nav-tabs">
+<li><a href="/index.php?m=user_address">收货地址管理</a></li>
+<li class="active"><a href="/index.php?m=user_address&a=add">收货地址添加</a></li>
+</ul>
+
+<form method='post' action='/index.php?m=user_address&a=save'>
+<input type='hidden' name='id' id='id' value='{$data.id}' >
+ <table class='table table-bordered' width='100%'>
+ 
+  <tr><td width="80">所在地区</td><td>
+  <select name="province_id" id="ajax_province_id">
+  	<option value="0">请选择</option>
+    {foreach item=c key=k from=$province_list}
+    <option value="{$k}" {if $data.province_id eq $k} selected{/if}>{$c}</option>
+    {/foreach}
+  </select>
+  
+  
+  <select name="city_id" id="ajax_city_id">
+  	<option value="0">请选择</option>
+    {foreach item=c key=k from=$city_list}
+    <option value="{$k}"  {if $data.city_id eq $k} selected{/if}>{$c}</option>
+    {/foreach}
+  </select>
+  
+  <select name="town_id" id="ajax_town_id">
+  	<option value="0">请选择</option>
+    {foreach item=c key=k from=$town_list}
+    <option value="{$k}"  {if $data.town_id eq $k} selected{/if}>{$c}</option>
+    {/foreach}
+  </select>
+  
+  </td></tr>
+  <tr><td >详细地址：</td><td><input type='text'  class="w300" name='address' id='address' value='{$data.address}' ></td></tr>
+  <tr><td>手机：</td><td><input type='text'  class="w300" name='telephone' id='telephone' value='{$data.telephone}' ></td></tr>
+  <tr><td>姓名：</td><td><input type='text'  class="w300" name='truename' id='truename' value='{$data.truename}' ></td></tr>
+ 
+  <tr><td>邮编地址：</td><td><input type='text'  class="w300" name='zip_code' id='zip_code' value='{$data.zip_code}' ></td></tr>
+  
+   
+   
+<tr> <td colspan="2"><input type='submit' value='保存' class='btn btn-row btn-success'></td></tr> </table>
+</form>
+</div>
+</div>
+ </div>
+{include file="footer.html"} </div>
+</body>
+</html>

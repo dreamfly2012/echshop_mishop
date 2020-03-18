@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> 
+<div class="header" style="display:block; height:50px;">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">我的头像</div>
+ 
+</div>
+ <style>
+      .cropit-image-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-top: 7px;
+        width: 250px;
+        height: 250px;
+        cursor: move;
+		margin:0 auto;
+      }
+
+      .cropit-image-background {
+        opacity: .2;
+        cursor: auto;
+      }
+
+      
+
+       .image-editor .row-range {
+        display: block;
+		padding:10px;
+		width:160px; 
+		margin:0 auto;
+		
+      }
+	  input{display: block;
+	  }
+	  .image-editor .tools{height:40px;}
+
+     .image-editor .export {
+        margin-top: 10px;
+      }
+    </style>
+  <div class="main-body">
+<div class="row-box">
+ 
+ 	<div class="image-editor">
+      
+      <div class="cropit-image-preview"></div>
+  		<div class="row-range">
+      <input type="range" class="cropit-image-zoom-input" >
+      </div>
+      <div class="tools row">
+      		<div class="col-2-1">
+      	<div class="btn btn-row" style="position:relative;">
+        	上传
+      		<input type="file" style="position:absolute; bottom:0px; right:0px; display:block; opacity:0;-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(opacity=0)';filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0); top:0px; left:0px;" class="cropit-image-input">
+        </div>
+        </div>
+        <div class="col-2-1">
+      	<button class="btn btn-row" id="save-head">保存</button>
+        </div>
+      </div>
+    </div>
+ 
+</div>
+ 
+ 
+</div>
+
+</div>
+
+ 
+ 
+ {include file="footer.html"}
+ 
+    <script src="/plugin/cropit/dist/jquery.cropit.js"></script>
+ <script>
+      $(function() {
+        $('.image-editor').cropit({
+          imageState: {
+            src: '{$data.user_head|images_site}',
+          },
+        });
+
+        $('#save-head').click(function() {
+          var imageData = $('.image-editor').cropit('export');
+          crop_upload(imageData);
+        });
+		
+		function crop_upload(content){
+			
+			 
+			skyToast('上传中');
+		 $.post("/index.php?m=upload&a=base64&dir=user_head&ajax=1&id={$data.userid}",{content:content},function(data){
+			 
+			 if(data.error==0){
+				 $.post("/index.php?m=user&a=user_head_save&ajax=1",{user_head:data.imgurl},function(data){
+					  if(data.error==0){
+						  skyToast('保存成功');
+					  }else{
+							 skyToast(data.message);
+						 }
+				 },"json")			 
+			 }else{
+				 skyToast(data.message);
+			 }
+		 },"json");
+	 }
+		
+      });
+    </script>   
+</body>
+</html>

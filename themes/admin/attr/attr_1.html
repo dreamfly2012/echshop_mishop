@@ -1,0 +1,49 @@
+<!--唯一-->
+{if $c.input_type eq 2}
+<!--列表选择-->
+<div class="attr_item">
+ 
+<div class="attr_item_list">
+
+    {if $attr[$c.id]}  
+         
+        <div class="{if $k eq 0}attr_item_copy{/if} attr_item_li">
+         
+        <select name="attr[{$c.id}]" >
+        {foreach item=cc key=kk from=$c.select}
+                <option value="{$kk}" {if $kk eq $attr[$c.id]} selected="selected"{/if}>{$cc}</option>
+        {/foreach}
+        </select>
+       
+        </div>
+        
+    {else}
+        <div class="attr_item_copy attr_item_li"  >
+        <select name="attr[{$c.id}]"   class="attr_value" >
+        {foreach item=cc key=kk from=$c.select}
+                <option value="{$kk}" >{$cc}</option>
+        {/foreach}
+        </select>
+        
+        </div>
+    {/if}
+</div>
+</div>
+{else}
+<!--唯一属性-->
+{if $c.ishtml}
+<script type="text/plain"  id="dy_attr_{$c.id}" name="attr[{$c[id]}]" >{$attr[$c[id]]}</script>
+<script class="jsa-text">
+ 
+	if(typeof(dy_attr_{$c.id})!="undefined"){	 
+		dy_attr_{$c.id}.destroy();
+		dy_attr_{$c.id}=UE.getEditor('dy_attr_{$c.id}',optionssimple);
+	}else{
+		var dy_attr_{$c.id}=UE.getEditor('dy_attr_{$c.id}',optionssimple);
+	}
+</script>
+{else}
+<input type="text" name="attr[{$c[id]}]" value="{$attr[$c[id]]}">
+{/if}
+ 
+{/if}

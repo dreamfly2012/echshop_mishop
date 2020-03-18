@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+{include file="head.html"}
+ 
+<body class="bg-fff">
+<div class="page">
+{include file="header.html"}
+<div class="main-body">
+  <div class="box960"> <div class="row">
+ 
+<ul class="breadcrumb">
+  <li><a href="/index.php">首页</a><span class="divider">/</span></li>
+   <li><a href="/index.php?m=goldgoods">0元换购</a><span class="divider">/</span></li>
+      <li class="active">{$data.title}</li>
+      
+</ul>
+</div>
+    <div class="row">
+      
+       
+          <div class="row">
+          		<div class="col-5-3">
+                	 <div style="position:relative; width:100%; height:320px; margin:0 auto;">
+    <ul id="slider_pic" class="slider_pic">
+       {if $imgsdata}
+                {foreach item=c from=$imgsdata}
+                <li><a href="#" ><img src="{$c.imgurl}" title="{$c.title}"    ></a></li>
+                {/foreach}
+                {else}
+                <li><a href="{$data.imgurl|IMAGES_SITE}" target="_blank"><img src="{$data.imgurl|IMAGES_SITE}.middle.jpg"  width="288"  ></a></li>
+                {/if}
+    </ul>
+    <div id="slider-num" class="slider-num"></div>
+    <div id="slider-prev" class="slider-prev"><i class="iconfont icon-zuo"></i></div>
+            <div id="slider-next" class="slider-next"><i class="iconfont icon-you"></i></div>
+  </div>
+  <script src="/plugin/jquery/cycle/jquery.cycle.all.js"></script>
+ <script>
+    $(function(){
+		$("#slider_pic li").css("width",$("#slider_pic li").parents("div").width());
+		
+		$("#slider_pic img").css("height",$("#slider_pic li").parents("div").height());
+		$('#slider_pic').cycle({
+		fx: 'scrollLeft',
+		timeout: 5000,
+		pager:'#slider-num',
+		prev:'#slider-prev',
+		next:'#slider-next'
+		}); 
+	});
+    </script>
+                    
+                     
+                </div>
+                <div class="col-5-2">
+                	<div style="width:90%; float:right;">
+                    	
+                		<div style=" line-height:20px; margin-bottom:5px; font-size:14px;">{$data.title}</div>
+                        <div style="border:1px solid #ccc; display:none; padding:10px; margin-bottom:10px;">本商品由<span style="color:red">{$data.shop_name}</span>店铺提供，<a href="{$data.shop_url}" style="color:red"  target="_blank">前往购买>></a></div>
+                        <div style="line-height:30px; height:30px; font-size:14px;">换购份数：<span style="color:#F33; font-size:26px;">{$data.total_num}</span> 份 &nbsp;&nbsp;已换：<span style="color:#F33; font-size:26px;">{$data.buy_num}</span> 份</div>
+                        <div style="line-height:40px;">邮费状态：免费</div>
+                        <div style="line-height:40px;">商品价格：<span style="color:#F33; font-size:26px;">{$data.market_price}</span>元 </div>
+                        <div style="line-height:40px;">所需金币：<span style="color:#F33; font-size:20px;">{$data.gold}</span>个</div> 
+                        
+                                                  <!--产品属性-->
+  <div style="margin-bottom:10px;">
+  {foreach item=c from=$data.attr}
+ 
+      {if $c.attr_type neq 1}        
+      <div class="row">
+       <input type="hidden" class="orderCart_attr_value" name="attr[{$c.id}]" attr_name="{$c.title}" id="orderCart_attr_{$c.id}" />
+      	<div class="btn-group orderCart_attr_item" style="margin-bottom:10px;" attr_id={$c.id}>
+       		<span class="btn btn-default">{$c.title}</span>   
+            {foreach item=a_c key=k from=$data_attr[$c[id]][value]}
+            <span class="btn orderCart_attr" val="{$a_c}" >{if $c.input_type eq 1}{$a_c}{else}{$c[select][$a_c]}{/if}</span>
+            {/foreach}    
+             
+        </div>
+        </div>
+      {/if}
+  	
+   {/foreach}
+  </div>
+  <!--end 产品属性-->
+                        
+                        <a href="javascript:;"    onClick="exchange({$data.id})" class="btn btn-larger btn-success">立即兑换</a>
+                        
+                    </div>
+                </div>
+          </div>
+          
+          <div style="width:100%; height:30px;"></div>
+          <div class="row">
+          	<div class="col-4-3">
+          		<div class="tabs-box">
+                	<ul class="tabs">
+                    	<li><a href="#p-detail" class="active"><span>商品详情</span></a></li>
+                        <li><a href="#p-order"><span>最新兑换</span></a></li>
+                        <li><a href="#p-shaidan"><span>最新晒单</span></a></li>
+                         
+                    </ul>
+                    
+                    <div class="tabs-item active" id="p-detail">
+                    	<div class="pd-5 d-content">{$data.content}</div>
+                    </div>
+                    <div class="tabs-item" id="p-order">
+                    	<div class="pd-5">
+                        <h1>暂无人兑换</h1>
+                        </div>
+                    </div>
+                    
+                    <div class="tabs-item" id="p-shaidan">
+                    	<div class="pd-5"> </div>
+                    </div>
+                     
+          </div>
+         	</div>
+            <div class="col-4-1"> 
+    	<div class="w98 right">
+        	<style>
+				.hgsm-item{margin-bottom:10px;border:1px solid #ccc;}
+				 
+            	.hgsm-item .hd{height:40px; line-height:40px; font-size:14px;padding-left:10px; background-color:#6cc; color:#fff;}
+				.hgsm-item .hglc,.hgsm-item .shop{height:25px; line-height:25px;padding-left:10px; }
+            </style>
+        	<div class="hgsm-item">
+            	 
+            	<div class="hd">换购说明</div>
+                
+                <div class="hglc">换购流程</div>
+                <div></div>
+                 
+            </div>
+            <style>
+			.qthg-list {border:1px solid #ccc; border-bottom:0px;} 
+			.qthg-list .hd{height:40px; line-height:40px; font-size:14px;padding-left:10px; background-color:#6cc; color:#fff; margin-bottom:10px;}
+            .qthg-list .item{width:100%; border-bottom:1px solid #ccc; margin-bottom:0px;}
+			.qthg-list .item .pd{ border:0px;}
+			.qthg-list .item .goldrow{height:30px; line-height:30px;text-align:center; margin-bottom:5px;}
+			.qthg-list .item .goldrow .gold{ color:red; font-size:24px;}
+            </style>
+            <div class="hg-list qthg-list">
+            	<div class="hd">其他换购</div>
+            	{api data=tc control=goldgoodsapi fun=onlist()}
+                {foreach item=c from=$tc}
+                	<div class="item">
+                    	<div class="pd">
+                    	<div class="img"><a href="/index.php?m=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}.small.jpg"></a></div>
+                        <div class="title"><a href="/index.php?m=show&id={$c.id}">{$c.title}</a></div>
+                        <div class="price"><span class="money">￥{$c.market_price}</span> <span class="num">限量：{$c.total_num}</span> </div>
+                        <div class="goldrow">所需金币：<span class="gold">{$c.gold}</span>个</div>
+                        </div>
+                    </div>
+                {/foreach}
+            	<div class="clearfix"></div>
+            </div>
+            
+        </div>
+      </div> 
+        </div>
+      
+    </div>
+    
+  </div>
+  </div>
+  </div>
+  
+  {include file="footer.html"} </div>
+  <script>
+  function newOrder(id){
+	  $.get("/index.php?m=goldorder&a=neworder&object_id="+id,function(data){
+		  $("#p-order").html(data);
+	  });
+	  setTimeout("neworder("+id+")",10000)
+  }
+  
+  function shaidan(id){
+	  $.get("/index.php?m=goldgoodsapi&a=shaidan_list&object_id="+id,function(data){
+		 if(data.error==0){
+		 	$("#p-shaidan").html(data.html);
+		 }
+	 },"json");
+	 
+	 $(document).on("click","#p-shaidan .pages a",function(e){
+		 e.preventDefault();
+		 $.get($(this).attr("href"),function(data){
+			 if(data.error==0){
+				$("#p-shaidan").html(data.html);
+			 }
+		 },"json");
+	 });
+  }
+  
+  newOrder("{$data.id}");
+  shaidan("{$data.id}");
+  </script>
+</body>
+</html>

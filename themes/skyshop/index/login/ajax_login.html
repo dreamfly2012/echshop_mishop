@@ -1,0 +1,43 @@
+<div class="row">
+        <form method="post" id="login-form" action="/index.php?m=login&a=loginsave" style="padding-top:10px;">
+          <table class=" form-table">
+            <tr>
+              <td class="td-1">用户名：</td>
+              <td><input type="text" name="username" class="input-text" value="" placeholder="请输入用户名"></td>
+            </tr>
+            
+            <tr>
+              <td class="td-1">密码：</td>
+              <td><input type="password" name="password" class="input-text" value="" placeholder="请输入密码"></td>
+            </tr>
+            
+            <tr><td class="td-1">&nbsp; </td><td><a href="/index.php?m=sinalogin&a=geturl"><img src="/static/images/weibo_24x24.png"></a> <a href="/index.php?m=qqlogin&a=geturl"><img src="/static/images/qq_24x24.png"></a></td></tr>
+            
+            <tr>
+            	<td colspan="2">
+                	<div class="form-submit">
+                    	<button type="button" id="login-submit" class="btn btn-success btn-larger">登陆</button>
+                        <a href="/index.php?m=register&a=reg" class="btn btn-info btn-larger" >无账号，注册-&gt;&gt </a>
+                    </div>
+                </td>
+            </tr>
+            
+          </table>
+        </form>
+        </div>
+   <script type="text/javascript" class="jsa-text">
+$(function(){
+	$(document).on("click","#login-submit",function(){		
+		$.post("/index.php?m=login&a=loginSave&ajax=1",$("#login-form").serialize(),function(data){
+			if(data.error==1){
+				skyToast(data.message);
+			}else{
+				skyToast("登陆成功");
+				setTimeout(function(){
+					window.location.reload();
+				},700);
+			}
+		},"json");
+	});
+});
+</script>      

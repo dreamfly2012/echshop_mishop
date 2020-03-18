@@ -1,0 +1,25 @@
+{include file="header.html"}
+<div> 
+{include file='express_fee/nav.html'}
+<form method='post' action='admin.php?m=express_fee&a=save'>
+<input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+ <table class='table table-bordered' width='100%'>
+  <tr><td width="100">标题：</td><td><input type='text' name='title' id='title' value='{$data.title}' ></td></tr>
+  <tr><td>首重：</td><td><input type='text' name='fmoney' id='fmoney' value='{$data.fmoney}' ></td></tr>
+  
+  <tr><td>加重：</td><td><input type='text' name='amoney' id='amoney' value='{$data.amoney}' ></td></tr>
+  {if $data.shopid}<tr><td>店铺：</td><td>{$data.shop_name}</td></tr>{/if}
+	<tr>
+    	<td>关联区域</td>
+        <td>
+        	{foreach item=c key=k from=$provincelist}
+            	<input type="checkbox" name="cityids[]" value="{$c.id}" {if $c.selected} checked{/if}  > {$c.name}
+            {/foreach}
+        </td>
+    </tr>	 
+<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> 
+
+</table>
+</form>
+</div> 
+{include file="footer.html"}

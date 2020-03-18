@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+
+{include file="common.html"}
+<div class="page" data-role="page"> 
+<div class="header">
+  <div class="left-box"> <a class="hd-lbtn back"   href="#"><span>返回</span></a> </div>
+  <h1>附近的风景</h1>
+  <div class="right-box"> <a href="javascript:;" class="panel-btn"><i class="fa fa-th f16"></i></a> </div>
+</div>
+ 
+
+
+
+ 
+ 
+ 
+<div  class="wrapper-y">
+	<div class="scroller-y " style="padding:10px;" >
+
+    <div style=" margin-bottom:10px;"><div class="input-group">
+      <input type="text" class="form-control" id="search-word">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="search-btn"><i class="fa fa-search"></i></button>
+      </span>
+    </div></div>
+    <div id="datalist">
+    <table class='table table-bordered' width='100%'>
+     
+        {api data=t_d control=pictureapi fun=near(array("limit"=>48,"mi"=>20000))} 
+        {foreach item=c from=$t_d}
+        <tr><td width="50"><img src="{const.IMAGES_SITE}{$c.imgurl}.100x100.jpg" style="width:50px;"></td><td><a href="{R("/index.php?m=show&id=$c.id")}" class="aurl">{$c.title}</a> </td></tr>
+        {/foreach}
+         
+      </table>
+    </div>
+ 
+ </div>
+ </div>
+{include file="footer.html"}
+</div>
+
+<script type="text/javascript" class="jsa-text">
+
+SkyPhone.scroll.scroll_y (".wrapper-y");
+$(function(){
+	var ispost=false;
+	 $("#search-btn").die().live("click",function(){
+		 var url="/index.php?m=search&type=picture&keyword="+encodeURI($("#search-word").val())
+		 set_hisurl(url);
+		 SkyPhone.loadPage(url);
+	 });
+});
+</script>
+</body>
+</html>

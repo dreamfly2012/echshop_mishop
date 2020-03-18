@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page">
+	{include file="common.html"}
+{assign var="tb" value="确认订单"}
+{include file="toolbar.html"}
+    <div class="main-body">
+    <div class="row-box">
+ 
+    	<form action="/index.php?m=order&a=buyproduct" method="post">
+                <input type="hidden" name="object_id" value="{$data.id}">
+                <input type="hidden" name="attr" value='{$attr}' />
+<h3>
+		收货地址&nbsp; <a  class="small right" id="add_address">新增地址</a>     
+ </h3>
+ <div class="skyline"></div>
+<ul class=" data-list "id="address_list">
+{foreach item=c key=k from=$address}
+
+<li  class="item" ><input type="radio" name="user_address_id" {if $k eq 0} checked{/if} value="{$c.id}"> 地址：{$dist_list[$c.province_id]} {$dist_list[$c.city_id]} {$dist_list[$c.town_id]} {$c.address} 邮编：{$c.zip_code} 姓名：{$c.truename} 手机：{$c.telephone}</li>
+    {/foreach}
+</ul>
+<div class="row-box">
+ 
+<h3>产品信息</h3>
+<div class="skyline"></div>
+	<table class="table noborder">
+    	<tr>
+        	<td width="80" height="40">产品名称：</td>
+            <td>{$data.title}
+            {if $data.ks_title} <span style="color:red">
+            {$data.ks_title}</span>{/if}</td>
+        </tr>
+        
+         
+        
+         
+        
+        <tr>
+        	<td height="40">￥{if $data.lower_price>0}{$data.lower_price}{else}{$data.price}{/if}</td>
+            <td><input class="" type="text" maxlength="16" id="amount" name="amount" value="{$smarty.get.amount|max:1}" rel="1" autocomplete="off"></td>
+        </tr>
+        
+        <tr>
+         
+            <td colspan="2">
+            <div class="h30">总价格：	￥<span id="a_price"> {$data[price]*max(1,get('amount')) + EXPRESS_FEE} </span>   
+            商品费：￥<span id="t_price"> {$data[price]*max(1,get('amount'))} </span>
+           ,物流费：￥<span id="e_price">{const.EXPRESS_FEE}</span>
+            </div>
+            <div class="h30">账户余额：￥{$user.money}元 </div>
+             
+             
+             <h3>支付方式</h3>
+<div class="skyline"></div>
+<div class="paylist row mgb-10" id="paylist">
+    	{foreach item=c key=k name=p from=$pay_type_list}
+        {if $smarty.foreach.p.first}
+        <input type="hidden" name="pay_type" id="pay_type" value="{$k}">
+         <div class="item active" v="{$k}">{$c}</div>
+        {else}
+        <div class="item" v="{$k}">{$c}</div> 
+        {/if}
+        
+        {/foreach}
+ </div>
+            </td>
+        </tr>
+        
+         
+        
+        <tr>
+        	 
+            <td colspan="2"><button type="submit" class="btn btn-row btn-success">购买</button></td>
+        </tr>
+        
+    </table>
+				 
+                 
+              
+              </form>
+    </div>
+    </div>
+ 
+
+<script language="javascript">
+$(document).ready(function(data){
+	
+	$("#amount").bind("keyup",function(){
+		$("#t_price").html( parseInt($("#price").text()) * parseInt($("#amount").val()) );
+		$("#a_price").html( parseInt($("#price").text()) * parseInt($("#amount").val())+parseInt($("#e_price").text()) );
+	});
+	$("#add_address").bind("click",function(){
+		$.get("/index.php?m=user_address&a=add&ajax=1",function(data){
+			showbox("添加收获地址",data,300,200);
+		});
+	});
+	$(document).on("click","#paylist .item",function(){
+		$("#paylist .item").removeClass("active");
+		$("#pay_type").val($(this).attr("v"));
+		$(this).addClass("active");
+	});
+	$("#save_address").live("click",function(){
+		$.post("/index.php?m=user_address&a=save&ajax=1",$(this).parents("form").serialize(),function(data){
+			if(data.error==1){
+				alert(data.message);
+			}else{
+				var html='<li  class="radio"><input type="radio" name="user_address_id" {if $k eq 0} checked{/if} value="'+data['data'].id+'">地址：'+data['data'].province+' '+data['data'].city+' '+data['data'].town+' '+data['data'].address+' 邮编：'+data['data'].zip_code+' 姓名：'+data['data'].truename+' 手机：'+data['data'].telephone+'</li>';
+				
+				$("#address_list").append(html);
+				
+				showboxClose();
+			}
+		},"json")
+	});
+});
+	
+</script> 
+{include file="footer.html"}
+</div>
+</body>
+</html>

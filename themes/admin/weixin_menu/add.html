@@ -1,0 +1,55 @@
+{include file="header.html"}
+     
+    <div class="row">
+    	<div class="span12">
+        {include file="weixin_menu/nav.html"}
+      <form method="post" action="{$appadmin}?m=weixin_menu&a=save">
+        <input type="hidden" name="id" value="{$data.id}" />
+        <input type="hidden" name="wid" value="{if $data.wid}{$data.wid}{else}{$smarty.get.wid}{/if}" />
+        <table class="table table-bordered">
+          <tr>
+            <td width="100">名称</td>
+            <td><input type="text" name="title" value="{$data.title}" /></td>
+          </tr>
+          
+          <tr>
+          	<td>类型</td>
+            <td><select name="w_type">
+            	{foreach item=c key=k from=$w_type_list}
+                <option value="{$k}" {if $k eq $data.w_type} selected="selected"{/if}>{$c}</option>
+                {/foreach}
+            </select></td>
+          </tr>
+          
+          <tr><td>key</td><td><input type="text" name="w_key" value="{$data.w_key}" /></td></tr>
+          <tr><td>链接</td><td><input type="text" name="w_url" value="{$data.w_url}" /></td></tr>
+          
+          <tr>
+          	<td>排序</td>
+            <td><input type="text" name="orderindex" value="{$data.orderindex}" /></td>
+          </tr>
+          
+          <tr>
+          	<td>素材</td>
+            <td><input type="text" name="sc_id" value="{$data.sc_id}" /></td>
+          </tr>
+          
+          <tr>
+            <td>上级分类</td>
+            <td><select name="pid">
+           		 <option value="0">作为一级菜单</option>
+            	{foreach item=c key=k from=$pid_list}
+                <option value="{$k}" {if $data.pid eq $k} selected="selected"{/if}>{$c}</option>
+                {/foreach}
+              </select></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><button type="submit" class="btn btn-success">保存</button></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    </div>
+ 
+{include file="footer.html"}

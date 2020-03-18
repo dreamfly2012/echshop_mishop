@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+
+<body>
+<div class="page">
+	{include file="header.html"}
+    <div class="main-body">
+    	<div style="width:680px; margin:0 auto">
+			 <form method="post" action="/index.php?m=login&a=findpwdSave">
+                    <input type="hidden" name="code" value="{$smarty.get.code|html}" />
+                    
+                    <h1>确认找回密码：</h1><br />
+					<p style="height:40px; line-height:40px; margin-bottom:10px;"><input class="y_login_email" type="text" name="email" value="" id="email" style="height:30px; line-height:30px; width:400px;" placeholder="邮箱"></p>
+                    <p style="height:40px; line-height:40px; margin-bottom:10px;"><input class="y_login_passcode" name="password" type="password" value="" id="password" style="height:30px; line-height:30px; width:400px;" placeholder="密码"></p>
+                    <p style="height:40px; line-height:40px; margin-bottom:10px;"><input class="y_login_passcode" name="password2" type="password" value="" id="password2" style="height:30px; line-height:30px; width:400px;" placeholder="重复密码"></p>
+                    <p><input class="btn btn-primary" type="submit" value="修改密码" id="btn" ></p>
+					 
+                    </form>
+		</div>
+    </div>
+    {include file="footer.html"}
+</div>
+</body>
+</html>

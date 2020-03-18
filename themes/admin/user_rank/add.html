@@ -1,0 +1,74 @@
+{include file="header.html"}
+ <script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#loading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=upload&dir=user_rank&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='/"+data.imgurl+"' width='100'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+{include file='user_rank/nav.html'}
+<form method='post' action='admin.php?m=user_rank&a=save'>
+<input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+ <table class='table table-bordered' width='100%'>
+  <tr><td>等级名称：</td><td><input type='text' name='rank_name' id='rank_name' value='{$data.rank_name}' ></td></tr>
+  <tr><td>最低分：</td><td><input type='text' name='min_grade' id='min_grade' value='{$data.min_grade}' ></td></tr>
+  <tr><td>最高分：</td><td><input type='text' name='max_grade' id='max_grade' value='{$data.max_grade}' ></td></tr>
+  <tr><td>折扣：</td><td><input type='text' name='discount' id='discount' value='{$data.discount}' >%</td></tr>
+   <tr>
+    <td align="right">图片：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="upimg" onChange="uploadgoodsimg()">
+      </div>
+      <label  id="loading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="logo" id="imgurl" value="{$data.logo}">
+      <span id="imgShow">
+      {if $data.logo}
+      <img src="/{$data.logo}">
+      {/if}
+      </span>
+      </td>
+  </tr>
+<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> </table>
+</form>
+ 
+{include file="footer.html"}

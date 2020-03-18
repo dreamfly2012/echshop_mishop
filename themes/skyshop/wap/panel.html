@@ -1,0 +1,18 @@
+<!--Panel-->
+
+<div class="panel-box" id="panel-box" style="display:none; position:fixed;">
+		<a class="panel-close" href="javascript:;" style="position:absolute; color:white; z-index:100; text-decoration:none; right:10px; top:10px;"><i class="fa fa-times"></i></a>
+		 
+        <ul class="nav-list">
+            <li><a href="/index.php" class="aurl">首页</a></li>
+ {get model=category data=c_data fun=children(0,MODEL_PRODUCT_ID,1)}
+            {foreach item=c from=$c_data}
+            <li><a href="{R("/index.php?m=list&catid=$c.catid")}">{$c.cname}</a></li>
+            {/foreach} 
+            
+        </ul>
+        
+    </div>
+ 
+<!--End Panel-->
+ 

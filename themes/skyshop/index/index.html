@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html> 
+{include file="head.html"}
+ 
+ 
+<body>
+<div class="page"> {include file="header.html"}
+ 
+  <div class="row box960">
+ 	<div>
+        <div style="position:relative; width:100%; margin:0 auto;">
+            <ul class="slider_pic" id="slider_pic">
+              {api data=t_c control=adapi fun=listbyno("index_flash",4)}
+              {foreach item=c from=$t_c name=t1}
+              <li><a href="{$c.link1}" target="_blank"><img src="{$c.imgurl|IMAGES_SITE}" width="100%" height="460" /></a></li>
+              {/foreach}
+            </ul>
+            <div id="slider-num" class="slider-num"></div>
+            <div id="slider-prev" class="slider-prev" style="left:250px;"><i class="iconfont icon-zuo"></i></div>
+            <div id="slider-next" class="slider-next"><i class="iconfont icon-you"></i></div>
+          </div>
+    </div>
+           
+ </div>
+  <script src="/plugin/jquery/cycle/jquery.cycle.all.js"></script>
+ <script>
+    $(function(){
+		$("#slider_pic li").css("width",$("#slider_pic li").parents("div").width());
+		
+		//$("#slider_pic img").css("height",$("#slider_pic li").parents("div").height());
+		$('#slider_pic').cycle({
+		fx: 'scrollLeft',
+		timeout: 5000,
+		pager:'#slider-num',
+		prev:'#slider-prev',
+		next:'#slider-next'
+		}); 
+	});
+    </script>
+  <div class="main-box">
+     
+      
+     
+    
+    <div class="box960"> 
+    
+        <div class="prolist">
+        	<div class="hd">
+            	<div class="title">推荐商品</div> 
+                <div class="more"><a href="/index.php?m=list&catid=2" class="more-link">更多<i class="iconfont icon-you"></i></a></div>
+               </div>
+        	{api data=t_c control=productapi fun=recommend(0,5)}
+            {foreach item=c  key=k from=$t_c}
+            <div class="item btc-{$k} {if $k % 5 eq 4}mgr0{/if}">
+                <div class="img"><a href="/index.php?m=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}" ></a></div>
+                <div class="title"><a href="/index.php?m=show&id={$c.id}">{$c.title}</a></div>
+                <div class="desc">{$c.description}</div>
+                <div class="price">￥{if $c.lower_price >0 }{$c.lower_price}{else}{$c.price}{/if}</div>
+            </div>
+                 
+            {/foreach}
+            <div class="clearfix"></div>
+        </div>
+    
+    
+    
+    <div class="prolist">
+        	<div class="hd">
+            	<div class="title">最新商品</div> 
+                <div class="more"><a href="/index.php?m=list&catid=2" class="more-link">更多<i class="iconfont icon-you"></i></a></div>
+               </div>
+        	{api data=t_c control=productapi fun=newlist(0,5)}
+            {foreach item=c  key=k from=$t_c}
+            <div class="item btc-{$k} {if $k % 5 eq 4}mgr0{/if}">
+                <div class="img"><a href="/index.php?m=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}" ></a></div>
+                <div class="title"><a href="/index.php?m=show&id={$c.id}">{$c.title}</a></div>
+                <div class="desc">{$c.description}</div>
+                <div class="price">￥{if $c.lower_price >0 }{$c.lower_price}{else}{$c.price}{/if}</div>
+            </div>
+                 
+            {/foreach}
+            <div class="clearfix"></div>
+        </div>
+      
+     
+   <div class="prolist">
+        	<div class="hd">
+            	<div class="title">热门商品</div> 
+                <div class="more"><a href="/index.php?m=list&catid=2" class="more-link">更多<i class="iconfont icon-you"></i></a></div>
+               </div>
+        	{api data=t_c control=productapi fun=hot(0,5)}
+            {foreach item=c  key=k from=$t_c}
+            <div class="item btc-{$k} {if $k % 5 eq 4}mgr0{/if}">
+                <div class="img"><a href="/index.php?m=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}" ></a></div>
+                <div class="title"><a href="/index.php?m=show&id={$c.id}">{$c.title}</a></div>
+                <div class="desc">{$c.description}</div>
+                <div class="price">￥{if $c.lower_price >0 }{$c.lower_price}{else}{$c.price}{/if}</div>
+            </div>
+                 
+            {/foreach}
+            <div class="clearfix"></div>
+        </div>
+    
+     
+    </div>
+  </div>
+  {include file="footer.html"}
+</div>
+</body>
+</html>

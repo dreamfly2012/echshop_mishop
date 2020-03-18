@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs">
+<li {if get('a') eq 'default'} class="active"{/if}><a href="{$appadmin}?m=admin">管理员管理</a> </li> 
+<li {if get('a') eq 'add'} class="active"{/if}><a href="{$appadmin}?m=admin&a=add">管理员添加</a>  </li>
+<li {if get('a') eq 'group' && get('op') eq ''} class="active"{/if}><a href="{$appadmin}?m=admin&a=group">管理组</a></li> 
+<li {if get('a') eq 'group' && get('op') eq 'add'} class="active"{/if}><a href="{$appadmin}?m=admin&a=group&op=add">管理组添加</a></li>
+</ul>

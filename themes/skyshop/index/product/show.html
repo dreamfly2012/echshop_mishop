@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+{include file="head.html"}
+ 
+ 
+<body>
+<div class="page">
+{include file="header.html"}
+<div class="main-body">
+  <div class="box960"> {include file="inc/show_breadcrumb.html"}
+    <div class="row">
+      
+      
+       
+          <div class="row">
+          		<div class="col-7-3">
+                	                	 <div style="position:relative; background-color:#efefef; width:100%; height:320px; margin:0 auto;">
+    <ul id="slider_pic" class="slider_pic">
+    	{get data=imgsdata model=imgs fun=get('product',"$data.id")}
+       {if $imgsdata}
+                {foreach item=c from=$imgsdata}
+                <li><a href="#" ><img src="{$c.imgurl|images_SITE}" title="{$c.title}"    ></a></li>
+                {/foreach}
+                {else}
+                <li><a href="{$data.imgurl|images_site}" target="_blank"><img src="{$data.imgurl|images_site}.middle.jpg"    ></a></li>
+                {/if}
+    </ul>
+    <div id="slider-num" class="slider-num"></div>
+    <div id="slider-prev" class="slider-prev"><i class="iconfont icon-zuo"></i></div>
+            <div id="slider-next" class="slider-next"><i class="iconfont icon-you"></i></div>
+  </div>
+  <script src="/plugin/jquery/cycle/jquery.cycle.all.js"></script>
+ <script>
+    $(function(){
+		$("#slider_pic li").css("width",$("#slider_pic li").parents("div").width());
+		
+		$("#slider_pic img").css("height",$("#slider_pic li").parents("div").height());
+		$('#slider_pic').cycle({
+		fx: 'scrollLeft',
+		timeout: 5000,
+		pager:'#slider-num',
+		prev:'#slider-prev',
+		next:'#slider-next'
+		}); 
+	});
+    </script>
+                
+                </div>
+                <div class="col-7-4">
+                	<div style="width:90%; float:right;">
+                    	
+                		<h3 class="hd">{$data.title}</h3>
+                        <div style="color:#aaa; padding:10px;">{$data.description}</div>
+                        <ul class="nav-list">   
+                            <li><tt>套餐价（不含税）：</tt><em>￥{if $data.lower_price>0}{$data.lower_price}{else}{$data.price}{/if}</em><tt>(节省￥{if $data.lower_price >0 }{math equation="x - y" x="$data.market_price" y="$data.lower_price"}{else}{math equation="x - y" x="$data.market_price" y="$data.price"}{/if}))</tt></li> 
+                            <li><tt style="color:#aaa;">市场价：<i style="text-decoration:line-through; color:#ccc">￥{$data.market_price}</i></tt></li>   
+                            <li><tt >商品评分：<img src="/static/images/star_{if $data.rating_grade eq 0}5{else}{$data.rating_grade|intval}{/if}.jpg" style="vertical-align:middle;">（共{$data.rating_num}人评价）</tt></li> 
+                        </ul>
+                         <!--产品属性-->
+ {get data=kslist model=product_ks fun=select(array("where"=>"object_id=$data.id"))}
+  {if $kslist} 
+  
+  <div class="kslist" id="kslist">
+  <input type="hidden" id="ksid" value="0">
+  	<div class="hd">款式：</div>
+  {foreach item=c from=$kslist}
+ 
+          <div class="item" did="{$c.id}">{$c.title} </div> 
+       
+  	
+   {/foreach}
+  </div>
+  <div class="clearfix"></div>
+  <script>
+  $(function(){
+	 $(document).on("click","#kslist .item",function(){
+		 $("#kslist .item").removeClass("active");
+		$(this).addClass("active");
+		$("#ksid").val($(this).attr("did")); 
+	 }) 
+  });
+  </script>
+  {/if}
+  <!--end 产品属性-->
+
+                        
+                        <div style=" padding:10px 0px;"><h4><span>购买数量</span> <input type="text" value="1" id="amount" style="width:50px; text-align:
+                        center;"> <em>件</em><tt>库存{$data.total_num}件</tt>
+                       
+                        </h4></div>
+                        
+                        <h5><a href="javascript:;" onclick="orderCart_buy('{$data.id}',$('#ksid').val(),$('#amount').val())"><img src="{$skins}images/ad_ljgm.jpg" width="140" height="39"></a> &nbsp;<a href="javascript:;" onclick="orderCart_add('{$data.id}',$('#ksid').val(),$('#amount').val())"><img src="{$skins}images/ad_jrgwc.jpg" width="150" height="39"></a></h5>
+                        
+                         
+                    </div>
+                </div>
+          </div>
+          
+          <div style="width:100%; height:30px;"></div>
+          <div class="row">
+      
+          		<div class="tabs-box">
+                	<ul class="tabs">
+                    	<li><a href="#p-detail" class="active"><span>商品详情</span></a></li>
+                        <li><a href="#p-comment"><span>商品评论</span></a></li>
+                        <li><a href="#p-goods"><span>相关商品</span></a></li>
+                    </ul>
+                    
+                    <div class="tabs-item active" id="p-detail">
+                    	<div class="pd-5 d-content">{$data.content}</div>
+                    </div>
+                    <div class="tabs-item" id="p-comment">
+                    	<div class="pd-5">{include file="comment/inc_common.html"}</div>
+                    </div>
+                    <div class="tabs-item" id="p-goods">
+                    	<div class="pd-5">
+                    	{api data=t_c control=productapi fun=getByIds("$data.product_ids")}
+                          <div  class="row" style="padding-top:10px;">
+                            {foreach item=c from=$t_c}
+                            <div class="col-4-1">
+                            <div class="w98">
+                            <div class="piclist-box"> 
+                            <p><a href="{R("/index.php?m=show&id=$c.id")}"><img src="{$c.imgurl|images_site}.middle.jpg" class="img"></a></p>  
+                            <div class="postxt"><a href="{R("/index.php?m=show&id=$c.id")}">{$c.title} </a></div>
+                            <div class="posprice">￥{$c.price}</div> 
+                             
+                        </div> 
+                        </div></div>
+                       
+                            {/foreach}
+                            <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    
+                    
+                </div>
+          </div>
+       
+      </div>
+    
+     
+    
+  </div>
+  </div>
+  </div>
+  <script src="/static/js/order_cart.js"></script>
+  {include file="footer.html"} </div>
+</body>
+</html>

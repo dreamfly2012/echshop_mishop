@@ -1,0 +1,95 @@
+{include file="header.html"}
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#loading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=uploadtao&dir=product&siteid={const.SITEID}&id={$data.id}&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='/"+data.imgurl+".100x100.jpg' width='100'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+<div> 
+{include file='goldorder_shaidan/nav.html'}
+<form method='post' action='admin.php?m=goldorder_shaidan&a=save'>
+<input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+ <table class='table table-bordered' width='100%'>
+  
+  
+  <tr><td width="100">主题：</td><td><input type='text' name='title' id='title' value='{$data.title}' ></td></tr>
+  <tr><td>描述：</td><td><input type='text' name='description' id='description' value='{$data.description}' ></td></tr>
+  
+
+   <tr>
+    <td align="right">图片：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="upimg" onChange="uploadgoodsimg()">
+      </div>
+      <label  id="loading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="imgurl" id="imgurl" value="{$data.imgurl}">
+      <span id="imgShow">
+      {if $data.imgurl}
+          <img src="{$data.imgurl|images_site}.100x100.jpg">
+          {/if}
+      </span>
+      </td>
+  </tr>
+  <tr><td>评论数：</td><td><input type='text' name='comment_num' id='comment_num' value='{$data.comment_num}' ></td></tr>
+  <tr><td>浏览数：</td><td><input type='text' name='view_num' id='view_num' value='{$data.view_num}' ></td></tr>
+ 
+  {if $data}<tr><td>发布时间：</td><td>{$data.dateline|date:Y-m-d H:m}</td></tr>{/if}
+  <tr><td>内容：</td><td><script type="text/plain" id="content" name="content" >{$data.content}</script></td></tr>
+<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> </table>
+</form>
+</div> 
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+
+<script language="javascript">
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&siteid={const.SITEID}&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&siteid={const.SITEID}&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&siteid={const.SITEID}&id={$data.id}"
+		 
+};
+var editor=UE.getEditor('content',options)
+</script> 
+{include file="footer.html"}

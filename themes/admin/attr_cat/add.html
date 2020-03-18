@@ -1,0 +1,18 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='attr_cat/nav.html'}
+<form method='post' action='admin.php?m=attribute_cat&a=save'  >
+<input type='hidden' name='cat_id' value='{$data.cat_id}' >
+ <table class='table table-bordered' width='100%'>
+
+  <tr><td>名称：</td><td><input type='text' name='title' id='title' value='{$data.title}' ></td></tr>
+  <tr><td>状态：</td><td>
+  显示<input type='radio' name='status' id='status' value='1' {if $data.status eq 1} checked="checked"{/if} > 
+  隐藏<input type='radio' name='status' id='status' value='0' {if $data.status eq 0} checked="checked"{/if}></td></tr>
+  <tr><td>分组：</td><td><input type='text' name='attr_group' id='attr_group' value='{$data.attr_group}' ></td></tr>
+<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> </table>
+</form>
+</div>
+</div>
+{include file="footer.html"}

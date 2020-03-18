@@ -1,0 +1,69 @@
+{include file="header.html"}
+{include file="stat/nav.html"}
+
+<form method="get" class="row searchform">
+	<input type="hidden" name="m" value="stat_shoporder_day">
+   <input type="hidden" name="a" value="all">
+  <div class="l160">
+    <div class="input-row">
+      <label>开始</label>
+      <input type="text" value="{$smarty.get.startday}" name="startday" onClick="WdatePicker({dateFmt:'yyyyMMdd'})">
+    </div>
+  </div>
+  <div class="l160">
+    <div class="input-row">
+      <label>结束</label>
+      <input type="text" value="{$smarty.get.endday}" name="endday" onClick="WdatePicker({dateFmt:'yyyyMMdd'})">
+    </div>
+  </div>
+  <div class="l60">
+    <button type="submit" class="btn btn-row">查询</button>
+  </div>
+</form>
+<div class="pd-10">总计营业额{$total_money|intval}{if $field eq 'money'}元{else}单{/if}</div>
+<div class="index-hd">统计图</div>
+ <div style="width:90%; max-width:640px; margin:0 auto;"><canvas id="canvas" height="450" width="600" style="width:100%" ></canvas></div>
+ <div class="index-hd">详细列表</div>
+<div class="uclist"> {foreach item=c from=$list}
+  <div class="item">
+  {if $field eq 'money'}
+    <div class="content pd-5">{$c.kday}  营业额￥<span class="money">{$c.money}</span>元</div>
+    {else}
+     <div class="content pd-5">{$c.kday} 成功订单数<span class="money">{$c.ordernum}</span>单</div>
+    {/if}
+  </div>
+  {/foreach} </div>
+<div>{$pagelist}</div>
+
+ <script src="/plugin/chart/Chart.min.js"></script>
+  <script>
+		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+		var lineChartData = {
+			labels : [{$labels}],
+			datasets : [
+				{
+					label: "My First dataset",
+					fillColor : "rgba(220,220,220,0.2)",
+					strokeColor : "rgba(220,220,220,1)",
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data : [{$moneys}]
+				} 
+			]
+
+		}
+
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myLine = new Chart(ctx).Line(lineChartData, {
+			responsive: true
+		});
+	}
+
+
+	</script>
+<script language="javascript" src="/plugin/My97DatePicker/WdatePicker.js"></script>
+</div>
+{include file="footer.html"}

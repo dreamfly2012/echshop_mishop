@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+{include file="header.html"}
+<div class="main-body">
+<div class="box960">
+<div class="row">
+<div class="col-5-1"> 
+{include file="inc/user_left.html"}
+</div>
+<div class="col-5-4">
+	<ul class="nav nav-tabs">
+    	<li class="active">
+        	<a href="/index.php?m=guest&a=my">我的建议</a>
+        </li>
+    </ul>
+	<div class="guest-list">
+ {foreach item=c from=$data}
+ <div class="item" style="border:1px solid #ccc;">
+ 	<div class="hd" style="height:40px; line-height:40px; background-color:#ccc;">
+        <span style="padding-left:10px;">{if $c.title}{$c.title}{else}{$c.nickname}{/if}</span>
+        <span style="float:right; padding-right:10px;">{$c.dateline|date:Y-m-d H:i:s}</span>
+    </div>
+    <div class="tool" style="height:30px; line-height:30px; background-color:#ddd;">
+    	<div class="row" style="width:98%; float:right;">
+        <div class="col-3-1">联系电话：{$c.telephone}</div>
+        <div class="col-3-1"> 邮箱：{$c.email}</div>
+         </div>
+    </div>
+    <div class="d-content">{$c.content}</div>
+    <div class="reply"><div style="height:30px; padding-left:10px; line-height:30px; background-color:#f1f1f1">Reply:</div><div class="d-content">{$c.reply}</div>
+    </div>
+ </div>
+ {/foreach}
+ </div>
+</div>
+</div>
+</div>
+</div>
+{include file="footer.html"}
+</body>
+</html>

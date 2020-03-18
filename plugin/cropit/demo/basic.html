@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>cropit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="/plugin/jquery/jquery-2.1.3.min.js"></script>
+    <script src="../dist/jquery.cropit.js"></script>
+
+    <style>
+      .cropit-image-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-top: 7px;
+        width: 250px;
+        height: 250px;
+        cursor: move;
+      }
+
+      .cropit-image-background {
+        opacity: .2;
+        cursor: auto;
+      }
+
+      .image-size-label {
+        margin-top: 10px;
+      }
+
+      input {
+        display: block;
+      }
+
+      .export {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image-editor">
+      <input type="file" class="cropit-image-input">
+      <div class="cropit-image-preview" id="preview"></div>
+      <div class="image-size-label">
+        Resize image
+      </div>
+      <input type="range" class="cropit-image-zoom-input">
+      <button class="export">Export</button>
+      <button id="rotate">0</button>
+      <img id="res">
+    </div>
+
+    <script>
+	var rotate=0;
+      $(function() {
+        $('.image-editor').cropit({
+          imageState: {
+            src: 'http://lorempixel.com/500/400/',
+          },
+        });
+		$("#rotate").click(function(){
+			rotate++;
+			rotate=rotate>3?0:rotate;
+			$(this).html(rotate);
+			var rx=rotate*90;
+			$("#preview").css({transform:"rotate("+rx+"deg)"});
+		});
+        $('.export').click(function() {
+          var imageData = $('.image-editor').cropit('export',{rotate:rotate});
+          $("#res").attr("src",imageData);
+        });
+      });
+    </script>
+  </body>
+</html>

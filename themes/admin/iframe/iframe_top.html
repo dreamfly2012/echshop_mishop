@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>文章管理</title>
+<script language="javascript" src="/plugin/jquery/jquery.js"></script>
+<script language="javascript">
+$(document).ready(function()
+{
+	$("#topnav a:nth-child(1)").addClass('on'); 
+	$('#topnav a').click(function(){
+		$('#topnav a').removeClass('on');
+		$(this).addClass('on');
+	});
+	
+	$("#refresh_permission").click(function(){
+		 $.get($(this).attr("url"),function(data){
+			alert('刷新成功'); 
+		})
+	})
+ 
+});
+
+
+ 
+</script>
+<link href="{$skins}css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="playmsg" ></div>
+<div class="top">
+<div class="logo"><img src="{$skins}images/logo.gif" style="display:none" /></div>
+
+<div class="topnav" id="topnav">
+{if $data}
+{foreach item=c from=$data}
+<a href="{$c.link_url}" target="menu-frame">{$c.title}</a>
+{/foreach}
+{/if}
+<a href="/yun.php?m=yunapp&a=menu" target="menu-frame">云应用</a>
+</div>
+
+
+<div class="header">
+{if  ADMINGID>2}
+{$site.sitename}
+{else}
+<a href="{$appadmin}?m=sites" target="main-frame">站点管理</a>
+{/if}
+
+{$ssadmin.username} 
+<a href="{$appadmin}?m=login&a=logout" target="_parent">退出管理</a>
+<a href='javascript:;' url="{$appadmin}?m=login&a=refresh" id="refresh_permission" >刷新权限</a>
+<a href="{$appadmin}?m=iframe&a=main" target="main-frame">管理首页</a>
+<a href="/index.php" target="_blank">网站首页</a> 
+
+
+</div>
+
+
+</div>
+</body>
+</html>

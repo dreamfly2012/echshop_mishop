@@ -1,0 +1,19 @@
+<div class=" row">
+	<ul class="data-list">
+        	{foreach item=c from=$data}
+             <li {if $c.imgurl} class="hasimg"{/if}>
+            <a class="aurl" href="/index.php?m=goldorder_shaidan&a=show&id={$c.id}">
+               {if $c.imgurl} <img src="{$c.imgurl|IMAGES_SITE}.100x100.jpg"/>{/if}
+                <dl>
+                    <dt>{$c.title}</dt>
+                    <dd class="time">{$c.dateline|timeago} By {$c.nickname}</dd>
+                    <dd class="content">{$c.description}</dd>
+                  
+                </dl>
+            </a>
+        </li>
+            
+            {/foreach}
+    </ul>        
+</div>
+<div class="row">{$pagelist}</div>

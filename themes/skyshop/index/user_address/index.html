@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+     
+    <div class="box960">
+ <div class="row">
+<div class="col-6-1">{include file="inc/user_left.html"}</div>
+<div class="col-6-5">
+<ul class="nav nav-tabs">
+<li class="active"><a href="/index.php?m=user_address">收货地址管理</a></li>
+<li><a href="/index.php?m=user_address&a=add">收货地址添加</a></li>
+</ul>
+
+<table class='table table-bordered'>
+  <tr>
+   <td>id</td>
+   <td>姓名</td>
+   <td>手机</td>
+   <td>所在地区</td>   
+   <td>详细地址</td>
+    <td>邮编地址</td>
+   
+  
+   
+   <td>是否默认地址</td>
+   <td>管理</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+    <td>{$c.truename}</td>
+   <td>{$c.telephone}</td>
+  <td>{$dist_list[$c.province_id]} {$dist_list[$c.city_id]} {$dist_list[$c.town_id]}</td>
+   <td>{$c.address}</td>
+   <td>{$c.zip_code}</td>
+   <td>{if $c.isdefault}默认地址{else}设为默认地址{/if}</td>
+   <td><a href="/index.php?m=user_address&a=add&id={$c.id}">编辑</a> 
+   	<a href="javascript::" class="delete" url="/index.php?m=user_address&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+
+</div>
+</div>
+</div>
+{include file="footer.html"} </div>
+</body>
+</html>

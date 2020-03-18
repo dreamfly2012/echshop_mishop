@@ -1,0 +1,11 @@
+{include file="header.html"}
+<div class="row">
+  <div class="span12"> {include file='collect_rule/nav.html'}</div>
+ <div class="span12">
+ <form method="post" action="{$appadmin}?m=collect_rule&a=import">
+ <textarea style="width:600px; height:300px;" name="content" >{$content}</textarea>
+ <p><input type="submit" class="btn btn-success" value="导入" /></p>
+ </form>
+ </div> 
+ </div>
+{include file="footer.html"}

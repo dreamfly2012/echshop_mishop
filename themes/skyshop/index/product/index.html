@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+    <div class="box960">
+    
+    <div class="row">
+    <style>
+    .pro-flcat{margin-right:10px; background-color:#efefef;}
+	.pro-flcat .item{margin-bottom:5px;  padding-left:10px;}
+	.pro-flcat .item .hd{height:30px; font-size:16px; font-weight:bold; line-height:30px; margin-bottom:10px;}
+	.pro-flcat .cat-child{}
+	.pro-flcat .cat-child .child{display:inline-block; margin:0px 10px; margin-bottom:5px;}
+	.pro-flcat .l{height:1px; width:90%; margin:0 auto; background-color:#ddd;}
+    </style>
+    <div class="col-3-1">
+    	 <div class="pro-flcat">
+         	{get model=category data=c_data fun=children(0,MODEL_PRODUCT_ID,1)}
+            
+            {foreach item=c key=k from=$c_data}
+            <div class="item">
+            	<div class="hd"><a href="{R("/index.php?m=list&catid=$c.catid")}" >{$c.cname}</a></div>
+                 {if $c.child}
+                <div class="cat-child">
+                  {foreach item=cc from=$c.child}
+                  <div  class="child {if get('catid') eq $cc.catid}active{/if}"><a href="{R("/index.php?m=list&catid=$cc.catid")}">{$cc.cname}</a></div>
+                  {/foreach}
+                </div>
+                {/if} 
+            </div>
+            <div  class="l"></div>
+            {/foreach}
+         </div>
+    </div>
+    
+	<div class="col-3-2">
+    	<div style="position:relative; width:100%; background-color:#eee; height:350px; margin:0 auto;">
+        <ul class="slider_pic" id="slider_pic">
+          {api data=t_c control=adapi fun=listbyno("index_flash",4)}
+          {foreach item=c from=$t_c name=t1}
+          <li><a href="{$c.link1}" target="_blank"><img src="{$c.imgurl|images_site}"  /></a></li>
+          {/foreach}
+        </ul>
+        <div id="slider-num" class="slider-num"></div>
+    <div id="slider-prev" class="slider-prev"><i class="iconfont icon-zuo"></i></div>
+            <div id="slider-next" class="slider-next"><i class="iconfont icon-you"></i></div>
+      </div>
+      <script src="/plugin/jquery/cycle/jquery.cycle.all.js"></script>
+      <script>
+     	$("#slider_pic li").css("width",$("#slider_pic li").parents("div").width());
+		$("#slider_pic img").css("width",$("#slider_pic li").parents("div").width());
+		$("#slider_pic li").css("height",$("#slider_pic li").parents("div").height());
+		$('#slider_pic').cycle({
+			fx: 'scrollLeft', 
+			timeout: 5000,
+			pager:'#slider-num',
+			prev:'#slider-prev',
+			next:'#slider-next'
+		}); 
+	 
+    </script>
+    </div>
+    
+</div>
+    
+    
+     <div class="index-hd">热销产品</div>
+          
+      <div class="piclist row">
+          
+        	{api data=t_c control=productapi fun=onlist(0,8)}
+            {foreach item=c from=$t_c}
+            	<div class="item " style="width:20%">
+                <div class="pd">
+            	<div class="rel">
+                	<div class="img h220">
+                	<a href="/index.php?m=show&id={$c.id}"><img src="{$c.imgurl|images_site}" class="img"></a>
+                    </div>                  
+                </div>
+                <div class="title"><a href="/index.php?m=show&id={$c.id}">{$c.title}</a></div>
+                 <div class="price">￥{if $c.lower_price >0}{$c.lower_price}{else}{$c.price}{/if}元</div>
+                </div>
+                </div>
+            {/foreach}
+        </div>
+       
+      
+    </div>
+  </div>
+  {include file="footer.html"} </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<script language="javascript">
+function movenew()
+{
+	document.location='{$url}';
+}
+setTimeout(movenew,2000);
+
+</script>
+<body>
+<div data-role="page">
+	{assign var="tb" value="跳转中"}
+	{include file="toolbar.html"}
+    <div data-role="content" id="content"><div style="border:5px solid #ccc; border-radius:5px; padding:10px; position:absolute; top:50px; left:0px; right:0px;">{$message}，如果没有自动跳转请点击 <a href="{$url}">跳转</a></div></div>
+    {include file="footer.html"}
+</div>
+</body>
+</html>

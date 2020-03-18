@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page ">
+{include file="picture/panel.html"}
+<div class="header" style="display:block; height:50px;">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">{$data.title}</div>
+<div class="right-btn bg"><a href="/index.php?m=comment&tablename=picture&object_id={$data.id}">{$data.comment_num}</a></div>
+</div>
+<div class="main-body pd-5">
+<div class="d-title">{$data.title}</div>
+<div class="d-tool"> {$data['author']['nickname']}&nbsp;&nbsp; {$data.dateline|timeago} {if $data.userid eq $ssuser.userid}<a href="/index.php?m=picture&a=add&id={$data.id}">编辑</a>{/if}</div>
+ 
+{get data=imgsdata model=imgs fun=get("picture","$data.id")}
+{include file="imgs/inc_common.html"}
+   
+<div class="index-hd">详细内容</div> 
+<div class="d-content">{$data.content}</div>
+ 
+
+ 
+{include file="comment/inc_common.html"}
+{include file="footer.html"}
+</div>
+</body>
+</html>

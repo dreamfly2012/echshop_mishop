@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page ">
+{include file="product/panel.html"}
+<div class="header" style="display:block; height:50px;">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">{$data.title}</div>
+<div class="right-btn "><a href="/index.php?m=order_cart"><span class="iconfont icon-cart"></span></a></div>
+</div>
+<div class="main-body proShow">
+<style>
+	.proShow .title{ height:40px; line-height:40px; font-size:1em;}
+	.proShow .row-price{ margin-bottom:10px;  font-size:14px; line-height:30px;}
+	.proShow .row-price p{line-height:30px;}
+	.proShow .row-price .price{ color:#f90; font-size:16px; font-style:italic}
+	.proShow .row-price .market_price{text-decoration:line-through;font-style:italic}
+</style>
+
+{get data=imgsdata model=imgs fun=get("product","$data.id")}
+{if $imgsdata}
+{include file="imgs/inc_common.html"}
+{else}
+  
+ <div><a href="{$data.imgurl|images_site}" target="_blank"><img src="{$data.imgurl|images_site}.middle.jpg" width="100%"></a></div>
+{/if}
+<div class="row-box">
+<div class="title">{$data.title}</div>
+<div class="row-price">
+	<p class="">本店售价:<span id="goods_price" class="price">￥{$data.price}</span></p>
+ 	 <p class="">市场售价:<span class="market_price">￥{$data.market_price}</span></p>
+</div>
+
+  
+                        <!--产品属性-->
+ {get data=kslist model=product_ks fun=select(array("where"=>"object_id=$data.id"))}
+  {if $kslist} 
+  
+  <div class="kslist" id="kslist">
+  <input type="hidden" id="ksid" value="0">
+  	<div class="hd">款式：</div>
+  {foreach item=c from=$kslist}
+ 
+          <div class="item" did="{$c.id}">{$c.title} </div> 
+       
+  	
+   {/foreach}
+  </div>
+  <div class="clearfix"></div>
+  <script>
+  $(function(){
+	 $(document).on("click","#kslist .item",function(){
+		 $("#kslist .item").removeClass("active");
+		$(this).addClass("active");
+		$("#ksid").val($(this).attr("did")); 
+	 }) 
+  });
+  </script>
+  {/if}
+  <!--end 产品属性-->   
+<div class="row" style="padding:20px 0px; text-align:center">
+  	<div class="col-2-1"><span class="btn  btn-success btn-row "  href="javascript:;" onclick="orderCart_buy('{$data.id}',$('#ksid').val(),$('#amount').val())">立即购买</span></div>
+  <div class="col-2-1"><span class="btn  btn-primary  btn-row" onclick="orderCart_add('{$data.id}',$('#ksid').val(),$('#amount').val())"> <i class="iconfont icon-cart"></i> 加入购物车</span></div>
+  </div>
+  </div>
+<div class="tabs-box row-box">
+<ul class="tabs tabs-small">
+	<li class="col-3-1 "><a href="#d1" class="active"><span>详情</span></a></li>
+    <li class="col-3-1"><a href="#d2"><span>评价</span></a></li>
+    <li class="col-3-1"><a href="#d3"><span>搭配</span></a></li>
+</ul>
+<div class="tabs-item active" id="d1">
+<div class="d-content">{$data.content}</div>
+</div>
+
+<div class="tabs-item" id="d2">
+ {include file="comment/inc_common.html"} 
+</div>
+<div class="tabs-item" id="d3">
+	{api data=t_c control=productapi fun=getByIds("$data.product_ids")}
+                <div  class="row" style="padding-top:10px;">
+                {foreach item=c from=$t_c}
+                <div class="col-2-1">
+                <div class="w98">
+                <div class="piclist-box"> 
+                <p><a href="{R("/index.php?m=show&id=$c.id")}"><img src="{const.IMAGES_SITE}{$c.imgurl}.middle.jpg" class="img"></a></p>  
+                <div class="postxt"><a href="{R("/index.php?m=show&id=$c.id")}">{$c.title} </a></div>
+                <div class="posprice">￥{$c.price}</div> 
+                 
+            </div> 
+            </div></div>
+           
+                {/foreach}
+                <div class="clearfix"></div>
+</div> 
+</div>
+<div style="height:50px; width:100%;">
+
+</div>
+{include file="footer.html"}
+</div>
+ <script src="/static/js/order_cart.js"></script>
+</body>
+</html>

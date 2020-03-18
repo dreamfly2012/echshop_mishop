@@ -1,0 +1,19 @@
+<!--start 导航-->
+ 
+<div class="row">
+ 
+<ul class="breadcrumb">
+  <li><a href="/index.php">首页</a><span class="divider">/</span></li>
+  <li><a href="{R("/index.php?m=list&catid=$cat_top.catid")}">{$cat_top.cname}</a><span class="divider">/</span></li>
+  {if $cat_2nd}
+  <li><a href="{R("/index.php?m=list&catid=$cat_2nd.catid")}">{$cat_2nd.cname}</a><span class="divider">/</span></li>
+  {/if}
+  {if $cat_3nd}
+   <li><a href="{R("/index.php?m=list&catid=$cat_3nd.catid")}">{$cat_3nd.cname}</a><span class="divider">/</span></li>
+  {/if}
+  <li class="active">{$data.title|cutstr:60}</li>
+      
+</ul>
+</div>
+ 
+<!--END 导航-->

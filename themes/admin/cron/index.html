@@ -1,0 +1,39 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+<ul class="nav nav-tabs">
+<li  class="active"><a href="{const.APPADMIN}?m=cron">计划管理</a></li>
+<li><a href="{const.APPADMIN}?m=cron&a=add">计划添加</a></li>
+</ul>
+<table class="table table-bordered" width="100%">
+    <tr>
+        <td>ID</td>
+        <td>名称</td>
+        <td>执行事件</td>
+        <td>开始时间</td>
+        <td>结束时间</td>
+        <td>时间间隔</td>
+        <td>上次执行时间</td>
+        <td>下次执行时间</td>
+        <td>操作</td>
+    </tr>
+    {foreach item=c from=$data}
+    <tr>
+        <td>{$c.id}</td>
+        <td>{$c.title}</td>
+        <td>{$c.url}</td>
+        <td>{$c.start_time|date:Y-m-d}</td>
+        <td>{$c.end_time|date:Y-m-d}</td>
+        <td>{$c.minute}分</td>
+         <td>{$c.last_time|date:Y-m-d H:i:s}</td>
+         <td>{$c.next_time|date:Y-m-d H:i:s}</td>
+        <td><a href="{const.APPADMIN}?m=cron&a=add&id={$c.id}">编辑</a></td>
+    </tr>
+    {/foreach}
+    
+</table>
+
+
+</div>
+</div>
+{include file="footer.html"}

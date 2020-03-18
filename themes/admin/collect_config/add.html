@@ -1,0 +1,20 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file="collect_rule/nav.html"}
+<form method='post' action='admin.php?m=collect_config&a=save'>
+<input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+ <table class='table table-bordered' width='100%'>
+  <tr>
+    <td>用户：</td><td><textarea name="pi_user" id="pi_user" style=" width:600px; height:100px;">{$data.pi_user}</textarea></td></tr>
+  <tr>
+    <td>回复内容：</td><td><textarea name="pi_content" id="pi_content"  style=" width:600px; height:100px;">{$data.pi_content}</textarea></td></tr>
+  <tr>
+    <td>密码：</td><td><input type='text' name='pwd' id='pwd' value='{$data.pwd}' ></td></tr>
+  <tr><td>在线人数：</td><td><input type='text' name='online_num' id='online_num' value='{$data.online_num}' ></td></tr>
+  <tr><td>执行计划：</td><td><input type='text' name='pi_cron' id='pi_cron' value='{$data.pi_cron}' ></td></tr>
+<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> </table>
+</form>
+</div>
+</div>
+{include file="footer.html"}

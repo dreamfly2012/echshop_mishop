@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page">  
+  <div class="header">
+    <div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+    <div class="title">购物车</div>
+     
+  </div>
+  <div class="main-body">
+ 
+  	<div class="row-box mgt-10">
+    <div class="cart-list">
+    {if !$list}
+    <h3  >暂无商品</h3>
+    {else} 
+    {foreach item=c from=$list}
+      <div class="row item orderCart_row">
+       
+        
+            <div class="g-sd1">
+            <a href="{R("/index.php?m=show&id=$c.object_id")}" ><img src="{$c.imgurl|images_site}.100x100.jpg" width="50"> </a>
+            </div>
+            <div class="g-mn1">
+                <div class="g-mn1c">
+                    <div class="title"><a href="{R("/index.php?m=show&id=$c.object_id")}" >{$c.title}</a></div>
+                    
+                  
+                  <div>{if $c.attr}<span style="color:red">{$c.attr}</span>{/if}  ￥{$c.price}元</div>
+                  <div class="tool orderCartNum_row">
+                  	<span><a href="javascript:;" class="orderCartNum_minus" oid="{$c.id}"><i class="iconfont icon-minus"></i></a></span> 
+        			<span><input class="orderCartNum" value="{$c.amount}" readonly></span> 
+                    <span> <a href="javascript:;" class="orderCartNum_plus" oid="{$c.id}"><i class="iconfont icon-plus "  ></i></a></span>
+           
+        	<a href="javascript:;" class="right cart_delete" url="/index.php?m=order_cart&a=delete&id={$c.id}">删除</a>
+         </div>
+                 </div>
+             </div>
+           
+          
+        
+       
+      </div>
+      {/foreach}
+      {/if}
+       </div>
+    <div style="height:40px; line-height:40px;">
+    	<span>共 <span id="orderCart_total_num">{$total_num}</span> 件 </span>
+        <span> 总价：￥<span id="orderCart_totalmoney">{$total_money}</span>元</span>
+        <div class="right">  &nbsp;&nbsp;<a href="{R("/index.php?m=order&a=confirm")}" class="btn btn-large btn-success">确认购买</a></div>
+        <div class="clearfix"></div>
+      </div>
+  </div>
+  </div>
+  <script src="/static/js/order_cart.js"></script>
+  {include file="footer.html"} </div>
+</body>
+</html>

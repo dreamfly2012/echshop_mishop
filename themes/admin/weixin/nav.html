@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs">
+<li {if get('m') eq 'weixin' && get('a') eq 'default'} class="active"{/if}><a href="{$appadmin}?m=weixin">微信管理</a></li>
+<li {if get('m') eq 'weixin' && get('a') eq 'add'} class="active"{/if}><a href="{$appadmin}?m=weixin&a=add">微信添加</a></li>
+<li {if get('m') eq 'weixin_command' && get('a') eq 'default'} class="active"{/if}><a href="{$appadmin}?m=weixin_command">微信命令管理</a></li>
+<li {if get('m') eq 'weixin_command' && get('a') eq 'add'} class="active"{/if}><a href="{$appadmin}?m=weixin_command&a=add">微信命令添加</a></li>
+<li  {if get('m') eq 'weixin_user'} class="active"{/if}><a href="{$appadmin}?m=weixin_user">微信用户</a></li>
+<li {if get('m') eq 'weixin_reply'} class="active"{/if}><a href="{$appadmin}?m=weixin_reply">微信回复</a></li>
+</ul>

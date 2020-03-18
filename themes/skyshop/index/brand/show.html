@@ -1,0 +1,31 @@
+<html>
+{include file="head.html"}
+<body>
+
+<div class="page">
+{include file="header.html"}
+<div class="main-body">
+<div class="box960">
+<div class="col-7-5">
+	<div><h1 class="text-center">{$data.title}</h1></div>
+ <div class="d-content">{$data.content}</div>
+ </div>
+ 
+ <div class="col-7-2">
+ 	<div class="skypanel" style="margin-top:30px;">
+    	<div class="hd">品牌推荐</div>
+        <ul class="nav-stacked">
+        {get data=t_c model=brand fun=select()}
+        {foreach item=c from=$t_c}
+        <li><a href="{R("/index.php?m=brand&a=show&id=$c.id")}">{$c.title}</a></li>
+        {/foreach}
+        </ul>
+    </div>
+ </div>
+</div>
+</div>
+{include file="footer.html"}
+</div>
+
+</body>
+</html>

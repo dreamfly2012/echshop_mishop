@@ -1,0 +1,48 @@
+<form method="post" id="login-form" action="/index.php?m=login&a=loginSave"  class="form-horizontal " autocomplete="off">
+<style>
+	.reg-table td{min-height:60px; border:0px;}
+	.rt1{height:60px; width:60px; text-align:right;}
+</style>
+<table class="table table-border-row reg-table">
+<tr>
+	<td class="rt1">用户:</td>
+    <td><input type="text" id="inputEmail" class="input-text" name="username" placeholder="请输入用户名"  ></td>
+</tr>
+ 
+<tr>
+	<td class="rt1">密码</td>
+    <td><input type="password" id="inputPassword" class="input-text" name="password" placeholder="请输入密码"><br>
+    	<div id="login-error" style="color:red"></div>
+    </td>
+</tr>
+  
+<tr><td class="rt1">
+</td>
+<td>
+ 
+     <button type="button" id="login-submit" class="btn btn-larger btn-success">登陆</button> 
+     <a href="/index.php?m=register&a=reg" class="btn btn-larger btn-default">注册账号</a></div>
+ 
+</td>
+</tr> 
+</table>
+
+    
+ 
+</form>
+   <script type="text/javascript" class="jsa-text">
+$(function(){
+	$(document).on("click","#login-submit",function(){		
+		$.post("/index.php?m=login&a=loginSave&ajax=1",$("#login-form").serialize(),function(data){
+			if(data.error==1){
+				skyToast(data.message);
+			}else{
+				skyToast("登陆成功");
+				setTimeout(function(){
+					window.location.reload();
+				},700);
+			}
+		},"json");
+	});
+});
+</script>    

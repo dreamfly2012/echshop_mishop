@@ -1,0 +1,19 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='pm/nav.html'}
+<form method='post' action='admin.php?m=pm&a=save'>
+ <table class='table table-bordered' width='100%'>
+<input type='hidden' name='id' value='{$data.id}' >
+  <tr><td>用户id：</td><td><input type='text' name='userid' id='userid' value='{$data.userid}' ></td></tr>
+  <tr><td>私信类型 1接收 2自己发的：</td><td><input type='text' name='type_id' id='type_id' value='{$data.type_id}' ></td></tr>
+  <tr><td>收发对象：</td><td><input type='text' name='t_userid' id='t_userid' value='{$data.t_userid}' ></td></tr>
+  <tr><td>时间：</td><td><input type='text' name='dateline' id='dateline' value='{$data.dateline}' ></td></tr>
+  <tr><td>状态 1未读 2已读 ：</td><td><input type='text' name='status' id='status' value='{$data.status}' ></td></tr>
+  <tr><td>内容：</td><td><input type='text' name='content' id='content' value='{$data.content}' ></td></tr>
+  <tr><td>siteid：</td><td><input type='text' name='siteid' id='siteid' value='{$data.siteid}' ></td></tr>
+<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> </table>
+</form>
+</div>
+</div>
+{include file="footer.html"}

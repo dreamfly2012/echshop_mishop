@@ -1,0 +1,119 @@
+body {
+    font: 14px / 1.5 "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
+    color: #333;
+    background-color: #fff;
+    min-width: 1226px;
+}
+
+
+/**
+*border-top-color
+***/
+.btc-1{border-top-color: #ffac13;}
+.btc-2{border-top-color: #83c44e;}
+.btc-3{border-top-color: #2196f3}
+.btc-4{border-top-color: #e53935}
+.btc-5{border-top-color: #00c0a5}
+.btc-6{border-top-color: #ffac13}
+.btc-7{border-top-color: #83c44e}
+.btc-8{border-top-color: #2196f3;}
+.btc-9{border-top-color: #e53935;}
+.btc-10{border-top-color: #00c0a5;}
+/*********产品列表************/
+.prolist .hd{
+	    position: relative;
+    height: 58px;
+    -webkit-font-smoothing: antialiased;
+}
+.prolist .hd .title{
+	    margin: 0;
+    font-size: 22px;
+    font-weight: 200;
+    line-height: 58px;
+    color: #333;
+}
+
+.prolist .hd .more {
+    position: absolute;
+    top: 0;
+    right: 10px;
+	
+}
+.prolist a{text-decoration:none;}
+.prolist .hd .more .more-link {
+    font-size: 16px;
+    line-height: 58px;
+    color: #424242;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+}
+.prolist .hd .more .more-link:hover{color:#ff6700}
+.prolist .hd .more .more-link:hover .iconfont{background:#ff6700}
+.prolist .hd .more .more-link .iconfont {
+    width: 12px;
+    height: 12px;
+    padding: 4px;
+    margin-left: 8px;
+    border-radius: 16px;
+    font-size: 12px;
+    line-height: 12px;
+    background: #b0b0b0;
+    color: #fff;
+    vertical-align: 1px;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.prolist .item{    
+	height: 300px;
+    padding-top: 39px;
+    border-top-width: 1px;
+    border-top-style: solid;
+	border-top-color:#fff;
+    text-align: center;
+    background: #fafafa;
+    -webkit-transition: all 0.6s;
+    transition: all 0.6s;	
+	float: left;
+    width: 234px;
+	margin-right: 14px;
+	margin-bottom:10px;
+}
+
+
+.prolist .item .img{
+	    display: block;
+    width: 160px;
+    margin: 0 auto 22px;
+}
+
+.prolist .item .img     img{
+	    width: 160px;
+    height: 160px;
+}
+
+.prolist .item .title{
+    margin: 0 20px 3px;
+    font-size: 14px;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;	
+}
+
+.prolist .item .desc{
+ 
+    height: 18px;
+    margin: 0 20px 12px;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    _zoom: 1;
+    color: #b0b0b0;
+}
+
+.prolist .item .price{
+	    margin: 0;
+    color: #ff6709;	
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page ">
+{include file="goldgoods/panel.html"}
+ 
+
+<div class="header" >
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">{$data.title}</div>
+<div class="right-btn panel-btn"><span class="iconfont icon-menu"></span></div>
+</div>
+
+<div class="main-body pd-5">
+
+<table   class="table table-bordered">
+<tr>
+<td>
+<div class="relative">
+<img src="{$data.imgurl|images_site}.middle.jpg" alt="{$data.title}" title="{$data.title}" style="width:100%;">
+</div>
+</td>
+
+</tr>
+ <tr><td width="53%">{$data.title} </td></tr>
+ <tr><td style="line-height:30px;">所需金币：{$data.gold}个 {if $data.price}+￥{$data.price}{/if}<br> 
+ 	 市场售价:<span style="text-decoration:line-through;">{$data.market_price}</span></p></td></tr>
+     {if $data.attr}
+<tr><td>
+	<!--产品属性-->
+  <div>
+  {foreach item=c from=$data.attr}
+ 
+      {if $c.attr_type neq 1}        
+      <div class="row">
+       <input type="hidden" class="orderCart_attr_value" name="attr[{$c.id}]" attr_name="{$c.title}" id="orderCart_attr_{$c.id}" />
+      	<div class="btn-group orderCart_attr_item" style="margin-bottom:10px;" attr_id={$c.id}>
+       		<span class="btn btn-default">{$c.title}</span>   
+            {foreach item=a_c key=k from=$data_attr[$c[id]][value]}
+            <span class="btn  orderCart_attr" val="{$a_c}" price="{$data_attr[$c[id]][price][$k]}" >{if $c.input_type eq 1}{$a_c}{else}{$c[select][$a_c]}{/if}</span>
+            {/foreach}    
+             
+        </div>
+        </div>
+      {/if}
+  	
+   {/foreach}
+  </div>
+  <!--end 产品属性-->
+</td></tr>
+  {/if}   
+<tr>
+  <td>
+ <div class="pd-10">
+  <a href="javascript:;"  onClick="exchange({$data.id})" class="btn btn-row btn-success">立即兑换</a>
+  </div>
+   </td>
+</tr>
+ 
+ 
+ 
+</table>
+<div class="tabs-box ">
+<ul class="tabs tabs-small">
+	<li class="col-2-1"  ><a href="#d1" class="active"><span>详情</span></a></li>
+    <li class="col-2-1"><a href="#d2"><span>评价</span></a></li>
+     <div class="clearfix"></div>
+</ul>
+<div class="tabs-item active" id="d1">
+<div class="d-content">{$data.content}</div>
+</div>
+
+<div class="tabs-item" id="d2">
+<div class="pd-5">{include file="comment/inc_common.html"}</div>
+</div>
+ 
+<div style="height:50px; width:100%;">
+
+</div>
+{include file="footer.html"}
+</div>
+</body>
+</html>

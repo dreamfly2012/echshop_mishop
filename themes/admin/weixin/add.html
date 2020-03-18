@@ -1,0 +1,239 @@
+{include file="header.html"}
+<div class="row">
+  <div class="span12"> {include file='weixin/nav.html'}
+    <form method='post' action='admin.php?m=weixin&a=save'>
+      <input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+      <table class='table table-bordered' width='100%'>
+        <tr>
+          <td>微信token：</td>
+          <td><input type='text' name='token' id='token' value='{$data.token}' ></td>
+        </tr>
+        <tr>
+          <td>微信名：</td>
+          <td><input type='text' name='title' id='title' value='{$data.title}' ></td>
+        </tr>
+        <tr>
+        	<td>微信用户：</td>
+            <td><input type="text" name="wx_username" value="{$data.wx_username}" /></td>
+        </tr>
+        
+        <tr>
+        	<td>微信密码：</td>
+            <td><input type="text" name="wx_pwd" value="{$data.wx_pwd}" /></td>
+        </tr>
+        
+        <tr>
+          <td>状态：</td>
+          <td> 验证
+            <input type="radio" name="status" value="0" {if $data.status neq 1} checked="checked"{/if} />
+            运营
+            <input type="radio" name="status" value="1"  {if $data.status eq 1} checked="checked"{/if} /></td>
+        </tr>
+        
+        <tr>
+        	<td>appId</td>
+        	<td><input type="text" name="appid" value="{$data.appid}" /></td>
+        </tr>
+        
+        <tr>
+        	<td>appKey</td>
+            <td><input type="text" name="appkey" value="{$data.appkey}" /></td>
+        </tr>
+        
+         <tr>
+        	<td>enKey</td>
+            <td><input type="text" name="enkey" value="{$data.enkey}" /></td>
+        </tr>
+        
+        
+       <tr>
+        	<td>原始id</td>
+            <td><input type="text" name="ysid" value="{$data.ysid}" /> (例：gh_962d3a8a3cf3)</td>
+        </tr>
+        
+        {if $data.dateline}
+        <tr>
+          <td>添加时间：</td>
+          <td>{$data.dateline|date:Y-m-d H:i:s}</td>
+        </tr>
+        {/if}
+        <tr>
+          <td align="right">分类：</td>
+          <td><select name="catid" class="w150">
+              <option value="0">请选择</option>
+              
+    {foreach item=c from=$cat_list}
+                
+              <option value="{$c.catid}" {if $data.catid eq $c.catid or get('catid') eq $c.catid} selected="selected"{/if}>
+              {$c.cname}
+              </option>
+              
+                {foreach item=c_2 from=$c.child}
+                	
+              <option value="{$c_2.catid}" {if $data.catid eq $c_2.catid or get('catid') eq $c_2.catid} selected="selected"{/if} class="o_c_2">
+              |__{$c_2.cname}
+              </option>
+              
+                    {foreach item=c_3 from=$c_2.child}
+                    
+              <option value="{$c_3.catid}" {if $data.catid eq $c_3.catid or get('catid') eq $c_3.catid} selected="selected"{/if} class="o_c_3">
+               |____{$c_3.cname}
+              </option>
+              
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+    
+            </select></td>
+        </tr>
+        
+        <tr>
+    <td align="right">Logo：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="uplogo" onChange="uploadLogo()">
+      </div>
+      <label  id="logo-loading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="logo" id="logo" value="{$data.logo}">
+      <span id="logoShow">
+      {if $data.logo}
+      <img src="/{$data.logo}">
+      {/if}
+      </span>
+      </td>
+  </tr>
+  
+  <tr>
+    <td align="right">二维码：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="upimg" onChange="uploadgoodsimg()">
+      </div>
+      <label  id="loading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="imgurl" id="imgurl" value="{$data.imgurl}">
+      <span id="imgShow">
+      {if $data.imgurl}
+      <img src="/{$data.imgurl}">
+      {/if}
+      </span>
+      </td>
+  </tr>
+        
+        <tr><td>截图</td><td>
+		 
+		<script id="imgsdata" name="imgsdata">{$data.imgsdata}</script></td></tr>
+        <tr>
+          <td></td>
+          <td><input type='submit' value='保存' class='btn btn-success'></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+
+<script language="javascript">
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&siteid={const.SITEID}&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&siteid={const.SITEID}&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&siteid={const.SITEID}&id={$data.id}",
+		toolbars:[['insertimage']]
+		 
+};
+var editor=UE.getEditor('imgsdata',options)
+</script>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#loading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=upload&dir=product&siteid={const.SITEID}&id={$data.id}&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='/"+data.imgurl+"' width='100'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+	
+	
+	function uploadLogo()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#logo-loading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=upload&dir=product&siteid={const.SITEID}&id={$data.id}&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'uplogo',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#logoShow").html("<img src='/"+data.imgurl+"' width='100'>");
+							 $("#logo").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+{include file="footer.html"}

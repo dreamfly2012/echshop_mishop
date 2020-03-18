@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>跳转中</title>
+</head>
+ 
+<body style="padding:0px; margin:0px;">
+<script language="javascript">
+function movenew()
+{
+	window.location.href="{$url}";
+}
+setTimeout(movenew,2000);
+
+</script>
+ 
+
+<div style="height:40px; line-height:40px; font-size:20px; text-align:center; background-color:#f30; color:#fff;">跳转页面</div>
+
+<div style="margin:10px auto; width:320px; padding:20px; line-height:20px; background-color:#fafafa;">
+	 {$message}，如果没有自动跳转请点击 <a href="javascript:gourl('{$url}')">跳转</a> 
+</div>
+</body>
+</html>

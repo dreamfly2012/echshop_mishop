@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+<body> 
+<div class="page">
+	{include file="u_header.html"}
+    <div class="main-body">
+    <div class="box960">
+<div class="row">
+<div class="col-6-1">{include file="user_left.html"}</div>
+<div class="col-6-5">
+{include file="msg_nav.html"}
+<h2>发送私信</h2>
+<form method="post" action="index.php?m=pm&a=send&op=post">
+<table  class="table table-bordered">
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>发送私信</td>
+  </tr>
+  <tr>
+    <td width="8%" align="right">昵称：</td>
+    <td width="92%">
+      <input name="nicknames" type="text" id="nicknames" class="h30" style="width:200px;"> <label for="nicknames">发送多个用@隔开</label></td>
+    </tr>
+  <tr>
+    <td align="right">内容：</td>
+    <td><label for="content"></label>
+      <textarea name="content" id="content" cols="45" rows="5" style="width:400px; height:100px;"></textarea></td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td><input type="submit" name="button" id="button" value="发送" class="btn btn-success"></td>
+    </tr>
+</table>
+
+</form>
+
+</div>
+ 
+</div>
+
+
+
+</div>{include file="footer.html"}
+</div>
+</body>
+</html>

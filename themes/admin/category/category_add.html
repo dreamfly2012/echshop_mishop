@@ -1,0 +1,163 @@
+{include file='header.html'}
+
+{include file="category/category_nav.html"}
+<div class="rbox">
+<form method="post" action="{$appadmin}?m=category&a=save">
+<input type="hidden" name="catid" value="{$data.catid}">
+{if $parent}
+<input type="hidden" name="pid" value="{$parent.catid}" />
+{/if}
+<table width="100%" class="table table-bordered">
+  
+  <tr>
+    <td >{$lang.model}：</td>
+    <td > 
+      {if !$parent}<select name="model_id" id="model_id" {if $data.model_id} disabled="disabled"{/if}>
+      {foreach item=m key=k from=$modellist}
+      <option value="{$k}" {if $data.model_id eq $k or $model_id eq $k} selected="selected"{/if} >{$m}</option>
+      {/foreach}
+      </select>
+      {else}
+      {$modellist.$parent.model_id}
+      {/if}
+       </td>
+  </tr>
+  {if $catlist} 
+  <tr>
+      <td>上级分类：</td>
+      <td><select name="pid" >
+      <option value="0">请选择</option>
+      	{foreach item=c from=$catlist}
+                <option value="{$c.catid}" {if $data.pid eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                {foreach item=c_2 from=$c.child}
+                	<option value="{$c_2.catid}" {if $data.pid eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                    {foreach item=c_3 from=$c_2.child}
+                    <option value="{$c_3.catid}" {if $data.pid eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+      </select></td>
+  </tr>
+  
+  {/if}
+   
+  <tr>
+    <td>{$lang.name}：</td>
+    <td><label for="cname"></label>
+      <input name="cname" type="text" id="cname" value="{$data.cname}"></td>
+  </tr>
+  
+  <tr>
+    <td>{$lang.status}：</td>
+    <td><input name="status" type="radio" id="radio2" value="1" {if $data.status neq 2} checked="checked" {/if} />
+      {$lang.show} 
+        <input type="radio" name="status" id="radio3" value="2" {if $data.status eq 2} checked="checked" {/if} />
+        {$lang.hide}</td>
+  </tr>
+  
+  <tr>
+    <td>{$lang.sort}：</td>
+    <td><input name="orderindex" type="text" id="orderindex" value="{if $data}{$data.orderindex}{else}9999{/if}"></td>
+  </tr>
+   
+  
+  <tr>
+    <td>seo{$lang.title}：</td>
+    <td><textarea name="title" id="title"  class="w600 h100">{$data.title}</textarea></td>
+  </tr>
+  <tr>
+    <td>seo{$lang.keywords}：</td>
+    <td><textarea name="keywords" id="keywords"  class="w600 h100">{$data.keywords}</textarea></td>
+  </tr>
+  <tr>
+    <td>seo{$lang.description}：</td>
+    <td><textarea name="description" id="description"  class="w600 h100">{$data.description}</textarea></td>
+  </tr>
+  
+  <tr>
+	<td>属性类型：</td>
+    <td><select name="attr_cat_id">
+    <option value="0">请选择</option>
+    	{foreach item=c key=k from=$attr_cat}
+        <option value="{$k}" {if $data.attr_cat_id eq $k} selected="selected"{/if}>{$c}</option>
+        {/foreach}
+    </select></td>
+</tr>
+    <tr>
+    <td align="right">图标：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="upimg" onChange="uploadgoodsimg()">
+      </div>
+      <label  id="loading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="logo" id="imgurl" value="{$data.logo}">
+      <span id="imgShow">
+      {if $data.logo}
+      <img src="{$data.logo|IMAGES_SITE}">
+      {/if}
+      </span>
+      </td>
+  </tr>
+  <tr>
+    <td>{$lang.list_tpl}：</td>
+    <td><input name="list_tpl" type="text" id="list_tpl" class="w600" value="{$data.list_tpl}" /></td>
+  </tr>
+  <tr>
+    <td>{$lang.show_tpl}：</td>
+    <td><input name="show_tpl" type="text" id="show_tpl" class="w600" value="{$data.show_tpl}" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" name="button" id="button" value="{$lang.submit}" class="btn" /></td>
+  </tr>
+  
+</table>
+</form>
+</div>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#loading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=upload&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='"+IMAGES_SITE+data.imgurl+"' width='50'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+{include file='footer.html'}

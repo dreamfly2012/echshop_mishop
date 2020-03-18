@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+	<div class="header">
+<a  class="left-btn" href="/index.php?m=user"><span class="iconfont icon-back"></span></a>
+<div class="title">收支记录</div>
+</div> 
+
+  <div class="main-body">
+     <div class="uclist"> {foreach item=c from=$list}
+      <div class="item">
+        <div class="hd"> {$c.dateline|date:Y-m-d H:i:s} {$config['pay_log_ispay'][$c[ispay]]}  ￥<span class="money">{$c.money}</span>元</div>
+        <div class="content">{$c.content}</div>
+      </div>
+      {/foreach} </div>
+    <div>{$pagelist}</div>
+    <div>{$pagelist}</div>
+  </div>
+  {include file="footer.html"}  
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!--评论开始-->
+<div style="height:5px; width:100%;"></div>
+<div  style="margin-bottom:10px;" >
+<form method="post" id="comment_form"  >
+<input type="hidden" name="pid" id="comment_pid" value="0" />
+<input type="hidden" name="tablename" value="{$comment_tablename}">
+ 
+<input type="hidden" name="object_id" id="comment_object_id" value="{$comment_object_id}" />
+ 
+<input type="hidden" name="f_userid" id="comment_f_userid" value="{$comment_f_userid}" />
+ 
+<input type="hidden" name="referer" id="comment_referer" value="{if $comment_referer}{$comment_referer}{else}{$smarty.server.REQUEST_URI}{/if}" />
+ <textarea name="content" id="comment_content"  style="width:90%; height:60px;"></textarea>
+    
+   <div style="clear:both; padding-top:10px; height:50px;"> <input type="button" name="button" id="comment_submit" value="评论" class="btn btn-success btn-larger" /> 
+   </div>
+   
+
+</form>
+</div>
+<div class="clearfix"></div>
+
+
+<div id="jscomment_list">
+
+</div> 
+<script language="javascript">
+
+ 
+function commentlist(url){
+	$.get(url,function(data){
+		$("#jscomment_list").html(data);
+		$(".comment_sortkey").each(function(i){
+					$(this).html(i+1);
+		});
+	})
+}
+
+$(function(){
+	var comment_insubmit=false;
+	commentlist("/index.php?m=comment&a=list&tablename={$comment_tablename}&object_id={$comment_object_id}");
+	$(document).on("click","#comment_list .pages a",function(e){
+		e.preventDefault();
+		commentlist($(this).attr("href"));
+	});
+	
+	
+	
+	$("#comment_submit").on("click",function(){
+		if(comment_insubmit) return false;
+		comment_insubmit=true;
+		setTimeout(function(){ comment_insubmit=false; },1000);
+		$.post("/index.php?m=comment&a=insert&ajax=1",$("#comment_form").serialize(),function(data){
+			if(data.error==0){
+				commentlist("/index.php?m=comment&a=list&tablename={$comment_tablename}&object_id={$comment_object_id}");
+				$("#comment_content").val("");
+				if($("#comment_none")){
+					$("#comment_none").remove();
+				}
+				
+				skyToast("评论成功");
+			}else{
+				
+				if(data.nologin !=undefined){
+					loginbox();
+				}else{
+					
+					alert(data.message);
+				}
+			}
+		},"json")
+	})
+	
+	$(document).on("click",".comment_reply_btn",function(){
+		
+		$("#comment_pid").val($(this).attr("pid"));
+		$("#comment_content").focus().val($(this).attr("reply_text") + " ");
+		//editor.setContent($(this).attr("reply_text") +":");
+	});
+
+});
+</script>

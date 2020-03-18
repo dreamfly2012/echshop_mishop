@@ -1,0 +1,38 @@
+<form method='post' action='/index.php?m=user_address&a=save'>
+<input type='hidden' name='id' id='id' value='{$data.id}' >
+ <table class='table noborder' width='100%'>
+ 
+  <tr><td width="70">所在地区</td><td style="line-height:40px;">
+  <select name="province_id" class="w100" id="ajax_province_id">
+  	<option value="0">请选择</option>
+    {foreach item=c key=k from=$province_list}
+    <option value="{$k}" {if $data.province_id eq $k} selected{/if}>{$c}</option>
+    {/foreach}
+  </select>
+  
+  <br />
+  <select name="city_id" class="w100" id="ajax_city_id">
+  	<option value="0">请选择</option>
+    {foreach item=c key=k from=$city_list}
+    <option value="{$k}"  {if $data.city_id eq $k} selected{/if}>{$c}</option>
+    {/foreach}
+  </select>
+  <br />
+  <select name="town_id" class="w100" id="ajax_town_id">
+  	<option value="0">请选择</option>
+    {foreach item=c key=k from=$town_list}
+    <option value="{$k}"  {if $data.town_id eq $k} selected{/if}>{$c}</option>
+    {/foreach}
+  </select>
+  
+  </td></tr>
+  <tr><td >详细地址：</td><td  ><input type='text' name='address' id='address' value='{$data.address}' ></td></tr>
+  <tr><td>手机：</td><td><input type='text' name='telephone' id='telephone' value='{$data.telephone}' ></td></tr>
+  <tr><td>姓名：</td><td><input type='text' name='truename' id='truename' value='{$data.truename}' ></td></tr>
+ 
+  <tr><td>邮编地址：</td><td><input type='text' name='zip_code' id='zip_code' value='{$data.zip_code}' ></td></tr>
+  
+   
+   
+<tr><td></td><td><input type='button' id="save_address" value='保存' class='btn btn-larger btn-success'></td></tr> </table>
+</form>

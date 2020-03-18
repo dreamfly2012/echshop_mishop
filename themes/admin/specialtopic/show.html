@@ -1,0 +1,18 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='specialtopic/nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr><td>id：</td><td>{$data.id}</td></tr>
+  <tr><td>名称：</td><td>{$data.title}</td></tr>
+  <tr><td>关键字：</td><td>{$data.keywords}</td></tr>
+  <tr><td>简介：</td><td>{$data.info}</td></tr>
+  <tr><td>状态：</td><td>{$data.status}</td></tr>
+  <tr><td>添加时间：</td><td>{$data.dateline}</td></tr>
+  <tr><td>开始时间：</td><td>{$data.starttime}</td></tr>
+  <tr><td>结束时间：</td><td>{$data.endtime}</td></tr>
+ </table>
+
+</div>
+</div>
+{include file="footer.html"}

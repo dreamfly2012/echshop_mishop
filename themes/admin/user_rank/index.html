@@ -1,0 +1,28 @@
+{include file="header.html"}
+ 
+{include file='user_rank/nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+   <td>等级名称</td>
+   <td>等级标识</td>
+   <td>最低积分</td>
+   <td>最高积分</td>
+   <td>折扣</td>
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.rank_name}</td>
+   <td><img src="{$c.logo|IMAGES_SITE}" width="30" /></td>
+   <td>{$c.min_grade}</td>
+   <td>{$c.max_grade}</td>
+   <td>{$c.discount}%</td>
+<td><a href="admin.php?m=user_rank&a=add&id={$c.id}">编辑</a> <a href="admin.php?m=user_rank&a=show&id={$c.id}">查看</a> <a href="javascript:;" class="delete" url="admin.php?m=user_rank&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+ 
+{include file="footer.html"}

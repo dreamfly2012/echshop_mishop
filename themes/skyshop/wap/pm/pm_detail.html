@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+<body> 
+<div class="page">
+	{include file="u_header.html"}
+    <div class="main-body">
+    <div class="box960">
+<div class="row">
+<div class="col-6-1">{include file="user_left.html"}</div>
+<div class="col-6-5">
+{include file="msg_nav.html"}
+ 
+<p class="breadcrumb">我和 {$t_nickname} 的对话 <a href="index.php?m=pm">返回私信</a>   共{$rscount}条私信</p>
+<form method="post" id="pm_form" action="index.php?m=pm&a=send&op=post" style="margin-bottom:10px">
+<input name="nicknames" type="hidden" id="nicknames"   value="{$t_nickname}">
+<table class="table table-bordered">
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>发送私信给：{$t_nickname}</td>
+  </tr>
+
+  <tr>
+    <td align="right">内容：</td>
+    <td><label for="content"></label>
+      <textarea name="content" id="content" cols="45" rows="5" style="width:400px; height:100px;"></textarea></td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td><input type="submit" name="button" id="pm_submit" value="发送" class="btn"></td>
+    </tr>
+</table>
+
+</form>
+
+{if $pmlist}  
+<table width="100%" class="table table-bordered"> 
+{foreach item=msg  from=$pmlist}
+
+<tr>
+<td width="120" align="center" style="line-height:30px;">{if $msg.type_id eq 1}<img src="{const.IMAGES_SITE}{$msg.t_user_head}.100x100.jpg" style="width:60px; height:60px;"><br>{$msg.t_nickname}{/if}</td>
+<td width="853">{$msg.content}<br />{$msg.dateline|date:Y-m-d H@i@s}  &nbsp;&nbsp;&nbsp;
+<a href="javascript:;" class="delete" url="index.php?m=pm&a=delete_pm&id={$msg.id}">删除</a>  </td>
+<td width="60">{if $msg.type_id eq 2}<img src="{const.IMAGES_SITE}{$msg.user_head}.100x100.jpg" style="width:60px; height:60px;"><br>{$msg.nickname}{/if}</td>
+</tr>
+
+
+{/foreach}
+<p>{$pagelist}</p>
+</table>
+{else}<h2>暂无通知</h2>
+{/if}
+ 
+{if $pagelist}
+{$pagelist}
+{/if}
+
+</div>
+ 
+</div>
+
+
+
+</div>{include file="footer.html"}
+</div>
+</body>
+</html>

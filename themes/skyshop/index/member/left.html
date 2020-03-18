@@ -1,0 +1,39 @@
+	<div  >
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+    <td colspan="3"><a href="/index.php?m=member&userid={$user.userid}"><img src="{if $user.userpic}{$user.userpic|IMAGES_SITE}{else}/static/images/user_head.jpg.100x100.jpg{/if}" style="width:100%;  " /></a></td>
+    
+    </tr>
+    <tr><td colspan="3" class="center"> <a href="/index.php?m=member&userid={$user.userid}">{$user.nickname}</a>  </td></tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>{$user.follow_num}<br /><a href="/index.php?m=follow&userid={$user.userid}">关注</a></td>
+    <td>{$user.followed_num}<br /><a href="/index.php?m=follow&type=3&userid={$user.userid}">粉丝</a></td>
+    <td>{$user.topic_num}<br /><a href="index.php?m=picture&a=my&userid={$user.userid}">作品</a></td>
+    </tr>
+    {if $smarty.get.userid && $smarty.session.ssuser.userid neq $smarty.get.userid}
+    <tr>
+    <td align="center" colspan="3">
+   <div style="line-height:30px; height:30px"> <a href="javascript:sendPm('{$data['userid']}');"><img src="/static/images/pmto.gif"  />发消息</a> &nbsp;&nbsp;
+   </div>
+    <script src="/index.php?m=jsapi&a=follow_btn&t_userid={$user.userid}"></script>
+    
+    </td>
+    </tr>
+    {/if}
+    </tbody>
+    </table>
+    
+    <div class="skypanel mgt-10">
+    	<div class="hd">栏目导航</div>
+        <ul class="nav-stacked">
+        	<li><a href="{R("/index.php?m=article&a=home&userid=$user.userid")}">Ta的文章</a></li>
+            <li><a href="{R("/index.php?m=picture&a=home&userid=$user.userid")}">Ta的摄影</a></li>
+        
+            <li><a href="{R("/index.php?m=forum&a=home&userid=$user.userid")}">Ta的帖子</a></li>
+        </ul>
+    </div>
+    </div>
+    

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+    <div class="row box960">
+      	 <div id="dqwz"><p>您当前的位置：<a href="#">首页</a>&gt;工程咨询</p></div>
+         
+         <div class="col-4-1">
+         	{include file="article/sidebar.html"}
+         </div>
+         
+         <div class="col-4-3">
+         	<div class="w98 right">
+            	<div class="gczx"> 
+        <h3>工程咨询</h3> 
+        <form method="post" name="f1" action="/index.php?m=guest&a=save">  
+        	<input type="hidden" name="type_id" value="5" />
+            <p><label>姓名：</label><input type="text" name="nickname" class="zxjm" value="" placeholder="请输入姓名（公司名称；个体名称）"></p> 
+            <p><label>联系电话：</label><input type="text" name="phone2" class="zxjm" value="" placeholder="请输入联系人电话"></p> 
+            <p><label>联系手机：</label><input type="text" name="telephone" class="zxjm" value="" placeholder="请输入联系手机号码"></p> 
+            <p><label>联系邮箱：</label><input type="text" name="email" class="zxjm" value="" placeholder="请输入联系邮箱地址"></p> 
+            <p><label style="padding-top:13px;">产品说明:</label><textarea name="content" class="cpsm"></textarea></p> 
+            <p><label>验证码：</label><input type="text"  name="checkcode" class="yzm"> <img src="/index.php?m=checkcode" height="30" align="absmiddle" id="img" onclick="img.src='/index.php?m=checkcode?'+Math.random()" /></p>
+        </form> 
+        <h4><a href="#" onclick="f1.submit()">提交</a><span>（注：我们会与你尽快取的联系）</span></h4> 
+    </div>
+            </div>
+         </div>
+         
+         
+      
+    </div>
+  </div>
+  {include file="footer.html"} </div>
+</body>
+</html>

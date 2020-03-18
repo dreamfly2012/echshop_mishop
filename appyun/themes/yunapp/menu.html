@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理后台</title>
+<link type="text/css" rel="stylesheet" href="/themes/admin/css.css?v={$smarty.now}" />
+<script language="javascript" src="/static/js/jquery.js"></script>
+<script language="javascript">
+$(document).ready(function()
+{
+	$(".mtitle").click(function()
+	{
+		if($(this).next(".menu").css("display")=="block")
+		{
+			$(".menu").css("display","none")
+		 
+		}else
+		{
+			$(".menu").css("display","none")
+			$(this).next(".menu").css({display:"block"});
+		}
+	});
+	parent['main-frame'].location.href=$("a:eq(0)").attr("href");
+	$("ul li a:eq(0)").addClass('on'); 
+	$('ul li a').click(function(){
+		$('ul li a').removeClass('on');
+		$(this).addClass('on');
+	});
+});
+</script>
+</head>
+
+<body id="menu-body">
+ 
+ 
+<div class="mtitle">云应用管理</div>
+ 
+<div class="menu"  style="display:block" >
+
+
+<ul>
+ 
+<li><a href="{$appadmin}?m=yunapp"  target="main-frame">云主页</a></li>
+ 
+ 
+</ul>
+</div>
+ 
+ 
+
+<div class="ztitle">版权声明</div>
+<div class="zbox" style="">
+<a href="{$appadmin}?m=ifram&a=main"></a>
+版权归<a href="http://www.deitui.com" target="_blank">得推网络</a>所有<br>
+</div>
+</body>
+</html>

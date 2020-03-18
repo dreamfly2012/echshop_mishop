@@ -1,0 +1,44 @@
+{include file="header.html"}
+	<div class="row">
+    <div class="span12"> 
+     {include file="weixin_menu/nav.html"}
+      <table class='table table-bordered' width='100%'>
+        <thead>
+        <tr>
+          <th>id</th>
+          <th>名称</th>
+          <th>类型</th>
+          <th>排序</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        {foreach item=c from=$data}
+        <tr>
+          <td>{$c.id}</td>
+          <td>{$c.title}</td>
+          <td>{$w_type_list[$c[w_type]]}</td>
+          <td>{$c.orderindex}</td>
+          <td>[<a href="{$appadmin}?m=weixin_menu&a=add&id={$c.id}&wid={$smarty.get.wid}">编辑</a>] [<a href="javascript:;" class="delete" url="{$appadmin}?m=weixin_menu&a=delete&id={$c.id}&wid={$smarty.get.wid}">删除</a>]</td>
+        </tr>
+        {if $c.child}
+        {foreach item=cc from=$c.child}
+        <tr>
+          <td>{$cc.id}</td>
+          <td>|__{$cc.title}</td>
+          <td>{$w_type_list[$cc[w_type]]}</td>
+          <td>{$cc.orderindex}</td>
+          <td>[<a href="{$appadmin}?m=weixin_menu&a=add&id={$cc.id}&wid={$smarty.get.wid}">编辑</a>]
+           [<a href="javascript:;" class="delete" url="{$appadmin}?m=weixin_menu&a=delete&id={$cc.id}&wid={$smarty.get.wid}">删除</a>]</td>
+        </tr>
+        {/foreach}
+        {/if}
+        
+        {/foreach}
+      </table>
+      <div>{$pagelist}</div>
+    </div>
+  </div>
+ 
+
+
+{include file="footer.html"}

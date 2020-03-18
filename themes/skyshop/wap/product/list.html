@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page">
+
+{include file="product/panel.html"}
+<div class="header" style="display:block; height:50px;">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">{$cat.cname}</div>
+<div class="right-btn panel-btn"><span class="iconfont icon-menu"></span></div>
+</div>
+<div class="main-body">
+ 
+ <div class="tabs"></div>
+ 
+ 
+	<div class="piclist">
+     	<div class="col-2-1">
+            {foreach item=c key=k from=$list}
+                 {if $k mod 2 eq 0}
+                      <div class="item"  style="width:100%;">
+                      	<div class="pd">
+                        <div class="img"><a href="{R("/index.php?m=show&id=$c.id")}" ><img class="img" src="{const.IMAGES_SITE}{$c.imgurl}.middle.jpg"  ></a></div>
+                        <div class="title"><a href="{R("/index.php?m=show&id=$c.id")}"  >{$c.title|cutstr:36}</a></div>
+                        <div class="price">￥{$c.price}元</div>
+                        </div>
+                      </div>
+                 {/if}   
+            {/foreach}
+		</div>
+        
+        <div class="col-2-1">
+            {foreach item=c key=k from=$list}
+                 {if $k mod 2 eq 1}
+                      <div class="item"  style="width:100%;">
+                      	<div class="pd">
+                        <div class="img"><a href="{R("/index.php?m=show&id=$c.id")}" ><img class="img" src="{const.IMAGES_SITE}{$c.imgurl}.middle.jpg"  ></a></div>
+                        <div class="title"><a href="{R("/index.php?m=show&id=$c.id")}"  >{$c.title|cutstr:36}</a></div>
+                        <div class="price">￥{$c.price}元</div>
+                        </div>
+                      </div>
+                 {/if}   
+            {/foreach}
+		</div>
+        
+	</div>
+ 
+<div class="pages">{$pagelist}</div>
+</div>
+{include file="footer.html"}
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file="attr/nav.html"}
+<form method="get" action="{$appadmin}" class="form form-inline">
+<input type="hidden" name="m" value="attribute" />
+
+属性分类：<select name="cat_id">
+<option value="0">请选择</option>
+{foreach item=c key=k from=$attr_cat}
+<option value="{$k}" {if $k eq $smarty.get.cat_id} selected="selected"{/if}>{$c}</option>
+{/foreach}
+</select>
+<input type="submit" value="搜索" class="btn btn-success" />
+</form>
+
+<form method="post" action="{$appadmin}?m=attribute&a=order">
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+   <td>属性名称</td>
+   <td>属性分类</td>
+    
+   <td>属性类型</td>
+   <td>表字段</td>
+   <td>排序</td>
+    
+   <td>输入方式</td>
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+   <td>{$attr_cat[$c.cat_id]}</td>
+    
+   <td>{$attr_type_list[$c.attr_type]}</td>
+   <td>{if $c.col_name}{$c.col_name}{else}非字段{/if}</td>
+   <td><input type="text" name="orderindex[{$c.id}]" value="{$c.orderindex}"  class="w50" /></td>
+    
+   <td>{$input_type_list[$c.input_type]}</td>
+<td>[<a href="{$appadmin}?m=attribute&a=add&id={$c.id}&cat_id={$smarty.get.cat_id|intval}">编辑</a>] 
+[<a href="javascript:;" class="delete" url="{$appadmin}?m=attribute&a=delete&id={$c.id}">删除</a>]</td>
+  </tr>
+   {/foreach}
+ </table>
+ <input type="submit" value="更改排序"  class="btn btn-success"/>
+ </form>
+<div>{$pagelist}</div>
+</div>
+</div>
+{include file="footer.html"}

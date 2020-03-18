@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs">
+<li {if  get('m') eq 'member' && get('a','h') eq 'home'} class="active"{/if}><a href="{R("/index.php?m=member&a=home&userid=$user.userid")}">{$heorme}首页</a></li>
+<li {if  get('m') eq 'product' &&  get('a','h') eq 'mylove'} class="active"{/if}><a href="{R("/index.php?m=product&a=mylove&userid=$user.userid")}">{$heorme}喜欢</a></li>
+<li {if get('m') eq 'product' &&  get('a','h') eq 'my'} class="active"{/if}><a href="{R("/index.php?m=product&a=my&userid=$user.userid")}">{$heorme}产品</a></li>
+
+<li {if get('m') eq 'magazine' &&  get('a','h') eq 'my'} class="active"{/if}><a href="{R("/index.php?m=magazine&a=my&userid=$user.userid")}">{$heorme}杂志</a></li>
+
+</ul>

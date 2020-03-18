@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> 
+{assign var="tb" value="积分兑换"}
+{include file="common.html"}
+{include file="toolbar.html"}
+  <div class="main-body">
+    <div class="row">
+     
+           <div class="w98 right">
+         	{foreach item=c from=$list}
+            	<div class="col-2-1">
+            	<div class="piclist-box w98 h220">
+                	<a href="/index.php?m=show&id={$c.id}"><img src="{const.IMAGES_SITE}{$c.imgurl}.small.jpg" class="img"></a>
+                    <div class="postxt"><a href="/index.php?m=show&id={$c.id}">{$c.title}</a></div>
+                    <div class="posprice">{$c.gold} {if $c.price >0}+{$c.price}{/if}</div>
+                </div>
+                </div>
+            {/foreach}
+            <div>{$pagelist}</div>
+            </div> 
+         </div>
+   
+  {include file="footer.html"} </div>
+</body>
+</html>

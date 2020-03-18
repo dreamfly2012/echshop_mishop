@@ -1,0 +1,50 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='options/nav.html'}
+{if $parent}
+<a href="{$appadmin}?m=options&pid={$parent.pid}&tablename={$tablename}" class="btn"><<{$parent.title}</a>
+<div class="clerfix"><br /></div>
+{/if}
+<div class="search-form">
+<form method="get" action="{$appadmin}">
+<input type="hidden" name="m" value="options" />
+	类型：<select name="tablename">
+    	<option value="0">请选择</option>
+    	{foreach item=c key=k from=$table_list}
+        <option value="{$k}" {if $k eq  $tablename} selected="selected"{/if}>{$c}</option>
+        {/foreach}
+    </select>
+    <input type="submit" class="btn btn-success" value="选择" />
+</form>
+</div>
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+   <td>主题</td>
+   <td>上级</td>
+   <td>类型</td>
+ 
+   <td>状态</td>
+   <td>时间</td>
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+   <td>{$c.pid}</td>
+   <td>{$table_list[$c[tablename]]}</td>
+    
+   <td>{$c.status}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+<td>
+<a href="{$appadmin}?m=options&a=addmore&pid={$c.id}">添加子类</a>
+<a href="{$appadmin}?m=options&a=add&id={$c.id}">编辑</a> <a href="{$appadmin}?m=options&pid={$c.id}">下级分类</a> <a href="javascript:;" class="delete" url="{$appadmin}?m=options&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+</div>
+{include file="footer.html"}

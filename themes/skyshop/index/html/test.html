@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+{include file="header.html"}
+<div class="main-body">
+{api data=t_c control=articleapi fun=getByIds("1412,1410,1411,1409")}
+{foreach item=c from=$t_c}
+<li>{$c.id}.{$c.title}</li>
+{/foreach}
+</div>
+{include file="footer.html"}
+</body>
+</html>

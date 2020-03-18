@@ -1,0 +1,30 @@
+{include file="header.html"}
+<div class="row">
+  <div class="span12"> {include file='collect_rule/nav.html'}
+    <form method='post' action='admin.php?m=collect_type&a=save'>
+      <input type='hidden' name='type_id' style='display:none;' value='{$data.type_id}' >
+      <table class='table table-bordered' width='100%'>
+        <tr>
+          <td>标题：</td>
+          <td><input type='text' name='title' id='title' value='{$data.title}' ></td>
+        </tr>
+        <tr>
+          <td>排序：</td>
+          <td><input type='text' name='orderindex' id='orderindex' value='{$data.orderindex}' ></td>
+        </tr>
+        <tr>
+          <td>状态：</td>
+          <td>
+          		<input type='radio' name='status' id='status' value='0' {if $data.status neq 1} checked="checked"{/if} >隐藏
+          		<input type='radio' name='status' id='status' value='1' {if $data.status eq 1} checked="checked"{/if}  >显示
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type='submit' value='保存' class='btn btn-success'></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+{include file="footer.html"}

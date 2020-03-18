@@ -1,0 +1,36 @@
+{if $data.attr}
+<!--产品属性-->
+<style>
+.attrbox{padding:10px; background-color:#f8f8f8;}
+.attr-row{ margin-bottom:10px;}
+</style>
+  <div class="attrbox">
+  {foreach item=c from=$data.attr}
+ 
+      {if $c.attr_type neq 1}        
+      <div class="row attr-row">
+       <input type="hidden" class="orderCart_attr_value" name="attr[{$c.id}]" attr_name="{$c.title}" id="orderCart_attr_{$c.id}" />
+      	<div class="btn-group orderCart_attr_item" style="margin-bottom:10px;" attr_id={$c.id}>
+       		<span class="btn btn-default">{$c.title}</span>   
+            {foreach item=a_c key=k from=$data_attr[$c[id]][value]}
+            <span class="btn orderCart_attr" val="{$a_c}" >{if $c.input_type eq 1}{$a_c}{else}{$c[select][$a_c]}{/if}</span>
+            {/foreach}    
+             
+        </div>
+        </div>
+        {else}
+        	{if $c.input_type eq 2}
+            <div class="col-3-1 attr-row" a="{$c.id}">{$c.title}:{$c[select][$data_attr[$c[id]]]}</div>
+            {else}
+        	{if !$c.ishtml}
+        <div class="col-3-1 attr-row" a="{$c.id}">{$c.title}:{$data_attr[$c[id]]}</div>
+        {/if}
+        {/if}
+      {/if}
+  		
+   {/foreach}
+   <div class="clearfix"></div>
+   <div class="row"><div class="d-content">{$data_attr[2]}</div></div>
+  </div>
+  <!--end 产品属性-->
+{/if}  

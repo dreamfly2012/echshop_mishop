@@ -1,0 +1,227 @@
+{include file='header.html'}
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+
+<script language="javascript">
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&id={$data.id}",
+		{include file="inc/ueditor_simple.html"}
+		 
+};
+var editor=UE.getEditor('content',options)
+</script>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#imgloading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=uploadtao&dir=product&id={$data.id}&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='/"+data.imgurl+".100x100.jpg' width='100'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+<div class="container">
+<div class="row">
+<div class="span2">{include file='inc/user_left.html'}</div>
+<div class="span10">
+<ul class="nav nav-tabs">
+<li> <a href="/index.php?m=product&a=my">我的产品</a> </li>
+<li class="active"><a href="/index.php?m=product&a=add">发表产品</a></li>
+</ul>
+<ul class="nav nav-tabs" id="myTab" style="margin-top:10px;">
+<li class="active"><a href="#p_base"  data-toggle="tab" >基本信息</a></li>
+<li><a href="#p_other"  data-toggle="tab" >扩展信息</a></li>
+<li><a href="#p_latlng"  data-toggle="tab">地理位置</a></li> 
+</ul>
+<form method="post" action="{$appadmin}?m=product&a=save"  onkeypress="javascript:return NoSubmit(event);">
+<input type="hidden" name="id" value="{$data.id}" />
+<div class="tab-content"> 
+<div class="tab-pane active" id="p_base"> 
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="16%" align="right"> 标题：</td>
+    <td width="84%"><input name="title" type="text" id="title" value="{$data.title}" size="80"></td>
+  </tr>
+  <tr>
+    <td align="right">分类：</td>
+    <td>
+    <select name="catid" class="w150">
+    <option value="0">请选择</option>
+    {foreach item=c from=$cat_list}
+                <option value="{$c.catid}" {if $data.catid eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                {foreach item=c_2 from=$c.child}
+                	<option value="{$c_2.catid}" {if $data.catid eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                    {foreach item=c_3 from=$c_2.child}
+                    <option value="{$c_3.catid}" {if $data.catid eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+    </select>
+    
+    
+    
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="right">图片：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="upimg" onChange="uploadgoodsimg()">
+      </div>
+      <label  id="imgloading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="imgurl" id="imgurl" value="{$data.imgurl}">
+      <span id="imgShow">
+      {if $data.imgurl}
+          <img src="{$data.imgurl|images_site}.100x100.jpg">
+          {/if}
+      </span>
+      </td>
+  </tr>
+  
+  <tr>
+    <td align="right">seo关键字：</td>
+    <td><input name="keywords" type="text" id="keywords" value="{$data.keywords}" class="w600" /></td>
+  </tr>
+  <tr>
+    <td align="right">seo描述：</td>
+    <td><textarea name="description" id="description" class="w600 h40">{$data.description}</textarea></td>
+  </tr>
+  <tr>
+    <td align="right">内容：</td>
+    <td><script type="text/plain" id="content" name="content" style="height:400px;" >{$data.content}</script></td>
+  </tr>
+ 
+</table>
+</div>
+
+
+<!--扩展信息-->
+<div class="tab-pane" id="p_other">
+<table class="table">
+<tr>
+	<td>价格：</td>
+    <td><input type="text" name="price" value="{$data.price}" /></td>
+</tr>
+<tr>
+	<td>促销价：</td>
+    <td><input type="text" name="lower_price" value="{$data.lower_price}" /></td>
+</tr>
+
+<tr>
+	<td>库存数量：</td>
+    <td><input type="text" name="total_num" value="{$data.total_num}" /></td>
+</tr>
+
+<tr>
+	<td>销售数：</td>
+    <td>{$data.buy_num}</td>
+</tr>
+
+</table>
+</div>
+<!--End 扩展信息-->
+<!--地理位置开始-->
+  <div class="tab-pane active" id="p_latlng"  >
+  <table class="table table-bordered">
+  	<tr><td width="15%">地理位置：</td><td><input type="text" name="latlng" id="latlng" value="" />  (当前：{$data.lat},{$data.lng}) <br />
+    地图搜索：<input type="text" name="word" id="word" /> </td></tr>
+    <tr><td></td><td>
+    <div id="map_canvas" style="width:600px; height:300px;"></div>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={const.BDMAPKEY}"></script>
+    <script language="javascript">
+	function NoSubmit(ev)
+	{
+		if( ev.keyCode == 13 )
+		{
+			return false;
+		}
+		return true;
+	}
+	$(document).ready(function(){
+ 
+		$("#word").bind("keyup",function(){
+			localsearch($(this).val());
+		});
+	});
+   var map = new BMap.Map("map_canvas");
+   map.enableScrollWheelZoom();
+   map.addControl(new BMap.MapTypeControl());  
+   var point = new BMap.Point({if $data.lat>0}{$data.lng},{$data.lat}{else}118.140829,24.477693{/if});
+   map.centerAndZoom(point, 14);
+   var marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);              // 将标注添加到地图中
+	marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+   map.addEventListener("click", function(e){
+	   $("#latlng").val(e.point.lat+ ", " + e.point.lng );
+   });
+   
+    function localsearch(word){
+	   var local = new BMap.LocalSearch(map, {
+		  renderOptions:{map: map}
+		});
+		local.search(word);
+   }
+    </script>
+    </td></tr>
+  </table>
+  </div>
+  <!--end地理位置-->
+</div>
+<div style="padding-left:60px;">
+ <input type="submit" name="button" id="button" class="btn" value="提交"> 
+</div>
+</form>
+</div>
+</div>
+</div>
+<script>
+  $('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+
+setTimeout(function(){
+		$("#p_latlng").removeClass("active");
+	},300);
+</script>
+{include file='footer.html'}

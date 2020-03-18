@@ -1,0 +1,34 @@
+<div id="orderCart_inc">
+<div class="skypanel">
+<div class="hd">购物车</div>
+{api data=t_c control=order_cartapi fun=cart()}
+<table class="table table-bordered">
+	<tr>
+    	 
+    	<td>商品名称</td>
+        <td>属性</td>
+        <td>数量</td>
+        <td>价格</td>
+         
+    </tr>
+{foreach item=c from=$t_c.list}
+    <tr class="orderCart_row">
+    	 
+        <td><a href="{R("/index.php?m=show&id=$c.object_id")}" target="_blank">{$c.title|cutstr:24:...}</a></td>
+        <td>{$c.attr}</td> 
+        <td><div >
+        	<span>
+            	<a href="javascript:;" class="orderCartNum_plus" oid="{$c.id}"><i class="icon-plus "  ></i></a></span>
+                <span class="orderCartNum">{$c.amount}</span> 
+            <span><a href="javascript:;" class="orderCartNum_minus" oid="{$c.id}"><i class="icon-minus"></i></a></span></div></td>
+        <td>{$c.price} <a href="javascript:;" class="delete" url="/index.php?m=order_cart&a=delete&id={$c.id}"><i class=" icon-remove"></i></a></td>
+        
+    </tr>
+{/foreach}
+</table>
+<div class="right">
+<div class="btn-group">
+<div class="btn">￥<span class="orderCard_totalmoney ">{math equation="x*y" x="$c[amount]" y="$c[price]" }</span></div>
+<a href="{R("/index.php?m=order&a=confirm")}" class="btn  btn-success">确认购买</a></div>
+</div>
+</div>

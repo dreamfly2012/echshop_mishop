@@ -1,0 +1,12 @@
+<div class="tabs-border">
+	<div class="item {if get('m') eq 'stat_shoporder_day' AND get('a') eq 'all'  AND  get('field') eq 'ordernum'}active{/if}"><a href="{$appadmin}?m=stat_shoporder_day&a=all&field=ordernum">订单统计</a></div>
+    <div class="item {if get('m') eq 'stat_shoporder_day' AND get('a') eq 'all'  AND  get('field') eq 'money'}active{/if}"><a href="{$appadmin}?m=stat_shoporder_day&a=all&field=money">营业额统计</a></div>
+     <div class="item {if get('a') eq 'newuser'}active{/if}"><a href="{$appadmin}?m=stat&a=newuser">顾客统计</a></div>
+     <div class="item {if get('m') eq 'stat_product_day' AND    get('field') eq 'ordernum'}active{/if}"><a href="{$appadmin}?m=stat_product_day&a=all&field=ordernum">商品销量统计</a></div>
+</div> 
+<style>
+		.searchform{margin-top:10px;}
+    	.searchform .l160{width:160px; float:left;}
+		.searchform .l60{width:60px; float:left;}
+		.searchform .input-row{margin-bottom:3px;}
+    </style> 

@@ -1,0 +1,22 @@
+<div class="row">
+<div style="">
+<form method="get" action="/index.php">
+<input type="hidden" name="m" value="search">
+<input type="hidden" name="type" id="s_type" value="product">
+ 
+<div class="search-bar">
+<input type="text" name="keyword" class="search-input" style="width:700px;" value="{$smarty.get.keyword|html}">
+<input type="submit" value="搜索" class="search-btn   btn-success">
+</div>
+</form>
+</div>
+</div>
+<script language="javascript">
+$(function(){
+	$("#search_type .btn").bind("click",function(){
+		$("#s_type").val($(this).attr("s-type"));
+		$("#search_type .btn").removeClass("active");
+		$(this).addClass("active");
+	});
+});
+</script>

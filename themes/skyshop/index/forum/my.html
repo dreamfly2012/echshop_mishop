@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page">
+{include file='header.html'}
+<div class="box960">
+<div class="row">
+<div class="col-6-1">{include file='inc/user_left.html'}</div>
+<div class="col-6-5">
+<div class="w98 right">
+<ul class="nav nav-tabs">
+<li class="active"> <a href="/index.php?m=forum&a=my">我的帖子</a> </li>
+<li><a href="/index.php?m=forum&a=add">发表帖子</a></li>
+</ul>
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="60" align="center">图片</td>
+    <td width="" align="center">主题</td>
+    <td width="60" align="center" valign="middle">分类</td>
+    <td width="80" align="center" valign="middle">时间</td>
+    <td width="50" align="center" valign="middle">状态</td>
+    <td width="100" align="center" valign="middle">管理</td>
+  </tr>
+  {foreach item=c from=$data}
+  <tr>
+  <td>{if $c.imgurl}<img src="{$c.imgurl|IMAGES_SITE}.100x100.jpg" width="50">
+    {else}<img src="{const.IMAGES_SITE}static/images/no_image.jpg.100x100.jpg" width="50">{/if}</td>
+    <td><a href="/index.php?m=show&id={$c.id}&model_id={$c.model_id}" target="_blank">{$c.title}</a></td>
+    <td>{$c.cname}{if $c.cname_2nd}>{$c.cname_2nd}{/if}{if $c.cname_3nd}>{$c.cname_3nd}{/if}</td>
+    <td>{$c.dateline|date:Y-m-d}</td>
+    <td>{if $c.status eq 1}未审核{elseif $c.status eq 2}已通过{/if}</td>
+    <td><a href="/index.php?m=forum&a=add&id={$c.id}">编辑</a> <a href="/index.php?m=forum&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+  {/foreach}
+  {if $pagelist}
+  <tr>
+    <td colspan="5">{$pagelist}</td>
+    </tr>
+    {/if}
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+{include file='footer.html'}
+</div>
+</body>
+</html>

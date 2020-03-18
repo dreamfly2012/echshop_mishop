@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page">
+
+{include file="forum/panel.html"}
+<div class="header" style="">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">社区论坛</div>
+<div class="right-btn panel-btn"><span class="iconfont icon-menu"></span></div>
+</div>
+<div class="main-body">
+	<div id="slides-flash"  style="height:248px; background-color:#bbb;" class="swipejs"> {api data=t_c control=adapi fun=listbyno("index_flash")}
+    <div class='swipejs-wrap'> {foreach item=c from=$t_c name=t1}
+      <div class="item" style="height:248px;"><a href="{$c.link1}" style="text-align:center;" ><img class="img" src="{const.IMAGES_SITE}{$c.imgurl}" style=" max-width:100%;  max-height:248px;"  ></a>
+        <div class="bg"></div>
+        <div class="title">{$c.title}</div>
+      </div>
+      {/foreach} </div>
+    <div class="swipejs-num"></div>
+    <div class="swipejs-prev" onclick='mySwipe.prev()'><i class="iconfont icon-zuo"></i></div>
+    <div   class="swipejs-next" onclick='mySwipe.next()'><i class="iconfont icon-you"></i></div>
+    <div class="swipejs-nav-bg"></div>
+    <div class="swipejs-nav"><span class="index">1</span> / <span class="total"></span></div>
+  </div>
+<ul class="data-list">
+{foreach item=c from=$list}
+        <li {if $c.imgurl} class="hasimg"{/if}>
+            <a class="aurl" href="{R("/index.php?m=show&id=$c.id")}">
+               {if $c.imgurl} <img src="{const.IMAGES_SITE}{$c.imgurl}.100x100.jpg"/>{/if}
+                <dl>
+                    <dt>{$c.title}</dt>
+                    <dd class="time">{$c.dateline|timeago}</dd>
+                    <dd class="content">{$c.description}</dd>
+                    <dd class="source">作者：{$c.nickname}</dd> 
+                </dl>
+            </a>
+        </li>
+    {/foreach}
+</ul> 
+<div>{$pagelist}</div>
+</div>
+
+{include file="footer.html"}
+</div>
+
+
+<link href="/plugin/skyweb/swipe/swipe.css" rel="stylesheet">
+<script src="/plugin/skyweb/swipe/swipe.js"></script> 
+<script>
+   
+	 $(function() {
+		var elem = document.getElementById('slides-flash');
+		window.mySwipe_total=$("#slides-flash .item").length;
+		
+		$("#slides-flash .total").html(mySwipe_total);
+		for(var i=0;i<mySwipe_total;i++){
+			$("#slides-flash .swipejs-num").append("<i></i>");
+		}
+		$("#slides-flash .swipejs-num i").eq(0).addClass("active");
+		window.mySwipe = Swipe(elem, {
+		  startSlide: 0,
+		  auto: 3000,
+		   callback: function(pos, element) {
+			    if (mySwipe_total < 3) {
+                            i = ((pos + 1) > 2) ? (pos - 1) : (pos + 1)
+                        } else {
+                            i = pos + 1;
+                        }
+				$("#slides-flash .swipejs-num i").removeClass("active");		
+				$("#slides-flash .swipejs-num i").eq(i-1).addClass("active")		
+				$("#slides-flash .index").html(i);
+				  
+			}
+		});
+		
+		 
+	}); 
+   
+  </script>
+</body>
+</html>

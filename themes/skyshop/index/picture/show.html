@@ -1,0 +1,222 @@
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> {include file='header.html'}
+  <div class="main-body">
+    <div class="box960"> {include file="inc/show_breadcrumb.html"}
+      <div class="row">
+      
+        <div  >
+          <div >
+            
+            
+              {if $data.userid}
+              <div class="row">
+              	<div class="col-7-1"><img style="float:right; margin-right:10px;" src="{$data[author][userid]|IMAGES_SITE}" width="100" onerror="err_user_head(this)"></div>
+                <div class="col-7-5">
+                	<h1>{$data.title}</h1>
+                    <div class="row">
+                    	<div class="zuvhh_r_2 cl" style="margin-top:10px;">
+                            <span class="s1" title="浏览量">{$data.view_num}</span>
+                            <span class="s2" title="评论">{$data.comment_num}</span>
+                            
+                            <span class="s4" title="收藏">{$data.love_num}</span>
+                            
+                            <div class="clearfix"></div>
+                             
+                        </div>
+                     </div>
+                    <div>
+                    <a href="{R("/index.php?m=member&userid=$data[userid]")}" ajax-href="{R("/index.php?m=member&a=userinfo&userid=$data[author][userid]")}" class="user_card">{$data['author']['nickname']}</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<script src="/index.php?m=jsapi&a=follow_btn&t_userid={$data.userid}"></script>
+                    &nbsp;&nbsp;{api data=t  control=jsapi fun=love_btn("$data.id","picture",1,"$data.userid")}
+                    <div style="float:right;"><div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div></div>
+                    </div>   
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              {else}
+              <h1 class="text-center">{$data.title}</h1>
+              <div class="d-tool">发表时间：{$data.dateline|date:Y-m-d} &nbsp;&nbsp;
+              <div style="float:right;"><div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div></div></div>
+              {/if}
+              
+             
+            
+            <div style="height:10px; width:100%"></div>
+            <div class="row">
+            	<div class="col-5-4">
+            <div class="tabs-box">
+              <ul class="tabs">
+               <li><a href="#dc-1" class="active" ><span >内容</span></a></li>
+              <li><a href="#dc-2"><span>图集</span></a></li>
+              <li><a href="#dc-3"><span>评分</span></a></li>
+              
+               
+                
+              </ul>
+               <div id="dc-1" class="tabs-item active"> {if !empty($data.content)}
+                <div class="d-content">{$data.content}</div>
+                {/if} </div>
+              <div id="dc-2" class="tabs-item active">
+              	<div style="position:relative; width:100%; height:320px; margin:0 auto;">
+    <ul id="slider_pic" class="slider_pic">
+    	{get data=imgsdata model=imgs fun=get('picture',"$data.id")}
+       {if $imgsdata}
+                {foreach item=c from=$imgsdata}
+                <li><a href="#" title="{$c.title}"  ><img src="{$c.imgurl}" class="showBigImg" bigImg="{$c.imgurl}" title="{$c.title}"    ></a></li>
+                {/foreach}
+                {else}
+                <li><a href="{$data.imgurl|IMAGES_SITE}" title="{$data.title}"><img src="{$data.imgurl|IMAGES_SITE}.middle.jpg"  width="288"  ></a></li>
+                {/if}
+    </ul>
+    <div id="slider-num" class="slider-num"></div>
+    <div id="slider-prev" class="slider-prev"><i class="iconfont icon-zuo"></i></div>
+            <div id="slider-next" class="slider-next"><i class="iconfont icon-you"></i></div>
+  </div>
+  <script src="/plugin/jquery/cycle/jquery.cycle.all.js"></script>
+ <script>
+    $(function(){
+		$("#slider_pic li").css("width",$("#slider_pic li").parents("div").width());
+		
+		$("#slider_pic img").css("height",$("#slider_pic li").parents("div").height());
+		$('#slider_pic').cycle({
+		fx: 'scrollLeft',
+		timeout: 5000,
+		pager:'#slider-num',
+		prev:'#slider-prev',
+		next:'#slider-next'
+		}); 
+	});
+    </script>
+              </div>
+              <div id="dc-3"  class="tabs-item active">
+                <div class="d-content">
+                
+                <div>
+                	<div class="row">
+                    {api data=t_c control=ratingapi fun=select(array("where"=>" tablename='picture' AND object_id=$data.id ","limit"=>10))}
+                    {foreach item=c from=$t_c}
+                    
+                    	<div class="col-2-1 mgb-10" style="min-height:120px; font-size:12px;">
+                        	<div class="col-7-1">
+                            <a href="{R("/index.php?m=member&a=home&userid=$c.userid")}" target="_blank"><img src="" onerror="err_user_head(this)"><br>{$c.nickname}</a></div>
+                            <div class="col-7-6">
+                            	<table style="margin-left:10px;">
+                                <tr><td width="50" class="f12">总分</td><td ><div class="raty-row" read=1 id="rt_{$c.id}"  jf={$c.grade}> </div></td></tr>
+                                <tr><td class="f12">创意</td><td><div class="raty-row" read=1 id="rt_{$c.id}"  jf={$c.jf_chuangyi}> </div></td></tr>
+                                <tr><td class="f12">质量</td><td><div class="raty-row" read=1 id="rt_{$c.id}"  jf={$c.jf_zhiliang}> </div></td></tr>
+                                
+                                </table>
+                                <div style="color:#888; line-height:25px;">{$c.content}</div>
+                            </div>
+                        </div>
+                    {/foreach}
+                    </ul>
+                </div>
+                
+                <form method="post" id="raty-form">
+                <input type="hidden" name="object_id"   value="{$comment_object_id}" />
+				 
+				<input type="hidden" name="f_userid"  value="{$comment_f_userid}" />
+				<input type="hidden" name="tablename"   value="{$comment_tablename}" />
+                  <table class="table">
+                  <tr>
+                      <td class="w100 f12" >总评</td>
+                      <td><div class="raty-row" id="star_grade" data="jf_grade" jf=5> </div>
+                        <input type="hidden" id="jf_grade" name="grade" value="5" /></td>
+                    </tr>
+                    <tr>
+                      <td class="w100 f12">创意</td>
+                      <td><div class="raty-row" id="star_chuangyi" data="jf_chuangyi" jf=5> </div>
+                        <input type="hidden" id="jf_chuangyi" name="jf_chuangyi" value="5" /></td>
+                    </tr>
+                    
+                    <tr>
+                    	<td class=" f12">质量</td> 
+                        <td><div class="raty-row" id="star_zhiliang" data="jf_zhiliang" jf=5> </div>
+                        	<input type="hidden" id="jf_zhiliang" name="jf_zhiliang" value="5" />
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                    	<td>内容</td>
+                        <td><textarea name="content" id="raty_content" style="width:400px; height:60px;" ></textarea></td>
+                    </tr>
+                    
+                    <tr>
+                    	<td></td>
+                        <td ><div class="form-submit"><button type="button" id="raty-submit" class="btn btn-success btn-larger">评分</button></div></td>
+                    </tr>
+                    
+                  </table>
+                  </form>
+                  
+                  
+                </div>
+              </div>
+              
+             
+            </div>
+            
+            <!--评论开始--> 
+            {include file="comment/inc_common.html"} </div>
+            </div>
+            	<div class="col-5-1">
+                	<div class="w98 right">
+                	{include file="picture/sidebar.html"}
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {include file='footer.html'} </div>
+ 
+ 
+<link href="/plugin/jquery/rating/rating.css" rel="stylesheet">
+<script src="/plugin/jquery/rating//rating.js" ></script> 
+<script language="javascript">
+$(function(){
+	$(".video_view").bind("click",function(){
+		$("#video_id").attr("src",$(this).attr("url"))
+		$("#viewo_video").html($("#viewo_video").html());
+	});
+	
+	$(".showBigImg").bind("click",function(e){
+		e.preventDefault();
+		var html="<div style='text-align:center; max-width:100%;'><img src='"+$(this).attr("bigImg")+"'></div>";
+		 
+		showbox('图片放大',html, window.innerWidth-20, window.innerHeight-20);
+	}); 
+	 
+	  
+	  $(document).on("click","#raty-submit",function(){
+		  $.post("/index.php?m=rating&a=save",$("#raty-form").serialize(),function(data){
+			  if(data.error==0){
+				  skyToast("发布成功！","success");
+				  window.location.reload();
+			  }else if(data.error==2){
+				  skyToast(data.message,"error");
+			  }else if(data.nologin!="undefined"){
+				  loginbox();
+			  }else{
+				  skyToast(data.message,"error");
+			  }
+		  },"json");
+	  });
+});
+</script>
+<style>
+        #slides-flash{
+      display: none;
+	  position:relative;
+    }
+
+</style>
+ 
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+</body>
+</html>

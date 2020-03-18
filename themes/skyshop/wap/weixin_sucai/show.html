@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page">
+<div class="header"><h1>{$data.title}</h1></div>
+<div class="main-body">
+<div style="padding:10px;"> 
+<div style="height:30px; line-height:30px; font-size:16px; font-weight:900;">{$data.title}</div>
+<div style="height:30px; line-height:30px; color:#ccc; font-size:12px;">{$data.dateline|date:Y-m-d} &nbsp;&nbsp;
+{if $weixin.ysid}<a href="weixin://contacts/profile/{$weixin.ysid}">点击关注 <span style="color:#F00; font-size:16px;">{$weixin.title}</span></a>{else}{$weixin.title}{/if} </div>
+{if $data.imgurl}<img src="{const.IMAGES_SITE}{$data.imgurl}" style="max-width:100%;">{/if}
+<div class="content">{$data.content}</div>
+</div> 
+</div>
+</div>
+</body>
+</html>

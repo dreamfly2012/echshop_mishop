@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs">
+<li {if $smarty.get.a eq 'default'} class="active"{/if}><a href="{$appadmin}?m=attribute&cat_id={$smarty.get.cat_id|intval}">属性管理</a></li>
+<li {if $smarty.get.a eq 'add'} class="active"{/if}><a href="{$appadmin}?m=attribute&a=add&cat_id={$smarty.get.cat_id|intval}">属性添加</a></li>
+<li><a href="{$appadmin}?m=attribute_cat">分类管理</a></li>
+<li><a href="{$appadmin}?m=attribute_cat&a=add">分类添加</a></li>
+
+
+</ul>

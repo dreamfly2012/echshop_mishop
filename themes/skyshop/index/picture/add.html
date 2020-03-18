@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page">
+{include file='header.html'}
+
+<div class="box960">
+<div class="row">
+<div class="col-6-1">{include file='inc/user_left.html'}</div>
+<div class="col-6-5">
+<div class="w98 right">
+<ul class="nav nav-tabs">
+<li> <a href="/index.php?m=picture&a=my">我的相册</a> </li>
+<li class="active"><a href="/index.php?m=picture&a=add">发表相册</a></li>
+</ul>
+<ul class="nav nav-tabs" id="myTab" style="margin-top:10px;">
+<li class="active"><a href="#p_base"  data-toggle="tab" >基本信息</a></li>
+<li><a href="#p_other"  data-toggle="tab" >扩展信息</a></li>
+<li><a href="#p_attr"  data-toggle="tab" >属性信息</a></li>
+<li><a href="#p_latlng"  data-toggle="tab">地理位置</a></li> 
+</ul>
+<form method="post" id="data-form" action="/index.php?m=picture&a=save"  onkeypress="javascript:return NoSubmit(event);">
+<input type="hidden" name="id" value="{$data.id}" />
+<div class="tab-content"> 
+<div class="tab-pane active" id="p_base"> 
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="16%" align="right"> 标题：</td>
+    <td width="84%"><input name="title" type="text" id="title" value="{$data.title}" size="80"></td>
+  </tr>
+  <tr>
+    <td align="right">分类：</td>
+    <td>
+    <select name="catid" id="catid" class="w150">
+    <option value="0">请选择</option>
+    {foreach item=c from=$cat_list}
+                <option value="{$c.catid}" {if $data.catid eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                {foreach item=c_2 from=$c.child}
+                	<option value="{$c_2.catid}" {if $data.catid eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                    {foreach item=c_3 from=$c_2.child}
+                    <option value="{$c_3.catid}" {if $data.catid eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+    </select>
+    
+    
+    
+    </td>
+  </tr>
+  
+ 
+    <tr>
+    <td align="right">封面图片：</td>
+    <td>
+    <div id="up1" url="/index.php?m=upload&a=uploadtao&dir=picture&id={$data.id}">
+    	<div class="btn-upload">
+          <input type="file" name="upimg" id="ud"  class="btn-upload-file" onChange="uploadimg('up1')">
+         </div>
+ 
+          <input type="hidden" name="imgurl" class="imgurl" value="{$data.imgurl}">
+          <span class="imgShow">
+          {if $data.imgurl}
+          <img src="{$data.imgurl|images_site}.100x100.jpg">
+          {/if}
+          </span>
+      </div>
+      </td>
+  </tr>
+       
+  
+  <tr>
+    <td align="right">seo关键字：</td>
+    <td><input name="keywords" type="text" id="keywords" value="{$data.keywords}" class="w600" /></td>
+  </tr>
+  <tr>
+    <td align="right">seo描述：</td>
+    <td><textarea name="description" id="description" class="w600 h40">{$data.description}</textarea></td>
+  </tr>
+  
+  
+  <tr>
+    <td align="right">内容：</td>
+    <td><script type="text/plain" id="content" name="content" style="height:400px;" >{$data.content}</script></td>
+  </tr>
+   
+</table>
+</div>
+<!--扩展信息-->
+<div class="tab-pane active" id="p_other">
+<table class="table">
+<tr>
+    <td align="right">图集：</td>
+    <td><div id="webuploader" url="/admin.php?m=imgs&tablename=picture&object_id={$data.id}" class="webuploader">
+        <!--用来存放item-->
+        
+        <div  class="webuploader-select">选择图片</div>
+    	<div  class="webuploader-list"></div>
+        <div class="ks-list" >
+                    <div class="item">
+                    </div>
+                    <div class="clearfix"></div>
+         </div>
+     </div></td>
+  </tr>
+</table>
+</div>
+<!--End 扩展信息-->
+
+<!--属性开始-->
+  <div class="tab-pane active" id="p_attr"  >
+  <table class="table">
+  	<tr><td>产品属性</td><td>
+    <select name="attr_cat_id" name="attr_cat_id" id="attr_cat_id">
+    <option value="0">请选择</option>
+    {foreach item=c key=k from=$attr_cat}
+    <option value="{$k}" {if $data.attr_cat_id eq $k} selected="selected"{/if}>{$c}</option>
+    {/foreach}
+    </select></td></tr>
+  </table>
+   <div id="attr_html"></div>
+  </div>
+  <!--end属性-->
+<!--地理位置开始-->
+  {include file="inc/add_latlng.html"}
+  <!--end地理位置-->
+</div>
+<div style="padding:30px 60px;">
+ <input type="button" onclick="dataSubmit()"  name="button" id="button" class="btn" value="提交"> 
+</div>
+</form>
+</div>
+</div>
+</div>
+<link href="/plugin/webuploader/webuploader.css" rel="stylesheet">
+<script src="/plugin/webuploader/webuploader.min.js"></script>
+ <script src="/plugin/webuploader/app.js"></script>
+<script>
+function dataSubmit(){
+	if($("#title").val()==""){
+		$("#title").focus();
+		skyToast('标题不能为空');
+		return false;
+	}
+	if($("#catid").val()==0){
+		$("#catid").focus();
+		skyToast('请选择分类');
+		return false;
+	}
+	
+	$.post($("#data-form").attr("action")+"&ajax=1",$("#data-form").serialize(),function(data){
+			skyToast('保存成功');
+	});
+	
+}
+function auto_post(){
+	if($("#title").val().length>0 && $("#catid").val()>0){
+		$.post($("#data-form").attr("action")+"&ajax=1",$("#data-form").serialize(),function(data){
+			skyToast('自动保存成功');
+		});
+	}
+	setTimeout(function(){
+		auto_post();
+	},20000)
+}
+  $(function(){
+	  modImgsList('webuploader');
+	 
+	wbupload('webuploader',"picture","{$data.id}",function(){modImgsList('webuploader')});	
+ 
+	setTimeout(function(){
+		 auto_post();
+	 },20000);
+  $('#myTab a').click(function (e) {
+		e.preventDefault();
+		$(this).tab('show');
+	})	
+	
+/*初始化载入属性*/
+	$.get("/index.php?m=picture&a=attr&id={$data.id}&cat_id="+$("#attr_cat_id").val(),function(data){
+				$("#attr_html").html(data);
+				ajax_jsa();	
+		});
+	/*属性载入完毕*/
+	
+	$("#attr_cat_id").bind("change",function(){
+		$.get("/index.php?m=picture&a=attr&id={$data.id}&cat_id="+$(this).val(),function(data){
+				$("#attr_html").html(data);
+				ajax_jsa();	
+		});
+	});
+	
+	$(document).on("click",".attr_item_add",function(e){
+		var obj=$(this).parent(".attr_item");
+		var o_t=obj.find(".attr_item_list");
+		var a_len=obj.find(".attr_item_li").length;
+		var html=obj.find(".attr_item_copy").html();
+		html = html.replace(/\[@\]/,"["+a_len+"]");
+		obj.find(".attr_item_list").append('<div class="attr_item_li">'+html+'</li>');
+	});
+	
+	$(document).on("click",".attr_item_remove",function(e){
+		$(this).parents(".attr_item_li").remove();
+	});
+	
+	
+  });
+	
+</script>
+</div>
+{include file='footer.html'}</div>
+
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/plugin/ueditor/ueditor_simple.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+<script language="javascript">
+var editor=UE.getEditor('content',options)
+</script>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript" src="/static/js/upload.js"></script>
+</body>
+</html>

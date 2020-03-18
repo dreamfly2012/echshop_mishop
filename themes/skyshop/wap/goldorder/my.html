@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+ 
+
+ 
+<div class="header">
+<a  class="left-btn" href="/index.php?m=user"><span class="iconfont icon-back"></span></a>
+<div class="title">我的兑换</div>
+</div> 
+
+  <div class="main-body pd-5">
+     
+     <div class="uclist">
+{foreach item=c from=$data}
+<div class="item">
+
+ <div class="hd">订单号:{$c.orderno} <span class="right">{$c.dateline|date:m-d H:i}</span></div>
+ <div class="tj">{$c.money} <span class="right">{$order_status_list[$c.status]}</span></div>
+ <div class="info">{$c[address].truename} {$c[address].telephone}</div>
+ 
+ <div class="tools"><a href="/index.php?m=goldorder&a=show&order_id={$c.order_id}">查看</a></div>
+ </div>
+{/foreach}
+
+{$pagelist}
+
+</div>
+ </div>
+{include file="footer.html"} 
+</body> 
+</html>

@@ -1,0 +1,42 @@
+<h3>订单详情</h3>
+<table class="table table-bordered" width="100%">
+<tr>
+	<td>订单编号：{$data.orderno}</td>
+    <td>订单类型：{$order_type_list[$data.type_id]}</td>
+    <td>订单价格：{$data.money}</td>
+</tr>
+
+<tr>
+	<td>下单时间：{$data.dateline|date:Y-m-d H:i}</td>
+	<td>支付状况：{$order_ispay[$data.ispay]}</td>
+    <td>订单状态：{$order_status_list[$data.status]}</td>
+</tr>
+
+
+
+<tr><td colspan="3"><strong>联系方式:</strong>
+{$addr.p_c_t}{$addr.address} 邮编：{$addr.zip_code} 姓名：{$addr.truename} 手机：{$addr.telephone}
+</td></tr>
+
+<tr>
+<td colspan="3"><strong>发货方式：</strong></td>
+</tr>
+
+<tr>
+<td colspan="3"><strong>物流信息：</strong>{$data.shipping_info}</td>
+</tr>
+</table>
+
+<h3>商品详情</h3>
+<table class="table table-bordered" width="100%">
+{foreach item=p from=$order_product}
+<tr>
+<td style="width:50px;"><a href="{R("/index.php?m=show&id=$p.id")}" target="_blank"><img src="{$p.imgurl|images_site}.100x100.jpg" width="50" /></a></td>
+<td><p><a href="{R("/index.php?m=show&id=$p.id")}" target="_blank">{$p.title}</a><br />
+{if $p.attr}<span style="color:red">{$p.attr}</span><br>{/if}
+
+原价：￥{$p.price} 促销价：{$p.lower_price}</p></td>
+<td>下单价：{$p.order_price}</td>
+</tr>
+{/foreach}
+</table>

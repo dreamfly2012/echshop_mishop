@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+     
+    <div class="box960"><div class="row">
+<div class="col-6-1">{include file="inc/user_left.html"}</div>
+<div class="col-6-5">
+{include file="order/nav.html"}
+<h1 class="hd-h1">订单管理</h1>
+<div id="jqbox">
+<table width="100%" class="table table-bordered">
+<tr>
+<td>ID</td>
+<td>订单号</td>
+<td>联系方式</td>
+<td>下单时间</td>
+<td>支付状况</td>
+<td>订单类型</td>
+<td>价格</td>
+<td>状态</td>
+<td>操作</td>
+</tr>
+{foreach item=c from=$data}
+<tr>
+<td>{$c.order_id}</td>
+<td>{$c.orderno}</td>
+<td>{$c[address].truename}<br>
+	{$c[address].telephone}
+</td>
+<td>{$c.dateline|date:m-d H:i}</td>
+<td>{$order_ispay[$c.ispay]}  {if $c.unpay}<br />货到付款{/if}</td>
+<td>{$order_type_list[$c.type_id]}</td>
+<td>{$c.money}</td>
+<td>{$order_status_list[$c.status]}</td>
+<td><a href="/index.php?m=order&a=show&order_id={$c.order_id}">查看</a> <br />
+ 
+{if !$c.unpay && $c.ispay==1}<a href="{R("/index.php?m=order&a=pay&order_id=$c.order_id")}">支付</a>{/if}
+</td>
+</tr>
+{/foreach}
+
+</table>
+</div>
+{$pagelist}
+
+</div>
+</div>
+</div>
+{include file="footer.html"} </div>
+</body>
+</html>

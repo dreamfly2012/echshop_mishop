@@ -1,0 +1,27 @@
+{include file='header.html'}
+ 
+<ul class="nav nav-tabs">
+<li class="active"><a href="{$appadmin}?m=module">{$lang.module_admin}</a></li>
+<li><a href="{$appadmin}?m=module&a=add">{$lang.module_create}</a></li>
+</ul>
+
+<div class="rbox">
+<table width="100%" class="table table-bordered">
+<tr>
+{foreach item=c from=$mods}
+<td width="15%">{$c.title}</td>
+<td width=" ">{$c.info}</td>
+<td width="22%">{if $c.isinstall}<font style="color:red"><a href='javascript:;' onclick="if(confirm('{$lang.confirm_uninstall_module}')){window.location.href='{$appadmin}?m=module&a=uninstall&inmodule={$c.module}';}">{$lang.uninstall}</a></font> <a href="/module.php?m={$c.module}" target="_blank">{$lang.view}</a>
+<a href="{$c.adminurl}" target="menu-frame" >管理</a>
+
+{else}<a href='{$appadmin}?m=module&a=install&inmodule={$c.module}'>{$lang.install}</a>{/if}
+&nbsp;&nbsp;
+ 
+&nbsp;&nbsp;
+<a href='javascript:;' onclick="if(confirm('{$lang.confirm_delete_module}')){window.location.href='{$appadmin}?m=module&a=delete&inmodule={$c.module}';}">{$lang.delete}</a>
+</td>
+</tr>
+{/foreach}
+</table>
+</div>
+{include file='footer.html'}

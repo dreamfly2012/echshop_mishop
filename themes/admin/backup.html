@@ -1,0 +1,33 @@
+{include file='header.html'}
+<ul class="nav nav-tabs">
+<li class="active"><a href="{$appadmin}?m=backup">{$lang.backup_admin}</a></li></ul>
+
+<div class="rbox">
+<table width="100%"   cellpadding="0" cellspacing="1" class="table table-bordered">
+  <tr>
+    <td width="75%" height="78" style="padding:6px;"><p> {$lang.backup_suggest_1}<br />
+      </p></td>
+    <td width="25%" align="center"><input type="button" value="{$lang.backup_start}" class="btn" onclick="window.open('{$appadmin}?m=backup&a=backtable');" /></td>
+  </tr>
+  <tr>
+    <td height="60"  style="padding:6px;"><p>{$lang.backup_suggest_1}</p></td>
+    <td align="center" valign="middle"><p>&nbsp;</p></td>
+  </tr>
+  <form method="get" action="{$appadmin}" target="_blank">
+  <input type="hidden" name="m" value="backup" />
+  <input type="hidden"  name="a" value="restoretable" />
+  <tr>
+    <td height="60" align="center"  style="padding:6px;">
+    <select name="backdir" id="backdir">
+      <option value="">{$lang.backup_select}</option>
+      {foreach from=$backlist item=t }
+      <option value="{$t}">{$t}</option>
+      {/foreach}
+    </select></td>
+    <td align="center" valign="middle"><input type="submit" onclick="return confirm('{$lang.backup_resotre_ask}');" value="{$lang.restore_start}" class="btn"></td>
+  </tr>
+  </form>
+</table>
+
+</div>
+{include file='footer.html'}

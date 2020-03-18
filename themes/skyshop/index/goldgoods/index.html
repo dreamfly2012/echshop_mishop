@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+<body class="bg-fff">
+<div class="page"> {include file="header.html"}
+
+  <div class="main-body"> 
+    <div class="box960">
+      <div class="row">
+         
+          
+        	 
+            <div class="index-hglist" id="hg-list">
+            {foreach item=c from=$list}
+            	{include file="goldgoods/item.html"}
+              
+            {/foreach}
+            </div>
+            <div>
+            {$pagelist}
+            </div>
+        </div>
+       <script src="/plugin/jquery/masonry.pkgd.min.js"></script>
+       <script src="/plugin/jquery/imagesloaded.pkgd.min.js"></script>
+       <script>
+	   $(function(){
+		   var c=$('#hg-list').masonry({	  
+		 		 itemSelector: '.item'
+			});
+			c.imagesLoaded( function() {
+			 	 c.masonry();
+			});
+	   });
+       </script>  
+       
+  </div>
+  </div>
+  {include file="footer.html"} </div>
+</body>
+</html>

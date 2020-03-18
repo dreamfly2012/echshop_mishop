@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> 
+ 
+<div class="header" style="display:block; height:50px;">
+<a class="left-btn" href="/index.php"><span class="iconfont icon-back"></span></a>
+<div class="title">个人中心</div>
+ 
+</div>
+  <div class="main-body">
+  <style>
+  .uclist .item{height:40px; line-height:40px;}
+  </style>
+<div class="row-box">
+ 	
+ 	<div class="uclist">
+    	 
+<div class="item"><a href="/index.php?m=order&a=my">我的订单</a></div>
+<div class="item"><a href="/index.php?m=goldorder&a=my">我的兑换</a></div>
+<div class="item"><a href="/index.php?m=notice">消息</a></div>
+<div class="item"><a href="/index.php?m=pay_log">收支记录</a></div>
+<div class="item"><a href="/index.php?m=recharge&a=my">充值记录</a></div>
+<div class="item"><a href="/index.php?m=recharge">在线充值</a></div>
+<div class="item"><a href="/index.php?m=comment&a=my">我的评论</a></div>
+
+</div>
+</div>
+<div class="row-box">
+ 	
+ 	<div class="uclist">  
+           <div class="item"><a href="/index.php?m=user_address&a=my">收货地址</a></div>
+<div class="item"><a href="/index.php?m=user&a=info">用户信息</a></div>
+<div class="item"><a href="/index.php?m=user&a=password">修改密码</a></div>
+<div class="item"><a href="/index.php?m=user&a=user_head">修改头像</a></div>
+           
+    </div>
+  <a href="/index.php?m=login&a=logout" class="btn btn-row btn-warining">注销</a>
+
+</div>
+ 
+{include file="footer.html"}
+</div>
+</body>
+</html>

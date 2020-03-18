@@ -1,0 +1,54 @@
+{include file="header.html"}
+<ul class="nav nav-tabs">
+<li class="active"><a href="{$appadmin}?m=invite">邀请管理</a></li>
+</ul>
+
+<table class="table">
+
+<tr>
+	<th>用户</th>
+    <th>手机</th>
+    <th>邮箱</th>
+    <th>注册时间</th>
+    
+    <th>邀请人</th>
+    <th>奖励</th>
+    <th>状态</th>
+    <th>操作</th>
+</tr>
+
+{foreach item=c from=$data}
+<tr>
+	<td>{$c[inuser][username]}</td>
+    <td>{$c[inuser][telephone]}</td>
+    <td>{$c[inuser][email]}</td>
+    <td>{$c[inuser][dateline]|date:Y-m-d H:i}</td>
+    <td>{$c[user][nickname]}</td>
+    <td><span class="pay">{if $c.ispay}已发送{else}未发送{/if}</span></td>
+    <td> {if $c.bstatus eq 1}
+   <img src='{$skins}images/yes.gif' class="ajax_no" url='{$appadmin}?m=invite&a=status&id={$c.id}&status=2' rurl='{$appadmin}?m=invite&a=status&id={$c.id}&status=1'>
+    {else}
+    <img src='{$skins}images/no.gif' class="ajax_yes" url='{$appadmin}?m=invite&a=status&id={$c.id}&status=1' rurl='{$appadmin}?m=invite&a=status&id={$c.id}&status=2'>
+    {/if}</td>
+    <td>{if !$c.ispay}<a href="javascript:;" class="sendpay" did="{$c.id}">发送奖励</a>{/if}</td>
+</tr>
+{/foreach}
+
+</table>
+<script>
+$(function(){
+	$(".sendpay").bind("click",function(){
+		var obj=$(this);
+		if(confirm("确认给该用户发送奖励吗")){
+		$.get("{$appadmin}?m=invite&a=pay&id="+$(this).attr("did"),function(data){
+			if(data.error==1){
+				alert(data.message);
+			}else{
+				obj.parents("tr").find(".pay").html("发送成功");
+			}
+		},"json");
+		}
+	});
+});
+</script>
+{include file="footer.html"}

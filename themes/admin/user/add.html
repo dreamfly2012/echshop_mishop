@@ -1,0 +1,152 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+<ul class="nav nav-tabs">
+    	<li><a href="{$appadmin}?m=user">用户管理</a></li>
+        <li class="active"><a href="{$appadmin}?m=user&a=add">用户添加</a></li>
+    </ul>
+<form method="post" action="{const.APPADMIN}?m=user&a=save">
+<input type="hidden" name="userid" value="{$data.userid}">
+<table class="table table-bordered" width="100%">
+
+<tr>
+    	<td width="70">账号：</td>
+        <td width=""><input type="text" name="username" value="{$data.username}"></td>
+    </tr>
+	<tr>
+    	<td >昵称：</td>
+        <td><input type="text" name="nickname" value="{$data.nickname}"></td>
+    </tr>
+    
+    <tr>
+    	<td>邮箱：</td>
+        <td>{if $data.email}{$data.email}{else}<input type="text" name="email" value="" />{/if}</td>
+    </tr>
+    
+    <tr>
+	  <td>手机：</td>
+	  <td><input name="telephone" type="text" id="telephone" value="{$data.telephone}"></td>
+	  </tr>
+	<tr>
+    
+    <tr>
+    	<td>密码：</td>
+        <td><input type="text" name="password" /></td>
+    </tr>
+    <tr>
+    	<td>重复密码：</td>
+        <td><input type="text" name="password2" /></td>
+    </tr>
+    
+    <tr>
+    	<td>头像</td>
+        <td>
+        <div class="btn-upload">
+        <input type="file" name="upimg" id="upimg" class="btn-upload-file" onChange="uploadgoodsimg()">
+        </div>
+      <label  id="loading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="user_head" id="imgurl" value="{$data.user_head}">
+      <span id="imgShow">
+      {if $data.user_head}
+      <img src="{$data.user_head|IMAGES_SITE}.100x100.jpg">
+      {/if}
+      </span></td>
+    </tr>
+    
+	<tr>
+	  <td>身份证：</td>
+	  <td><input name="user_card" type="text" id="user_card" value="{$data.user_card}"></td>
+	  </tr>
+	<tr>
+	  <td>真实姓名：</td>
+	  <td><input name="truename" type="text" id="truename" value="{$data.truename}"></td>
+	  </tr>
+	
+	  <td>实名认证：</td>
+	  <td><select name="is_auth">
+      	<option value="1" {if $data.is_auth eq 1} selected{/if}>已通过</option>
+        <option value="2" {if $data.is_auth eq 2} selected{/if}>未通过</option>
+        <option value="3" {if $data.is_auth eq 3} selected{/if}>待审核</option>
+      </select></td>
+	  </tr>
+	<tr>
+	  <td>用户类型：</td>
+	  <td><select name="user_type">
+      	{foreach item=c key=k from=$user_type_list}
+        <option value="{$k}" {if $k eq $data.user_type} selected{/if}>{$c}</option>
+        {/foreach}
+      </select></td>
+	  </tr>
+	<tr>
+	  <td>账户状态：</td>
+	  <td><select name="status">
+      	<option  value="99" {if $data.status eq 99} selected{/if}>已禁止</option>
+      	<option value="1" {if $data.status eq 1} selected{/if}>已通过</option>
+        <option value="10"  {if $data.status eq 10} selected{/if}>待审核</option>
+      </select></td>
+	  </tr>
+	<tr>
+	  <td>允许投稿</td>
+	  <td><select name="is_post">
+      		<option value="2" {if $data.is_post eq 2} selected="selected"{/if}>不允许</option>
+            <option value="1"  {if $data.is_post eq 1} selected="selected"{/if}>允许</option>
+      	</select></td>
+	  </tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td><input type="submit" name="button" id="button" class="btn btn-success" value="保存"></td>
+	  </tr>
+    
+    
+</table>
+</form>
+
+</div>
+</div>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#loading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=uploadtao&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='/"+data.imgurl+".100x100.jpg' width='100'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+                    alert(e);
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+
+{include file="footer.html"}

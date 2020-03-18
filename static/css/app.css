@@ -1,0 +1,234 @@
+/* CSS Document */
+ol{list-style-type:none;}
+.flow-step{margin-bottom:20px;}
+.flow-step li{font:normal 14px Microsoft Yahei; color:#888; float:left;}
+.flow-step li b{font:normal 30px/42px Arial; float:left;}
+.flow-step li span{float:left; margin:15px 0 0 5px;}
+.flow-step .on{color:#C1A86B;}
+.flow-step .step-line strong{height:2px; background:#888; width:80px; display:block; margin:20px 15px 0; overflow:hidden;}
+.flow-step .reg-quit{border:none;}
+.icon-minus{background:url(images/minus.png) no-repeat; width:15px; height:15px; display:inline-block;}
+.icon-plus{background:url(images/plus.png) no-repeat; width:15px; height:15px; display:inline-block;}
+.nav-list{ list-style-type:none;}
+.nav-list li{line-height:30px;}
+ 
+.header{min-height:50px;}
+.hd-h1{line-height:30px; margin-bottom:10px; font-size:18px; font-weight:700;}
+.hd-h3{line-height:40px; height:40px; display:block;  font-size:16px; font-weight:700;}
+.color-h4 {
+	color: #F15433;
+}
+.bg-f3 {
+	background-color: #f3f3f3;
+}
+.bg-fff {
+	background-color: #fff;
+}
+.index-tabs {
+}
+.index-tabs .tabs li {
+	width: 33.3%;
+}
+.index-tabs .tabs li a {
+	text-align: center;
+	display: block;
+	border: 1px solid #ccc;
+}
+.index-tabs .tabs li a.active {
+	border-bottom: 0px;
+	border-top: 2px solid #F60;
+}
+.index-tabs .tabs-item {
+	padding: 10px;
+	line-height: 20px;
+}
+.tabs-skins2 .tabs .active {
+	border-bottom: 1px solid #F60;
+}
+.tabs-item .dot-border li {
+	border-bottom: 1px dotted #ccc;
+	margin-bottom: 1px;
+	height: 25px;
+	line-height: 25px;
+	overflow: hidden;
+}
+/*换购样式*/
+.hg-list .item {
+	width: 25%;
+	float: left;
+	margin-bottom: 10px;
+}
+.hg-list .item .pd {
+	width: 90%;
+	margin: 0 auto;
+	background-color: #fcfcfc;
+}
+.hg-list .item .img {
+	width: 100%;
+	margin-bottom: 5px;
+}
+.hg-list .item .img img {
+	width: 100%;
+}
+.hg-list .item .title {
+	line-height: 20px;
+	margin-bottom: 5px;
+	padding: 0px 5px;
+}
+.hg-list .item .price {
+	line-height: 25px;
+	padding: 0px 5px;
+}
+.hg-list .item .price .money {
+	text-decoration: line-through;
+}
+.hg-list .item .price .num {
+	color: #999;
+	float: right;
+	margin-right: 10px;
+}
+.hg-list .item .goldrow{ height:30px; line-height:30px;}
+.hg-list .item .goldrow .gold{font-size:20px; color:red;}
+/*晒单样式*/
+.sd-list .item {
+	width: 24%;
+	float: left;
+	margin-right: 1%;
+}
+.sd-list .pd {
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+.sd-list .item .img {
+	margin-bottom: 10px;
+}
+.sd-list .item .img img {
+	width: 100%;
+}
+.sd-list .item .title {
+	line-height: 20px;
+}
+.sd-list .item .time {
+	color: #999;
+	text-align: center;
+	line-height: 30px;
+}
+/*默认换购样式*/
+.index-hglist .item {
+	width: 25%;
+	float: left;
+	margin-bottom: 10px;
+}
+.index-hglist .item .pd {
+	width: 96%;
+	margin: 0 auto;
+	text-align: center;
+	padding-bottom: 10px;
+	background-color: #fafafa;
+	position: relative;
+}
+.index-hglist .item .pd .rel {
+	position: relative;
+	margin-bottom: 5px;
+}
+.index-hglist .item .pd .rel .pos {
+	color: #fff;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 3px;
+}
+.index-hglist .item .pd .rel .pos a {
+	color: #fff;
+}
+.index-hglist .item .pd .rel .bg {
+	background-color: #333;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+	height: 60px;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+.index-hglist .item .title {
+	height: 25px;
+	line-height: 25px;
+	overflow: hidden;
+	padding: 0px 5px;
+}
+.index-hglist .item .info {
+	line-height: 25px;
+}
+.index-hglist .item .info .gold {
+	color: red;
+	font-size:20px;
+}
+.footer-hd {
+	padding: 10px 10px 10px 0px;
+}
+.footer-p {
+	line-height: 25px;
+}
+
+/*******产品款式列表**********/
+.kslist{width:100%; clear:both;}
+  .kslist .hd{ float:left; height:30px; line-height:30px;}
+  .kslist .item{ float:left; height:30px; cursor:pointer; line-height:30px; padding:0px 6px; margin-right:10px; border:1px solid #eee;}
+  .kslist .item.active{background-color:#eee;}
+/***************/  
+/*
+-----------------------------------------------------------++
+登录注册
+-------------------------------+++
+*/
+.loginbox { background: #fff; width: 400px; margin: 0 auto; }
+.loginbox .f_padding { padding: 20px; }
+.loginbox .form { width: 100%; }
+.loginbox .form li { overflow: hidden; margin-bottom: 10px; }
+.loginbox .form li img { vertical-align: middle; }
+.loginbox .form li .inp { -webkit-appearance: none; width: 96%; height: 40px; border: 1px solid #dadbda; border-radius: 2px; background-color: #f6f6f6; padding: 0 1.5%; outline: none; }
+.loginbox .form li .inp.code { width: 40%; }
+.loginbox .form li.spe { color: #999; font-size: 0.8em; }
+.loginbox .form li.spe label { line-height: 1.5em; }
+.loginbox .form li.spe label input { vertical-align: baseline; }
+.loginbox .form li.spe .fr { float: right; color: #999; text-decoration: none; }
+.loginbox .form li .btn { display: inline-block; line-height: 38px; color: #fff; font-size: 1.2em; border-radius: 6px; float: right; margin-top: 10px; margin-right: 5px; background: #f6151a; text-decoration: none; border: 0; width: 98%; text-align: center; }
+.loginbox .form li .thirdlogin { color: #999; font-size: 0.9em; text-align: center; margin: 20px auto 10px; }
+.loginbox .form li .thirdlogin .ico { margin-left: 3px; display: inline-block; width: 25px; height: 25px; background: url(../img/third.png); background-size: 100px 25px; vertical-align: middle; border-radius: 50%; }
+.loginbox .form li .thirdlogin .ico.weixin { background-position: -75px 0; }
+.loginbox .form li .thirdlogin .ico.sina { background-position: -50px 0; }
+.loginbox .form li .thirdlogin .ico.qq { background-position: -25px 0; }
+.loginbox .form li .thirdlogin .ico.renren { background-position: 0 0; }
+.loginbox .form li .links { color: red; font-size: 0.9em; text-decoration: none; }
+.loginbox .form li .jie { color: #999; }
+.loginbox .form li.yzm_box { position: relative; }
+.loginbox .form li.yzm_box .btn_code { position: absolute; right: 0; top: 0; padding: 0 5px; text-decoration: none; color: #666; height: 40px; line-height: 40px; background: #fff; border: 1px solid #dadbda; }
+.loginbox .form li.yzm_box .btn_code.disable { cursor: not-allowed; color: #ccc; }
+.loginbox .rgbox{display:none;}
+.loginbox .steps{height:40px; line-height:40px; padding-left:5px; text-align:center; line-height:30px; font-size:14px;}
+.loginbox .steps a{text-decoration:none; color:#333}
+.paddingheight {
+    height: 50px;
+}
+
+/*********在线充值***********/
+.paylist{padding-left:50px;}
+.paylist .item{height:40px; line-height:40px; cursor:pointer; border-radius:5px; margin-right:10px; border:1px  solid #83C44E;   padding:0px 10px; float:left;margin-bottom:10px;   }
+.paylist .item.active{background-color:#83C44E; color:#fff;}
+/**********购物车********/
+.cartlist{ width:100%;}
+.cartlist thead{margin-bottom:10px;}
+.cartlist thead .hd{height:50px;background-color:#eee; }
+.cartlist thead .hd th{color:#333; text-align:center;margin-bottom:3px;}
+.cartlist  tbody td{color:#333; text-align:center; border-bottom:1px solid #ccc; padding:10px 3px;}
+.cartlist .orderCard_totalmoney{color:red;}
+.cartlist .btn{width:200px;}
+/**用户面板左边**/
+.userpanel{border:1px solid #ccc;}
+.userpanel .hd{ height:40px; line-height:40px; background-color:#5CB85C;     border-color: #4CAE4C; color:#fff; text-align:center;}
+.userpanel .item a{height:40px; line-height:40px; display:block; border-bottom:1px solid #ccc; text-align:center;}
+.userpanel .item a.no{border:0px;}		
+

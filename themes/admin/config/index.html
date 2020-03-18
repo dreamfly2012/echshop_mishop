@@ -1,0 +1,51 @@
+{include file='header.html'}
+<div class="row">
+  <div class="span12">
+  
+    <ul class="nav nav-tabs" id="myTab">
+      <li  class="active"><a href="#c_base">基本设置</a></li>
+      <li><a href="#c_email">邮箱设置</a></li>
+      <li><a href="#c_open">开放平台</a></li>
+      <li><a href="#c_water">水印设置</a></li>
+      <li><a href="#c_sms">短信设置</a></li>
+      <li><a href="#c_invite">邀请设置</a></li>
+      <li><a href="#c_pay">支付设置</a></li>
+      <li><a href="#c_yingye">营业设置</a></li>
+      <li><a href="#c_cuxiao">全站促销</a></li>
+    </ul>
+    <form method="post" id="t-form" action="{const.APPADMIN}?m=config&a=save">
+      <div class="tab-content">
+        <div class="tab-pane active" id="c_base">{include file="config/base.html"}</div>
+        <div class="tab-pane" id="c_open">{include file="config/open.html"}</div>
+        <div class="tab-pane" id="c_water">{include file="config/water.html"}</div>
+        <div class="tab-pane" id="c_sms">{include file="config/sms.html"}</div>
+        <div class="tab-pane" id="c_invite">{include file="config/invite.html"}</div>
+        <div class="tab-pane" id="c_pay">{include file="config/pay.html"}</div>
+        <div class="tab-pane" id="c_yingye">{include file="config/yingye.html"}</div>
+        <div class="tab-pane" id="c_email">{include file="config/email.html"}</div>
+         <div class="tab-pane" id="c_cuxiao">{include file="config/cuxiao.html"}</div>
+      </div>
+      <div class="pd-10"><input type="submit" name="button" id="button" class="btn btn-success btn-large" style="margin-right:100px;" value="提交"></div>
+    </form>
+  </div>
+</div>
+<script language="javascript">
+$(".tab-content tr").find("td:eq(0)").css("width","100px");
+$('#myTab a').click(function (e) {
+	  e.preventDefault();
+	  $(this).tab('show');
+});
+$("#testphone").click(function(){
+		$.get("{$appadmin}?m=config&a=testphone",$("#t-form").serialize(),function(data){
+			alert(data)
+		})
+});
+
+$("#testemail").click(function(){
+	$.get('{$appadmin}?m=config&a=testemail',$("#t-form").serialize(),function(data){ 
+    	$('.testemail_res').html(data); 
+    });
+});
+
+</script> 
+{include file="footer.html"}

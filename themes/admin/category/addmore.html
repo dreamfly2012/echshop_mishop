@@ -1,0 +1,14 @@
+{include file="header.html"}
+<div class="span12">
+{include file="category/category_nav.html"}
+<form method="post" action="{$appadmin}?m=category&a=savemore">
+<input type="hidden" name="catid" value="{$data.catid}">
+ 
+<table class="table table-bordered">
+<tr><td>所属分类：</td><td><a href="{$appadmin}?m=admin_category&pid={$data.id}">{$data.cname}</a></td></tr>
+<tr><td>分类内容：</td><td><textarea name="content" style="width:400px; height:200px;"></textarea>(每行一个分类)</td></tr>
+<tr><td></td><td><input type="submit" value="添加" class="btn btn-success"></td></tr>
+</table>
+</form>
+</div>
+{include file="footer.html"}

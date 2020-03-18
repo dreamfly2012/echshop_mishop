@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+ 
+
+<body style=" background-color:#EBEBEB;">
+<div class="page">
+{include file="article/panel.html"}
+<div class="header" style="">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">内容</div>
+<div class="right-btn bg"><a href="/index.php?m=comment&tablename=article&object_id={$data.id}">{$data.comment_num}</a></div>
+</div>
+
+<div class="main-body" style="background-color:#fff; padding-top:10px;">
+<h3 style="margin-bottom:10px; padding-left:10px;">{$data.title}</h3>
+<div class="d-tool"> {$data['author']['nickname']}&nbsp;&nbsp; {$data.dateline|timeago}</div>
+<div class="d-content" >
+{$data.content}
+</div>
+
+{include file="comment/inc_common.html"}
+</div>
+
+{include file="footer.html"}
+</div>
+</body>
+</html>

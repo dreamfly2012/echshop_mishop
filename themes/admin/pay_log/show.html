@@ -1,0 +1,19 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='pay_log/nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr><td>id：</td><td>{$data.id}</td></tr>
+  <tr><td>时间：</td><td>{$data.dateline}</td></tr>
+  <tr><td>用户id：</td><td>{$data.userid}</td></tr>
+  <tr><td>操作类型：</td><td>{$data.type_id}</td></tr>
+  <tr><td>日志内容：</td><td>{$data.content}</td></tr>
+  <tr><td>删除：</td><td>{$data.isdelete}</td></tr>
+  <tr><td>金钱：</td><td>{$data.money}</td></tr>
+  <tr><td>收支：</td><td>{$data.ispay}</td></tr>
+  <tr><td>分站id：</td><td>{$data.siteid}</td></tr>
+ </table>
+
+</div>
+</div>
+{include file="footer.html"}

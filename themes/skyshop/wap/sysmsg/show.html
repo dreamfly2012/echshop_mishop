@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page">
+	<div class="header">
+<a  class="left-btn" href="/index.php?m=sysmsg"><span class="iconfont icon-back"></span></a>
+<div class="title">消息详情</div>
+</div> 
+    <div class="main-body">
+    <div class="box960">
+<div class="row">
+{include file="msg_nav.html"}
+ 
+<table class="table table-bordered" width="100%">
+<tr>
+<td>{$data.title}</td>
+</tr>
+<tr>
+<td>{$data.content}</td>
+</tr>
+</table>
+
+</div>
+
+</div>
+{include file="footer.html"}
+</div>
+</body>
+</html>

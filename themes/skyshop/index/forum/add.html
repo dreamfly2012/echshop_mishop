@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page">
+{include file='header.html'}
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+
+<script language="javascript">
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&id={$data.id}",
+		{include file="inc/ueditor_simple.html"}
+		 
+};
+var editor=UE.getEditor('content',options)
+</script>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#uploading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=uploadtao&dir=product&id={$data.id}&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='/"+data.imgurl+".100x100.jpg' width='100'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+<div class="box960">
+<div class="row">
+<div class="col-6-1">{include file='inc/user_left.html'}</div>
+<div class="col-6-5">
+<div class="w98 right">
+<ul class="nav nav-tabs">
+<li> <a href="/index.php?m=forum&a=my">我的帖子</a> </li>
+<li class="active"><a href="/index.php?m=forum&a=add">发表帖子</a></li>
+</ul>
+<ul class="nav nav-tabs" id="myTab" style="margin-top:10px;">
+<li class="active"><a href="#p_base"  data-toggle="tab" >基本信息</a></li>
+<li><a href="#p_other"  data-toggle="tab" >扩展信息</a></li>
+<li><a href="#p_attr"  data-toggle="tab" >属性信息</a></li>
+ 
+</ul>
+<form method="post" action="/index.php?m=forum&a=save"  onkeypress="javascript:return NoSubmit(event);">
+<input type="hidden" name="id" value="{$data.id}" />
+<div class="tab-content"> 
+<div class="tab-pane active" id="p_base"> 
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="100" align="right"> 标题：</td>
+    <td><input name="title" type="text" id="title" value="{$data.title}" size="80"></td>
+  </tr>
+  <tr>
+    <td align="right">板块：</td>
+    <td>
+    <select name="catid" class="w150">
+    <option value="0">请选择</option>
+    {foreach item=c from=$cat_list}
+                <option value="{$c.catid}" {if $data.catid eq $c.catid or get('catid') eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                {foreach item=c_2 from=$c.child}
+                	<option value="{$c_2.catid}" {if $data.catid eq $c_2.catid or get('catid') eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                    {foreach item=c_3 from=$c_2.child}
+                    <option value="{$c_3.catid}" {if $data.catid eq $c_3.catid or get('catid') eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+    </select>
+    
+    
+    
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="right">图片：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="upimg" onChange="uploadgoodsimg()">
+      </div>
+      <label  id="uploading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="imgurl" id="imgurl" value="{$data.imgurl}">
+      <span id="imgShow">
+      {if $data.imgurl}
+          <img src="{$data.imgurl|images_site}.100x100.jpg">
+          {/if}
+      </span>
+      </td>
+  </tr>
+ 
+  <tr>
+    <td align="right">内容：</td>
+    <td><script type="text/plain" id="content" name="content" style="height:400px;" >{$data.content}</script></td>
+  </tr>
+  
+</table>
+</div>
+<!--扩展信息-->
+<div class="tab-pane" id="p_other">
+<table class="table">
+<tr>
+	<td></td>
+    <td>暂无选项</td>
+</tr>
+</table>
+</div>
+<!--End 扩展信息-->
+
+<!--属性开始-->
+  <div class="tab-pane active" id="p_attr"  >
+  <table class="table">
+  	<tr><td>产品属性</td><td>
+    <select name="attr_cat_id" name="attr_cat_id" id="attr_cat_id">
+    <option value="0">请选择</option>
+    {foreach item=c key=k from=$attr_cat}
+    <option value="{$k}" {if $data.attr_cat_id eq $k} selected="selected"{/if}>{$c}</option>
+    {/foreach}
+    </select></td></tr>
+  </table>
+   <div id="attr_html"></div>
+  </div>
+  <!--end属性-->
+  
+ 
+</div>
+<div class="form-submit">
+ <input type="submit" name="button" id="button" class="btn btn-success btn-larger" value="提交"> 
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<script>
+  $(function(){
+  $('#myTab a').click(function (e) {
+		e.preventDefault();
+		$(this).tab('show');
+	})	
+	
+/*初始化载入属性*/
+	$.get("/index.php?m=forum&a=attr&id={$data.id}&cat_id="+$("#attr_cat_id").val(),function(data){
+				$("#attr_html").html(data);
+				ajax_jsa();	
+		});
+	/*属性载入完毕*/
+	
+	$("#attr_cat_id").bind("change",function(){
+		$.get("/index.php?m=forum&a=attr&id={$data.id}&cat_id="+$(this).val(),function(data){
+				$("#attr_html").html(data);
+				ajax_jsa();	
+		});
+	});
+	
+	$(document).on("click",".attr_item_add",function(e){
+		var obj=$(this).parent(".attr_item");
+		var o_t=obj.find(".attr_item_list");
+		var a_len=obj.find(".attr_item_li").length;
+		var html=obj.find(".attr_item_copy").html();
+		html = html.replace(/\[@\]/,"["+a_len+"]");
+		obj.find(".attr_item_list").append('<div class="attr_item_li">'+html+'</li>');
+	});
+	
+	$(document).on("click",".attr_item_remove",function(e){
+		$(this).parents(".attr_item_li").remove();
+	});
+	
+	
+  });
+	
+</script>
+{include file='footer.html'}
+</div>
+</body>
+</html>

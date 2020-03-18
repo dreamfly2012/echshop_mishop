@@ -1,0 +1,39 @@
+{include file='header.html'}
+<ul class="nav nav-tabs">
+<li class="active"><a href="{$appadmin}?m=model">{$lang.model_admin}</a></li>
+<li><a href="{$appadmin}?m=model&a=add">{$lang.model_add}</a></li>
+</ul>
+
+
+<div class="rbox">
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="5%" align="center">ID</td>
+    <td width="14%" align="center">名称</td>
+    <td width="15%" align="center">表名</td>
+ 	<td width="9%" align="center">状态</td>
+   
+    <td width="57%" align="center">操作</td>
+  </tr>
+  {foreach item=c from=$data}
+  <tr>
+    <td align="center">{$c.id}</td>
+    <td align="center">{$c.title}</td>
+    <td align="center">{$c.tablename}</td>
+ 	<td align="center"> {if $c.status eq 1}
+           <img src="/static/images/yes.gif" class="ajax_no"  rurl="{$appadmin}?m=model&a=status&id={$c.id}&status=1" url="{$appadmin}?m=model&a=status&id={$c.id}&status=10" />
+           {else}
+           <img src="/static/images/no.gif"  class="ajax_yes" url="{$appadmin}?m=model&a=status&id={$c.id}&status=1" rurl="{$appadmin}?m=model&a=status&id={$c.id}&status=10" />  
+          {/if}</td>
+    <td align="center">
+    {if $c.module}模块 
+    {else}<a href="{$appadmin}?m=model&a=add&id={$c.id}">{$lang.edit}</a> 
+   {if $c.id>20}<a href="javascript:;" class="del" url="{$appadmin}?m=model&a=delete&id={$c.id}">{$lang.delete}</a>{/if}{/if} </td>
+  </tr>
+  {/foreach}
+  
+</table>
+
+
+</div>
+{include file='footer.html'}

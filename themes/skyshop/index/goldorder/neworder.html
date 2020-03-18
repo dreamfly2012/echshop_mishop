@@ -1,0 +1,9 @@
+<div class="pd-5">
+{foreach item=c from=$data}
+<div class="item" style="margin-bottom:10px; border-bottom:1px dotted #ccc; padding:10px;">
+<a href="/index.php?m=member&userid={$c.userid}"><img src="{$c.user_head|IMAGES_SITE}.100x100.jpg" width="30"></a> <a href="/index.php?m=member&userid={$c.userid}">{$c.nickname}</a> 在{$c.dateline|timeago} 兑换了该商品
+</div>
+{foreachelse}
+<h1>暂无兑换</h1>
+{/foreach}
+</div>

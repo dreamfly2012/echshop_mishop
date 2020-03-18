@@ -1,0 +1,44 @@
+ <div class="tab-pane active" id="p_latlng"  >
+  <table class="table table-bordered">
+  	<tr><td width="15%">地理位置：</td><td><input type="text" name="latlng" id="latlng" value="" />  (当前：{$data.lat},{$data.lng}) <br />
+    地图搜索：<input type="text" name="word" id="word" /> </td></tr>
+    <tr><td></td><td>
+    <div id="map_canvas" style="width:600px; height:300px;"></div>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={const.BDMAPKEY}"></script>
+    <script language="javascript">
+	function NoSubmit(ev)
+	{
+		if( ev.keyCode == 13 )
+		{
+			return false;
+		}
+		return true;
+	}
+	$(document).ready(function(){
+ 
+		$("#word").bind("keyup",function(){
+			localsearch($(this).val());
+		});
+	});
+   var map = new BMap.Map("map_canvas");
+   map.enableScrollWheelZoom();
+   map.addControl(new BMap.MapTypeControl());  
+   var point = new BMap.Point({if $data.lat>0}{$data.lng},{$data.lat}{else}118.140829,24.477693{/if});
+   map.centerAndZoom(point, 14);
+   var marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);              // 将标注添加到地图中
+	marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+   map.addEventListener("click", function(e){
+	   $("#latlng").val(e.point.lat+ ", " + e.point.lng );
+   });
+   
+    function localsearch(word){
+	   var local = new BMap.LocalSearch(map, {
+		  renderOptions:{map: map}
+		});
+		local.search(word);
+   }
+    </script>
+    </td></tr>
+  </table>
+  </div>

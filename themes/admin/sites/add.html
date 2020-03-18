@@ -1,0 +1,100 @@
+{include file='header.html'}
+
+<ul class="nav nav-tabs">
+<li><a href="{$appadmin}?m=sites">{$lang.sites_admin}</a></li> 
+</ul>
+
+<form method="post" action="{$appadmin}?m=sites&a=save">
+<input type="hidden" name="siteid" value="{$data.siteid}" />
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="17%" align="right">{$lang.sitename}：</td>
+    <td width="83%"><input name="sitename" type="text" id="sitename" value="{$data.sitename}" /></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.domain}：</td>
+    <td><input name="domain" type="text" id="domain" value="{$data.domain}" /></td>
+  </tr>
+  
+  <tr>
+  	<td>logo：</td>
+    <td><div id="up1" url="/index.php?m=upload&a=uploadtao&dir=site&id={$data.id}">
+    	<div class="btn-upload">
+          <input type="file" name="upimg" id="ud"  class="btn-upload-file" onChange="uploadimg('up1')">
+         </div>
+ 
+          <input type="hidden" name="logo" class="imgurl" value="{$data.logo}">
+          <span class="imgShow">
+          {if $data.logo}
+          <img src="{$data.logo|images_site}.100x100.jpg">
+          {/if}
+          </span>
+      </div></td>
+  </tr>
+  
+  <tr>
+  	<td>微站背景图：</td>
+    <td><div id="up2" url="/index.php?m=upload&a=uploadtao&dir=site&id={$data.id}">
+    	<div class="btn-upload">
+          <input type="file" name="upimg" id="ud2"  class="btn-upload-file" onChange="uploadimg('up2')">
+         </div>
+ 
+          <input type="hidden" name="wapbg" class="imgurl" value="{$data.imgurl}">
+          <span class="imgShow">
+          {if $data.wapbg}
+          <img src="{$data.wapbg|images_site}.100x100.jpg">
+          {/if}
+          </span>
+      </div></td>
+  </tr>
+  
+  
+  <tr>
+    <td align="right">{$lang.is_open}：</td>
+    <td><input type="radio" name="is_open" id="radio" value="1" {if $data.is_open eq 1} checked="checked"{/if} />
+      {$lang.open}
+        <input type="radio" name="is_open" id="radio2" value="2" {if $data.is_open eq 2} checked="checked"{/if} />
+      {$lang.close}</td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.close_why}：</td>
+    <td><textarea name="close_why" id="close_why" cols="45" rows="5">{$data.close_why}</textarea></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.title}：</td>
+    <td><input name="title" type="text" id="title" value="{$data.title}" class="w600" /></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.keywords}：</td>
+    <td><input name="keywords" type="text" id="keywords" value="{$data.keywords}" class="w600" /></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.description}：</td>
+    <td><textarea name="description" id="description" cols="45" rows="5">{$data.description}</textarea></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.icp}：</td>
+    <td><input name="icp" type="text" id="icp" value="{$data.icp}" /></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.index_template}：</td>
+    <td><input name="index_template" type="text" id="template" value="{$data.index_template}" size="40" /></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.statjs}：</td>
+    <td><textarea name="statjs" cols="45" rows="5" id="statjs">{$data.statjs}</textarea></td>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td><input type="submit" name="button" id="button" value="提交" class="btn" /></td>
+  </tr>
+</table>
+
+</form>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript" src="/static/js/upload.js"></script>
+{include file='footer.html'}

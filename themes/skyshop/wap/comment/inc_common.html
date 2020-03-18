@@ -1,0 +1,112 @@
+<!--评论开始-->
+ 
+
+<div class="pd-5">
+    <div id="jscomment_list">
+    
+    </div>
+    <div style="height:50px;"></div>
+</div>
+
+<style>
+.comment-tools{position: fixed;  font-size: 14px;; height: 50px; background-color: #eee; border-top: #eee 1px solid; bottom: 0px; left: 0px; right: 0px;}
+.comment-tools .l{position: absolute; right: 50px; left: 0px;}
+.comment-tools .comment-btn{height: 40px; line-height: 40px; margin-top: 5px; margin-left: 10px; border-radius: 30px; padding-left: 20px; background-color: #fff; border:1px solid #ccc; cursor:pointer;}
+.comment-tools .r{position: absolute; right: 10px;}
+.comment-tools .share-btn{height: 30px; line-height: 30px; width: 30px; margin-top: 10px; text-align: center; border-radius: 50%; border: 1px solid #ccc;}
+.commentbox{position: fixed; display: none;  bottom: 0px; left: 0px; right: 0px; padding-bottom:20px;  background-color: #ccc;}
+.commentbox .comment-content{height:100px; display:block; position:relative; padding:5px;  width:90%; margin:0 auto; left:-5px;}
+</style>
+<div id="tools" class="comment-tools">
+		<div class="l">
+			<div id="comment-btn" class="comment-btn">
+  					<span class="iconfont icon-write"></span>写跟帖
+        	</div>
+		</div>
+		<div class="r">
+			<div id="share-btn" class="share-btn" style="">
+				<span class="iconfont icon-fenxiang"></span>
+				
+			</div>
+			 
+		</div>
+	</div>
+	<div id="commentbox" class="commentbox" style="">
+ 
+					<div class="row" style="margin: 5px 5px;">
+					<textarea  id="comment-content" class="comment-content"  name="content"   placeholder="评论内容.."></textarea> 
+				</div>
+					<div style="text-align:center">
+						<button class=" btn  btn-larger btn-primary" type="button" id="comment-submit">评论</button>&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class=" btn  btn-larger btn-danger" type="button" id="comment-cancel">取消</button>
+					</div>         
+	</div> 
+<script language="javascript">
+
+ 
+function commentlist(url){
+	$.get(url,function(data){
+		$("#jscomment_list").html(data);
+		$(".comment_sortkey").each(function(i){
+					$(this).html(i+1);
+		});
+	})
+}
+
+$(function(){
+	var comment_insubmit=false;
+	var comment_object_id='{$comment_object_id}';
+	var comment_tablename='{$comment_tablename}';
+	var comment_f_userid='{$comment_f_userid}';
+	var comment_pid=0;
+	commentlist("/index.php?m=comment&a=list&tablename={$comment_tablename}&object_id={$comment_object_id}");
+	$(document).on("click","#comment_list .pages a",function(e){
+		e.preventDefault();
+		commentlist($(this).attr("href"));
+	});
+	
+	$(document).on("click","#comment-btn",function(e){
+		$("#commentbox").show();
+	}); 
+	$(document).on("click","#comment-cancel",function(e){
+		$("#comment-content").val("");
+		$("#commentbox").hide();
+		comment_pid=0;
+	});
+	$(document).on("click","#comment-submit",function(){
+		if(comment_insubmit) return false;
+		comment_insubmit=true;
+		setTimeout(function(){ comment_insubmit=false; },1000);
+		var pdata={
+				content:$("#comment-content").val(),
+				object_id:comment_object_id,
+				tablename:comment_tablename,
+				comment_f_userid:comment_f_userid
+			}
+		$.post("/index.php?m=comment&a=insert&ajax=1",pdata,function(data){
+			if(data.error==0){
+				commentlist("/index.php?m=comment&a=list&tablename={$comment_tablename}&object_id={$comment_object_id}");
+				$("#comment-content").val("");
+				$("#commentbox").hide();
+				comment_pid=0;
+				skyToast("评论成功");
+			}else{
+				
+				if(data.nologin !=undefined){
+					loginbox();
+				}else{
+					
+					skyToast(data.message);
+				}
+			}
+		},"json")
+	})
+	
+	$(document).on("click",".comment_reply_btn",function(){
+		$("#commentbox").show();
+		comment_pid=$(this).attr("pid");
+		$("#comment-content").focus().val($(this).attr("reply_text") + " ");
+	});
+
+});
+</script>

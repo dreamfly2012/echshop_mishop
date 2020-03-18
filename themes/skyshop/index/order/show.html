@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+     
+    <div class="box960">
+    <div class="row">
+<div class="col-6-1">{include file="inc/user_left.html"}</div>
+<div class="col-6-5">
+{include file="order/nav.html"}
+<h3>订单详情</h3>
+<table class="table table-bordered" width="100%">
+<tr>
+	<td>订单编号：{$data.orderno}</td>
+    <td>订单类型：{$order_type_list[$data.type_id]}</td>
+    <td>订单价格：{$data.money}</td>
+</tr>
+
+<tr>
+	<td>下单时间：{$data.dateline|date:Y-m-d H:i}</td>
+	<td>支付状况：{$order_ispay[$data.ispay]} {if $data.unpay}货到付款{/if}</td>
+    <td>订单状态：{$order_status_list[$data.status]}</td>
+</tr>
+
+
+
+<tr><td colspan="3"><strong>联系方式:</strong>
+{$addr.p_c_t}{$addr.address} 邮编：{$addr.zip_code} 姓名：{$addr.truename} 手机：{$addr.telephone}
+</td></tr>
+
+ 
+
+<tr>
+<td colspan="3"><strong>物流信息：</strong>{$data.shipping_info}</td>
+</tr>
+
+<tr>
+	<td colspan="3"><strong>收货:</strong>{if $data.isreceived eq 2}已收货{elseif $data.status > 2}<a href="{R("/index.php?m=order&a=Receive&order_id=$data.order_id")}" class="btn  btn-default">确认收货</a>{else}未收货{/if}</td>
+</tr>
+
+</table>
+
+<h1 style="height:40px; line-height:40px;">商品详情</h1>
+<table class="table table-bordered" width="100%">
+<script>
+function order_product_comment(order_id,id,obj){
+	$.get("/index.php?m=order&a=product_comment",{order_id:order_id,id:id},function(data){
+		showbox("订单评价",data,400,200);
+	})
+}
+</script>
+{foreach item=p from=$order_product}
+<tr>
+<td style="width:50px;"><a href="{R("/index.php?m=show&id=$p.id")}" target="_blank"><img src="{$p.imgurl|images_site}.100x100.jpg" width="50" /></a></td>
+<td><p><a href="{R("/index.php?m=show&id=$p.id")}" target="_blank">{$p.title}</a><br />
+{if $p.ks_title}<span style="color:red">{$p.ks_title}</span><br>{/if}
+原价：￥{$p.price} {if $p.lower_price > 0} 促销价：{$p.lower_price} {/if}</p></td>
+<td>下单价：{$p.order_price}</td>
+<td>共{$p.amount}件</td>
+<td>  {if $p.iscomment}已评价(<span style="color:red">+{$p.rating_grade}</span>){elseif $data.status eq 3}<a href="javascript:;" onClick="order_product_comment({$data.order_id},{$p.id},this)">评价</a>{else}未评价{/if}</td>
+</tr>
+{/foreach}
+</table>
+
+</div>
+</div>
+
+<div class="clearfix"></div>
+</div>
+</div>
+{include file="footer.html"} </div>
+</body>
+</html>

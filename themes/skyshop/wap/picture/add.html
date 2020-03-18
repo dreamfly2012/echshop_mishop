@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+ 
+<body>
+ {include file="picture/panel.html"}
+<div class="header" style="">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">发布美图</div>
+<div class="right-btn panel-btn"><span class="iconfont icon-menu"></span></div>
+</div>
+
+<div id="page" data-role="page">
+ 
+    <div class="main-body pd-5">
+    <form method="post" action="{$appadmin}?m=picture&a=save&ajax=1" id="upload_form" class="form-horizontal ">
+    <input type="hidden" name="id" value="{$data.id}" />
+    <style>
+    .input-row{position:relative; height:36px; margin:0px 20px; margin-bottom:10px;}
+	.input-row input[type='text'],.input-row .txt{display:block;width:100%; height:36px; margin-left:-6px;}
+    </style>
+      <div class="input-row">
+             
+            <input type="text" name="title"  class="txt"   id="title" value="{$data.title}" placeholder="请输标题"  >
+        
+        </div>    
+        
+        
+        <div class="input-row">
+            
+             <select name="catid" class="txt">
+        <option value="0">请选择</option>
+        {foreach item=c from=$cat_list}
+                    <option value="{$c.catid}" {if $data.catid eq $c.catid or get('catid') eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                    {foreach item=c_2 from=$c.child}
+                        <option value="{$c_2.catid}" {if $data.catid eq $c_2.catid or get('catid') eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                        {foreach item=c_3 from=$c_2.child}
+                        <option value="{$c_3.catid}" {if $data.catid eq $c_3.catid or get('catid') eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                        {/foreach}
+                    {/foreach}
+                    {/foreach}
+        </select>
+             
+        </div>
+     
+        
+        <div class="row mgb-10">
+            <div class="col-4-1">封面图片:</div>
+            <div class="col-4-3">
+      <input type="hidden" name="imgurl" id="imgurl" value="{$data.imgurl}">
+      <span id="imgShow">
+      {if $data.imgurl}
+          <img src="{$data.imgurl|images_site}.100x100.jpg">
+          {/if}
+      </span>
+              
+               
+            </div>
+        </div> 
+      
+      
+       <div class="area-row">
+             
+            <div style="width:90%; margin:0 auto; margin-left:5px;">
+            <textarea id="content" class="input-area" name="content"  style="width:100%; height:100px; padding:5px; border-radius:5px;" placeholder="请输入内容..">{$data.content}</textarea>
+            </div>
+      </div>
+            <div class="clearfix"></div>
+        </div>  
+     <div class="row">
+     	{assign var="tablename" value="picture"}
+     	 {include file="picsup.html"} 
+     </div>  
+    <div class="form-btns">
+    
+      <button type="button" name="button" id="post-submit" class="btn btn-success btn-larger" value="">发布美图</button>
+      <a href="/index.php?m=show&id={$data.id}" class="btn btn-link">查看效果</a>  
+    </div>
+    <div style="clear:both;"></div>
+    </form>
+    </div>
+    {include file="footer.html"}
+</div>
+
+
+<script>
+$(function(){
+	$("#post-submit").on("click",function(){
+		$.post($("#upload_form").attr("action"),$("#upload_form").serialize(),function(data){
+	
+			if(data.url!="undefined"){
+				skyToast("发布成功");
+				setTimeout(function(){
+					goBack();
+				},1000);
+			}else{
+				skyToast(data.message);
+			}
+		},"json");
+	});
+});
+</script>
+
+</body>
+</html>

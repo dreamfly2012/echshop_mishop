@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+<body>
+<div class="page">
+	{include file="u_header.html"}
+    <div class="main-body">
+    <div class="box960">
+    <div class="row">
+	<div class="col-7-1">
+    	{include file="member/left.html"}
+    </div>
+	<div class="col-7-6">
+    <div class="w98 right">
+    	 
+        	<div class="hg-list">
+            {foreach item=c from=$data}
+            	 
+            	<div class="item">
+                	<div class="pd">
+                        <div class="img"><a href="/index.php?m=goldorder_shaidan&a=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}.small.jpg"></a></div>
+                        <div class="title"><a href="/index.php?m=goldorder_shaidan&a=show&id={$c.id}">{$c.title}</a></div>
+                        
+                       <div>晒单时间：{$c.dateline|timeago}</div> 
+                    </div>
+                </div>
+              
+            {/foreach}
+            </div>
+            <div>{$pagelist}</div>
+             
+            
+         
+    </div>
+    </div>
+</div>
+    </div>
+    </div>
+</div>
+
+
+
+ 
+
+{include file="footer.html"}
+</body>

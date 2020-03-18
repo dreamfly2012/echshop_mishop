@@ -1,0 +1,12 @@
+<div class="item">
+            <div class="pd">
+            	<div class="rel"><a href="/index.php?m=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}" style="width:100%; height:280px;"></a> 
+                <div class="bg"></div>
+              <div class="pos">  
+              <div class="title"> <a href="/index.php?m=show&id={$c.id}">{$c.title|cutstr:24}</a> </div>
+              <div class="info"><span class="price" style="text-decoration:line-through;">￥{$c.market_price}</span> &nbsp;&nbsp;限量:{$c.total_num}份</div>
+              </div>
+              </div>
+              <div class="info">金币：<span class="gold">{$c.gold}</span>个</div>
+            </div>
+          </div>

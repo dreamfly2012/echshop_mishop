@@ -1,0 +1,18 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='pm/nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr><td>id：</td><td>{$data.id}</td></tr>
+  <tr><td>用户id：</td><td>{$data.userid}</td></tr>
+  <tr><td>私信类型 1接收 2自己发的：</td><td>{$data.type_id}</td></tr>
+  <tr><td>收发对象：</td><td>{$data.t_userid}</td></tr>
+  <tr><td>时间：</td><td>{$data.dateline}</td></tr>
+  <tr><td>状态 1未读 2已读 ：</td><td>{$data.status}</td></tr>
+  <tr><td>内容：</td><td>{$data.content}</td></tr>
+  <tr><td>siteid：</td><td>{$data.siteid}</td></tr>
+ </table>
+
+</div>
+</div>
+{include file="footer.html"}

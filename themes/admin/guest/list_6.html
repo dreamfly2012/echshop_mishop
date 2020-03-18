@@ -1,0 +1,32 @@
+<table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+  
+   <td>商家名称</td>
+  <td>联系电话</td>
+  <td>qq</td>
+   <td>联系人</td>
+   <td>宝贝链接</td>
+   <td>数量</td>
+   <td>发布时间</td>
+   <td>备注</td>
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   
+   <td>{$c.title}</td>
+    
+  <td>{$c.telephone}</td>
+ <td>{$c.qq}</td>
+   <td>{$c.nickname}</td>
+  
+   <td><a  href="{$c.linkurl}" target="_blank">查看宝贝</a></td>
+   <td>{$c.num}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   <td>{$c.content}</td>
+<td><a href="javascript:;" class="delete" url="admin.php?m=guest&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>

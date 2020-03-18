@@ -1,0 +1,116 @@
+<div id="search-filter-box">
+           <!--筛选-->
+           <input type="hidden"  id="filter_catid" value="{$smarty.get.catid|intval}">
+    <input type="hidden" id="filter_order" value="{if get('orderby')}{$smarty.get.orderby|html}{else}buy_num{/if}">
+    <input type="hidden" id="filter_attr_1" value="{$smarty.get.attr_1}">
+   	<input type="hidden" id="filter_attr_2" value="{$smarty.get.attr_2}">
+    <input type="hidden" id="filter_attr_3" value="{$smarty.get.attr_3}">
+    <input type="hidden" id="filter_attr_4" value="{$smarty.get.attr_4}">
+      
+      <input type="hidden" id="filter_price" value="{$smarty.get.price|intval}">
+       <script>
+    $(function(){
+		var catid=$("#filter_catid").val();
+		var orderby=$("#filter_order").val();
+		var attr_1=$("#filter_attr_1").val();
+		var attr_2=$("#filter_attr_2").val();
+		var attr_3=$("#filter_attr_3").val();
+		var attr_4=$("#filter_attr_4").val();
+		var brand_id=$("#filter_brand").val();
+		var price=$("#filter_price").val();
+		$(".select_catid").bind("click",function(e){
+			e.preventDefault();
+			var catid=$(this).attr("catid");		
+			var url="/index.php?m=list&catid="+catid+"&orderby="+orderby+"&attr_1="+attr_1+"&attr_2="+attr_2+"&attr_3="+attr_3+"&attr_4="+attr_4+"&brand_id="+brand_id+"&price="+price+"#select_box";
+			window.location=url;
+		});
+		$(".select_attr_1").bind("click",function(e){
+			e.preventDefault();
+			var attr_1=$(this).attr("v");		
+			var url="/index.php?m=list&catid="+catid+"&orderby="+orderby+"&attr_1="+attr_1+"&attr_2="+attr_2+"&attr_3="+attr_3+"&attr_4="+attr_4+"&brand_id="+brand_id+"&price="+price+"#select_box";
+			window.location=url;
+		});
+		
+		$(".select_attr_2").bind("click",function(e){
+			e.preventDefault();
+			var attr_2=$(this).attr("v");		
+			var url="/index.php?m=list&catid="+catid+"&orderby="+orderby+"&attr_1="+attr_1+"&attr_2="+attr_2+"&attr_3="+attr_3+"&attr_4="+attr_4+"&brand_id="+brand_id+"&price="+price+"#select_box";
+			window.location=url;
+		});
+		
+		$(".select_attr_3").bind("click",function(e){
+			e.preventDefault();
+			var attr_3=$(this).attr("v");		
+			var url="/index.php?m=list&catid="+catid+"&orderby="+orderby+"&attr_1="+attr_1+"&attr_2="+attr_2+"&attr_3="+attr_3+"&attr_4="+attr_4+"&brand_id="+brand_id+"&price="+price+"#select_box";
+			window.location=url;
+		});
+		
+		$(".select_attr_4").bind("click",function(e){
+			e.preventDefault();
+			var attr_4=$(this).attr("v");		
+			var url="/index.php?m=list&catid="+catid+"&orderby="+orderby+"&attr_1="+attr_1+"&attr_2="+attr_2+"&attr_3="+attr_3+"&attr_4="+attr_4+"&brand_id="+brand_id+"&price="+price+"#select_box";
+			window.location=url;
+		});
+		
+		$(".select_orderby").bind("click",function(e){
+			e.preventDefault();
+			var orderby=$(this).attr("v");		
+			var url="/index.php?m=list&catid="+catid+"&orderby="+orderby+"&attr_1="+attr_1+"&attr_2="+attr_2+"&attr_3="+attr_3+"&attr_4="+attr_4+"&brand_id="+brand_id+"&price="+price+"#select_box";
+			window.location=url;
+		});
+		
+		
+		
+		$(".select_brand").bind("click",function(e){
+			e.preventDefault();
+			var brand_id=$(this).attr("v");		
+			var url="/index.php?m=list&catid="+catid+"&orderby="+orderby+"&attr_1="+attr_1+"&attr_2="+attr_2+"&attr_3="+attr_3+"&attr_4="+attr_4+"&brand_id="+brand_id+"&price="+price+"#select_box";
+			window.location=url;
+		});
+		
+		$(".select_price").bind("click",function(e){
+			e.preventDefault();
+			var price=$(this).attr("v");		
+			var url="/index.php?m=list&catid="+catid+"&orderby="+orderby+"&attr_1="+attr_1+"&attr_2="+attr_2+"&attr_3="+attr_3+"&attr_4="+attr_4+"&price="+price+"#select_box";
+			window.location=url;
+		});
+		
+	});
+    </script>
+    <style>
+		.search-filter{ line-height:30px; border-bottom:1px solid #ccc; margin-bottom:5px}
+    	.search-filter .hd{font-size:16px; margin-right:20px; font-weight:800; display:inline-block; text-align:right; width:60px;}
+		.search-filter .search-option{margin-right:10px; display:inline-block; height:28px; line-height:30px; padding:0px 8px;}
+		.search-filter .search-option.active{margin-right:10px; background-color:#ccc;}
+    </style>
+           <div class="search-filter-box">
+           		<div class="search-filter">
+                	<span class="hd">分类:</span>
+                    {if $cat.pid} 
+                    	<a href="javascript:;" class="search-option {if $cat.pid eq get('catid')}active{/if}  select_catid" catid="{$cat.pid}">全部</a>
+                    {else}
+                   	 <a href="javascript:;" class="search-option {if $cat.catid eq get('catid')}active{/if}   select_catid" catid="{$cat.catid}" >全部</a>
+                    {/if}
+                    
+                    {foreach item=c from=$children}
+ <a href="javascript:;" class="search-option  {if $c.catid eq get('catid')}active{/if}  select_catid" catid="{$c.catid}">{$c.cname}</a> 
+{/foreach}
+                </div>
+           
+           		{get data=attr_cat_id model=category fun=get_attr_cat_id("$cat.catid")}
+           		{get data=attr_list model=attribute fun=col_name_attr_list("$attr_cat_id")}
+                
+                {foreach item=c from=$attr_list}
+                <div class="search-filter">
+                <span class="hd">{$c.title}:</span> 
+                <a href="javascript:;" class="search-option {if get($c.col_name) eq 0}active{/if} select_{$c.col_name}" v="0">全部</a>
+                	{foreach item=cc key=kk from=$c.list}
+                    	<a href="javascript:;" class="search-option {if get($c.col_name) eq $kk}active{/if} select_{$c.col_name}" v="{$kk}">{$cc}</a>
+                    {/foreach}
+                
+                
+                </div>
+                {/foreach}
+           </div>
+           <!--End 筛选-->
+           </div>

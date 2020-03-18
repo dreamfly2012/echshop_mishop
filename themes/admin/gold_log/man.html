@@ -1,0 +1,40 @@
+{include file="header.html"}
+<div>
+<ul class="nav nav-tabs">
+	<li><a href="{$appadmin}?m=gold_log">金币记录</a></li>
+    <li><a href="{$appadmin}?m=gold_log&a=man">人工充金币</a></li>
+</ul>
+            <form class="form-horizontal" method="post" action="{$appadmin}?m=gold_log&a=saveman" >
+              <div class="control-group">
+                <table  class="table table-bordered">
+                  
+                  <tr align="center">
+                    <td width="100" align="right">充值账户：</td>
+                    <td align="left"  ><input type="text" name="userid" id="userid" placeholder="用户id" value="{$smarty.get.userid}"></td>
+                     
+                  </tr>
+                  
+                  <tr align="center">
+                    <td width="20%" align="right">充值金额：</td>
+                    <td align="left"  ><input type="text" name="money"></td>
+                     
+                  </tr>
+                  
+                  <tr>
+                  	<td align="right">备注：</td>
+                    <td align="left"><input type="text" name="orderinfo" /></td>
+                  </tr>
+                  
+                  <tr align="center">
+                    <td width="20%" align="right"> </td>
+                    <td align="left"  ><input type="submit"  onClick="return confirm('确认充值吗')"   value="确认充值" class="btn btn-success"></td>
+                     
+                  </tr>
+                  
+                   </table>
+              </div>
+            </form>
+          </div>
+           
+
+{include file="footer.html"}

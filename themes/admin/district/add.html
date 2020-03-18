@@ -1,0 +1,13 @@
+{include file="header.html"}
+<div> 
+{include file='district/nav.html'}
+<form method='post' action='admin.php?m=district&a=save'>
+<input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+ <table class='table table-bordered' width='100%'>
+  <tr><td>name：</td><td><input type='text' name='name' id='name' value='{$data.name}' ></td></tr>
+  
+  <tr><td>displayorder：</td><td><input type='text' name='displayorder' id='displayorder' value='{$data.displayorder}' ></td></tr>
+<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> </table>
+</form>
+</div> 
+{include file="footer.html"}

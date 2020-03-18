@@ -1,0 +1,12 @@
+{include file="header.html"}
+<div class="row">
+<div class="index-hd">属性选项管理</div>
+ <table class="table">
+ 	{foreach item=c key=k from=$table_list}
+    <tr>
+    	<td><a href="{$appadmin}?m=options&tablename={$k}">{$c}</a></td>
+    </tr>
+    {/foreach}
+ </table>
+</div>
+{include file="footer.html"}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page">
+	{include file="header.html"}
+    <div class="main-body">
+    <div class="box960">
+<div class="row">
+<div class="col-6-1">{include file="inc/user_left.html"}</div>
+<div class="col-6-5">
+{include file="inc/msg_nav.html"}
+<div style="border:1px solid #ccc;">
+<div style="height:30px; line-height:30px; background-color:#eee; font-weight:600;">&nbsp;{$data.title}</div>
+<div class="d-content">{$data.content}</div>
+</div>
+
+
+</div>
+
+</div>
+</div>
+{include file="footer.html"}
+</div>
+</body>
+</html>

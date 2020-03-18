@@ -1,0 +1,26 @@
+{include file="header.html"}
+<div> 
+{include file='express_fee/nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+   <td>标题</td>
+   <td>首重</td>
+   <td>加重</td>
+   <td>店铺</td>
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+   <td>{$c.fmoney}</td>
+   <td>{$c.amoney}</td>
+   <td>{if $c.shopid}{$c.shop_name}{else}官方{/if}</td>
+<td><a href="admin.php?m=express_fee&a=add&id={$c.id}">编辑</a> <a href="admin.php?m=express_fee&a=show&id={$c.id}">查看</a> <a href="javascript:;" class="delete" url="admin.php?m=express_fee&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}

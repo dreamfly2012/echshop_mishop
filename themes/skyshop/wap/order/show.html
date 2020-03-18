@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> <div class="header">
+<a  class="left-btn" href="/index.php?m=order&a=my"><span class="iconfont icon-back"></span></a>
+<div class="title">订单详情</div>
+</div> 
+  <div class="main-body">
+    <div class="row-box">
+      
+      <table class="table table-bordered" width="100%">
+        <tr>
+          <td>订单编号：{$data.orderno}</td>
+        </tr>
+        <tr>
+          <td>订单类型：{$order_type_list[$data.type_id]}</td>
+        </tr>
+        <tr>
+          <td>订单价格：{$data.money}</td>
+        </tr>
+        <tr>
+          <td>下单时间：{$data.dateline|date:Y-m-d H:i}</td>
+        </tr>
+        <tr>
+          <td>支付状况：{$order_ispay[$data.ispay]} {if $data.unpay}货到付款{/if}</td>
+        </tr>
+        <tr>
+          <td>订单状态：{$order_status_list[$data.status]}</td>
+        </tr>
+        <tr>
+          <td >
+          	<span> 姓名：{$addr.truename} 手机：{$addr.telephone}</span>
+          <div><strong>地址:</strong> {$addr.p_c_t}{$addr.address}</div>  </td>
+        </tr>
+        <tr>
+          <td ><strong>物流信息：</strong>{$data.shipping_info}</td>
+        </tr>
+        <tr>
+          <td  ><strong>收货:</strong>{if $data.isreceived eq 2}已收货{elseif $data.status > 2}<a href="{R("/index.php?m=order&a=Receive&order_id=$data.order_id")}" class="btn  btn-default">确认收货</a>{else}未收货{/if}</td>
+        </tr>
+      </table>
+      <h3>商品详情</h3>
+      <div class="skyline"></div>
+      <script>
+function order_product_comment(order_id,id,obj){
+	$.get("/index.php?m=order&a=product_comment",{order_id:order_id,id:id},function(data){
+		showbox("订单评价",data,400,200);
+	})
+}
+</script>
+      <style>
+.gs50-list .item{margin-bottom:10px; padding:5px;}
+.gs50-list .item .g-s1{width:60px; margin-right:-60px; float:left;}
+.gs50-list .item .g-m1{width:100%;}
+.gs50-list .item .g-m1c{margin-left:65px;}
+</style>
+      <div class="gs50-list"> {foreach item=p from=$order_product}
+        <div class="item">
+          <div class="g-s1"><a href="{R("/index.php?m=show&id=$p.id")}" ><img src="{const.IMAGES_SITE}{$p.imgurl}.100x100.jpg" width="60" /></a></div>
+          <div class="g-m1">
+            <div class="g-m1c">
+              <p><a href="{R("/index.php?m=show&id=$p.id")}" >{$p.title}</a><br />
+                {if $p.attr}<span style="color:red">{$p.attr}</span>{/if}
+                共{$p.amount}件
+                </p>
+              <p>下单价：￥{$p.order_price}元  &nbsp; &nbsp;
+              {if $p.iscomment}已评价(<span style="color:red">+{$p.rating_grade}</span>){elseif $data.status eq 3}<a href="javascript:;" onClick="order_product_comment({$data.order_id},{$p.id},this)">评价</a>{else}未评价{/if}</p>
+            </div>
+          </div>
+        </div>
+        {/foreach} </div>
+    </div>
+  </div>
+  {include file="footer.html"} </div>
+</body>
+</html>

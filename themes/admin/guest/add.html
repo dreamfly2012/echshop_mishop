@@ -1,0 +1,59 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='guest/nav.html'}
+<form method='post' action='admin.php?m=guest&a=save'>
+<input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+ <table class='table table-bordered' width='100%'>
+
+  
+  <tr><td>标题：</td><td><input type='text' name='title' id='title' value='{$data.title}' ></td></tr>
+  
+  <tr><td>用户id：</td><td><input type='text' name='userid' id='userid' value='{$data.userid}' ></td></tr>
+  <tr><td>昵称：</td><td><input type='text' name='nickname' id='nickname' value='{$data.nickname}' ></td></tr>
+  <tr><td>邮箱：</td><td><input type='text' name='email' id='email' value='{$data.email}' ></td></tr>
+  <tr><td>价格：</td><td><input type="text" name="money" value="{$data.money}" /></td></tr>
+  <tr><td>手机：</td><td><input type='text' name='telephone' id='telephone' value='{$data.telephone}' ></td></tr>
+  <tr><td>发布时间：</td><td>{$data.dateline|date:Y-m-d H:i:s}</td></tr>
+  <tr>
+    <td width="100" align="right">图集：</td>
+    <td><div id="webuploader" url="/admin.php?m=imgs&tablename=guest&object_id={$data.id}" class="webuploader">
+        <!--用来存放item-->
+        
+        <div  class="webuploader-select">选择图片</div>
+    	<div  class="webuploader-list"></div>
+        <div class="ks-list" >
+                    <div class="item">
+                    </div>
+                    <div class="clearfix"></div>
+         </div>
+     </div></td>
+  </tr>
+  <tr><td>内容：</td><td><script type="text/plain" id="content" name="content" style="height:400px;" >{$data.content}</script></td></tr>
+  <tr><td>回复：</td><td><script type="text/plain" id="reply" name="reply" style="height:400px;" >{$data.reply}</script></td></tr>
+<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> </table>
+</form>
+</div>
+</div>
+<link href="/plugin/webuploader/webuploader.css" rel="stylesheet">
+<script src="/plugin/webuploader/webuploader.min.js"></script>
+ <script src="/plugin/webuploader/app.js"></script>
+   <script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+
+<script language="javascript">
+modImgsList('webuploader');
+	 
+	wbupload('webuploader',"guest","{$data.id}",function(){modImgsList('webuploader')});	
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&id={$data.id}",
+		{include file="ueditor_simple.html"}
+		 
+};
+var editor=UE.getEditor('content',options);
+var editor2=UE.getEditor('reply',options);
+</script>
+{include file="footer.html"}

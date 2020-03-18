@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+     
+    <div class="box960"><div class="row">
+<div class="col-6-1">{include file="inc/user_left.html"}</div>
+<div class="col-6-5">
+{include file="goldorder/nav.html"}
+<h1 class="hd-h1">订单管理</h1>
+<table width="100%" class="table table-bordered">
+<tr>
+<td>ID</td>
+<td>订单号</td>
+<td>联系方式</td>
+<td>下单时间</td>
+<td>支付状况</td>
+ 
+<td>价格</td>
+<td>状态</td>
+<td>晒单</td>
+<td>操作</td>
+</tr>
+{foreach item=c from=$data}
+<tr>
+<td>{$c.order_id}</td>
+<td>{$c.orderno}</td>
+<td>{$c[address].truename}<br>
+	{$c[address].telephone}
+</td>
+<td>{$c.dateline|date:m-d H:i}</td>
+<td>{$order_ispay[$c.ispay]}  {if $c.unpay}<br />货到付款{/if}</td>
+
+<td>{$c.money}</td>
+<td>{$order_status_list[$c.status]}</td>
+<td>{if !$c.isshaidan}未晒单{else}已晒单{/if}, <a href="/index.php?m=goldorder_shaidan&a=add&order_id={$c.order_id}">晒单</a></td>
+<td><a href="/index.php?m=goldorder&a=show&order_id={$c.order_id}">查看</a>
+</td>
+</tr>
+{/foreach}
+
+</table>
+{$pagelist}
+
+</div>
+</div>
+</div>
+{include file="footer.html"} </div>
+</body>
+</html>

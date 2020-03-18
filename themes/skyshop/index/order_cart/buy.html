@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+<body> 
+<div class="page">
+	{include file="header.html"}
+    <div class="main-body">
+    <div class="box960">
+	<div class="row">
+    <div  >
+    	<form action="/index.php?m=order&a=buyproduct" method="post">
+                <input type="hidden" name="object_id" value="{$data.id}">
+                {foreach item=c key=k from=$attr}
+                <input type="hidden" name="attr[{$k}]" value='{$c}' />
+                {/foreach}
+                <ul class="nav  nav-list " style=" padding:10px; background-color:#fff;" id="address_list">
+<li><p><a class="btn btn-primary" id="add_address">新增地址</a></p></li>
+{foreach item=c key=k from=$address}
+
+<li  class="radio" style="margin:10px 0px;"><input type="radio" name="user_address_id" {if $k eq 0} checked{/if} value="{$c.id}">地址：{$dist_list[$c.province_id]} {$dist_list[$c.city_id]} {$dist_list[$c.town_id]} {$c.address} 邮编：{$c.zip_code} 姓名：{$c.truename} 手机：{$c.telephone}</li>
+    {/foreach}
+</ul>
+	<table class="table noborder">
+    	<tr>
+        	<td width="100" >产品名称：</td>
+            <td>{$data.title}
+            {if $data.attr}<br /><span style="color:red">
+            {$data.attr}</span>{/if}</td>
+        </tr>
+        
+        <tr>
+        	<td >价格：</td>
+            <td><div id="price">￥{if $data.lower_price>0}{$data.lower_price}{else}{$data.price}{/if}</div></td>
+        </tr>
+        
+         
+        
+        <tr>
+        	<td >购买数量：</td>
+            <td><input class="" type="text" maxlength="16" id="amount" name="amount" value="{$smarty.get.amount|max:1}" rel="1" autocomplete="off"></td>
+        </tr>
+        
+        <tr>
+        	<td >价格：</td>
+            <td>
+            总价格：	￥<span id="a_price"> {$data[price]*max(1,get('amount')) + EXPRESS_FEE} </span> = 
+            商品费：￥<span id="t_price"> {$data[price]*max(1,get('amount'))} </span>
+            + 物流费：￥<span id="e_price">{const.EXPRESS_FEE}</span>
+            &nbsp;&nbsp;账户余额：￥{$user.money}元 {if  ORDER_UNPAY} 货到付款 <input type="checkbox" name="unpay" value="1"> {/if}
+            </td>
+        </tr>
+        
+         
+        
+        <tr>
+        	<td height="50"></td>
+            <td><button type="submit" class="btn btn-larger btn-success">购买</button></td>
+        </tr>
+        
+    </table>
+				 
+                 
+              
+              </form>
+    </div>
+    </div>
+</div>
+
+<script language="javascript">
+$(document).ready(function(data){
+	
+	$("#amount").bind("keyup",function(){
+		$("#t_price").html( parseInt($("#price").text()) * parseInt($("#amount").val()) );
+		$("#a_price").html( parseInt($("#price").text()) * parseInt($("#amount").val())+parseInt($("#e_price").text()) );
+	});
+	$("#add_address").bind("click",function(){
+		$.get("/index.php?m=user_address&a=add&ajax=1",function(data){
+			showbox("添加收获地址",data,600,200);
+		});
+	});
+	
+	$(document).on("click","#paylist .item",function(){
+		$("#paylist .item").removeClass("active");
+		$("#pay_type").val($(this).attr("v"));
+		$(this).addClass("active");
+	});
+	
+	$(document).on("click","#save_address",function(){
+		$.post("/index.php?m=user_address&a=save&ajax=1",$(this).parents("form").serialize(),function(data){
+			if(data.error==1){
+				alert(data.message);
+			}else{
+				var html='<li  class="radio"><input type="radio" name="user_address_id" {if $k eq 0} checked{/if} value="'+data['data'].id+'">地址：'+data['data'].province+' '+data['data'].city+' '+data['data'].town+' '+data['data'].address+' 邮编：'+data['data'].zip_code+' 姓名：'+data['data'].truename+' 手机：'+data['data'].telephone+'</li>';
+				
+				$("#address_list").append(html);
+				
+				showboxClose();
+			}
+		},"json")
+	});
+});
+	
+</script> 
+{include file="footer.html"}
+</div>
+</body>
+</html>

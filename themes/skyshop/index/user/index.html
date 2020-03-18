@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> {include file="header.html"}
+  <div class="main-body  box960">
+<div class="row">
+<div class="col-6-1">{include file="inc/user_left.html"}</div>
+<div class="col-6-5"> 
+<ul class="nav nav-tabs" >
+<li class="active"><a href="#p_base">用户中心</a></li>
+</ul>
+<div style="width:95%; margin:0 auto;">
+
+<div class="row" style="margin-bottom:10px;">
+	<div class="col-4-3"><div class="w98"><div class="hd-h3" style="border-bottom:1px solid #ccc;">基本资料</div></div></div>
+    <div class="col-4-1"><div class="w98"><div class="hd-h3" style="border-bottom:1px solid #ccc;"><div class="hd-h3">网站动态</div></div></div>
+</div>
+</div>
+<div class="row">
+<div class="col-4-1">
+<div style="width:100px; margin:0 auto; text-align:center;"><img src="{const.IMAGES_SITE}{$data.user_head}.100x100.jpg" width="100"><br>
+<a href="/index.php?m=user&a=user_head">更改</a>
+</div>
+</div>
+<style>
+	.uinfo{line-height:25px;}
+</style>
+<div class="col-2-1 uinfo">
+	<div>
+    	<div>用户名：{$data.username} &nbsp;&nbsp;用户名：{$data.nickname} &nbsp;&nbsp; <a href="/index.php?m=user&a=info">编辑</a></div>
+        <div>手机：{$data.telephone} &nbsp;&nbsp;邮箱：{$data.email}</div>
+        <div>注册时间：{$data.dateline|date:Y-m-d}</div>
+        <div>账号余额：￥{$data.money}元 </div>
+    </div>
+</div>
+
+<div class="col-4-1">
+ 
+              {api data=t control=articleapi fun=select(array("limit"=>6,"order"=>"id DESC","where"=>"  status=2 "))}
+              {foreach item=c from=$t}
+              <div style="border-bottom:1px dotted #ccc; line-height:25px; margin-bottom:2px;"><a href="/index.php?m=show&id={$c.id}">{$c.title|cutstr:32}</a></div>
+              {/foreach}
+            
+</div>
+</div>
+
+ 
+ 
+
+<div class="hd-h3" style="border-bottom:1px solid #ccc; margin-bottom:10px;">近期订单</div> 
+<div id="jqboxs"></div>
+ <script>
+ 	$.get("/index.php?m=order&a=my",function(data){
+		$("#jqboxs").html($(data).find("#jqbox").html());
+	});
+ </script>
+ </div>
+ 
+</div> 
+ </div>
+</div>
+ 
+{include file="footer.html"}
+</div>
+</body>
+</html>

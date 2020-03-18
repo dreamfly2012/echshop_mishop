@@ -1,0 +1,52 @@
+.index-hglist .item {
+	width: 25%;
+	float: left;
+	margin-bottom: 10px;
+}
+.index-hglist .item .pd {
+	width: 96%;
+	margin: 0 auto;
+	text-align: center;
+	padding-bottom: 10px;
+	background-color: #fcfcfc;
+	position: relative;
+}
+.index-hglist .item .pd .rel {
+	position: relative;
+	margin-bottom: 5px;
+}
+.index-hglist .item .pd .rel .pos {
+	color: #fff;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 3px;
+}
+.index-hglist .item .pd .rel .pos a {
+	color: #fff;
+}
+.index-hglist .item .pd .rel .bg {
+	background-color: #333;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+	height: 60px;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+.index-hglist .item .title {
+	height: 25px;
+	line-height: 25px;
+	overflow: hidden;
+	padding: 0px 5px;
+}
+.index-hglist .item .info {
+	line-height: 25px;
+}
+.index-hglist .item .info .gold {
+	color: red;
+	font-size:20px;
+}

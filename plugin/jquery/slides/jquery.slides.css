@@ -1,0 +1,65 @@
+.slidesjs-navigation {
+      margin-top:3px;
+    }
+
+    .slidesjs-previous {
+      display:block;
+	  position:absolute;
+	  top:100px;
+	  left:0px;
+	  z-index:99 !important;
+	  background-image:url(images/lt-huang.png);
+	  background-repeat:no-repeat;
+	  width:18px;
+	  height:18px;
+	  text-indent:-999em;
+    }
+
+    .slidesjs-next {
+      display:block;
+	  position:absolute;
+	  top:100px;
+	  right:0px;
+	  z-index:99 !important;
+	  background-image:url(images/gt-huang.png);
+	  background-repeat:no-repeat;
+	  width:18px;
+	  height:18px;
+	  text-indent:-999em;
+    }
+
+    .slidesjs-pagination {
+      margin: 6px 0 0;
+      float: left;
+      list-style: none;
+	  position:absolute;
+	  top:10px;
+	  z-index:9999 !important;
+	  left:40%;
+	   
+    }
+
+    .slidesjs-pagination li {
+      float: left;
+      margin: 0 1px;
+    }
+
+    .slidesjs-pagination li a {
+      display: block;
+      width: 13px;
+      height: 0;
+      padding-top: 13px;
+      background-image: url(/plugin/skyweb/img/pagination.png);
+      background-position: 0 0;
+      float: left;
+      overflow: hidden;
+    }
+
+    .slidesjs-pagination li a.active,
+    .slidesjs-pagination li a:hover.active {
+      background-position: 0 -13px
+    }
+
+    .slidesjs-pagination li a:hover {
+      background-position: 0 -26px
+    }

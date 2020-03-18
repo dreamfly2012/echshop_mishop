@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> 
+{assign var="tb" value="积分兑换"}
+{include file="common.html"}
+{include file="toolbar.html"}
+  <div class="main-body"> 
+ 
+           <div class="row-box">
+        	<div class="prolist" id="prolist">
+    	{foreach item=c key=k from=$list}
+        	<div class="row item">
+            	<div class="g-sd1">
+                <a href="{R("/index.php?m=show&id=$c.id")}" ><img class="img" src="{const.IMAGES_SITE}{$c.imgurl}.100x100.jpg"  ></a>
+                </div>
+                <div class="g-mn1">
+                	<div class="g-mn1c">
+                    	<div class="title"><a href="{R("/index.php?m=show&id=$c.id")}"  >{$c.title|cutstr:36}</a></div>
+                        <div class="row-price"><span class="price">{$c.gold}</span>个</div>
+                        <div class="row-sold"><span class="lower_price">￥{$c.price}</span> <span class="right">{$c.buy_num}个兑换</span></div>
+                    </div>
+                </div>
+            </div>
+        {/foreach}
+    </div>
+        </div>
+       
+         
+       
+     
+  {include file="footer.html"} </div>
+</body>
+</html>

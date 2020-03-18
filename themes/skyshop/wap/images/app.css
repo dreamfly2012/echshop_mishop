@@ -1,0 +1,43 @@
+body{font-family: "微软雅黑"; padding-top:50px;}
+/**颜色*/
+.red{color:red;}
+.box960{width:96%; margin:0 auto;}
+
+.header{display:block; position:fixed; top:0px; z-index:9990; left:0px; right:0px; background-color:#f8f8f8; height:44px; margin-bottom:10px;}
+.header .left-btn,.header .right-btn{ position:absolute;  min-width:20px; color:blue; height:30px; line-height:30px; cursor:pointer;top:6px; padding:0px 3px; font-size:16px;}
+.header .left-btn{ left:1px; }
+.header .left-btn img{height:25px; }
+.header .right-btn{ right:3px;text-align:right; }
+.header .left-btn.bg,.header .right-btn.bg{background-color:#e8e8e8; text-align:center; padding:0px 10px;border-radius:10px;  }
+.header .left-btn a,.header .right-btn a{color:blue;}
+.header .right-btn img{height:25px;   }
+.header .title{float:left; left:50px; right:50px; height:44px; line-height:44px; position:absolute; top:0px; text-align:center; font-size:18px; font-weight:600px; overflow:hidden;}
+.nav-btn{
+	width:80%;
+	margin:0 auto;
+	display:block;
+	padding:10px;
+	text-align:center;
+	margin-bottom:10px;
+	color:#fff;
+	font-size:16px;
+	font-weight:600;
+	font-family: "微软雅黑";
+	text-decoration:none;
+	background-image: url(bk.png);		
+}
+.nav-btn:hover,.nav-btn:active{color:red;}
+
+
+.panel-box{position:absolute; left:0px; right:100px; top:0px; bottom:0px; background-color:#f8f8f8; z-index:9999; display:none; padding-bottom:10px; overflow-y:scroll; }
+.nav-list {list-style-type:none; }
+.nav-list li{line-height:20px; margin-top:5px;}
+.panel-box .nav-list li a{height:40px; line-height:40px; display:block; text-decoration:none; color:#333;}
+.panel-box .nav-list li{border-bottom:1px solid #ccc; padding:0px 6px; border-collapse:collapse;}
+.icon-minus{background:url(minus.png) no-repeat; width:15px; height:15px; display:inline-block;}
+.icon-plus{background:url(plus.png) no-repeat; width:15px; height:15px; display:inline-block;}
+.tabs-small {height:40px;}
+.tabs-small li{height:40px;}
+.tabs-small li a{padding:0px;}
+.tabs-small li a span{width:100%; background-color:#ccc; text-align:center; display:block; height:40px; line-height:40px;}
+.tabs-small li a.active span{ margin:0px; border-radius:0px; padding:0px; height:40px; line-height:40px; }

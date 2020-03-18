@@ -1,0 +1,28 @@
+{get model=category data=c_data fun=children(0,MODEL_PICTURE_ID,1)}
+ <div class="cat-list"> 
+           <div class="hd" style=""><span>栏目推荐</span></div>
+           {foreach item=c key=k from=$c_data}
+              <div  class="item {if get('catid') eq $c.catid}active{/if}"><a href="{R("/index.php?m=list&catid=$c.catid")}" >{$c.cname}</a></div>
+                {if $c.child}
+                <div class="cat-list-2nd">
+                  {foreach item=cc from=$c.child}
+                  <div  class="item {if get('catid') eq $cc.catid}active{/if}"><a href="{R("/index.php?m=list&catid=$cc.catid")}">{$cc.cname}</a></div>
+                  {/foreach}
+                </div>
+                {/if} 
+                 
+              {/foreach}
+            </div> 
+          
+
+<div style="height:10px; width:100%;"></div>
+{api data=t_c control=pictureapi fun=recommend(0,6)}
+<div class="skypanel pdb-5">
+<div class="hd mgb-10 ">推荐摄影</div>
+<ul class="nav-stacked">
+ 
+ {foreach item=c from=$t_c}
+<li><a href="index.php?m=show&id={$c.id}" style="line-height:20px;"> <img src="{$c.imgurl|IMAGES_SITE}.100x100.jpg" style="width:100px; height:100px; float:left; margin-right:10px;">{$c.title|cutstr:36:..}<div class="clearfix"></div></a></li>
+ {/foreach}
+</ul>
+</div>

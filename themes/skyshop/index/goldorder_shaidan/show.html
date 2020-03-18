@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page">
+	{include file="header.html"}
+    <div class="main-body box960">
+    	<div class="row ">
+ 
+			<ul class="breadcrumb">
+            	<li><a href="/index.php">首页</a> <span class="divider">/</span></li>
+                <li><a href="/index.php?m=goldorder_shaidan">晒单</a><span class="divider">/</span></li>
+                <li>详细内容</li>
+            </ul>
+        </div>    
+        <div class="row">
+        	<div class="col-7-5">
+            	<div class="d-title">{$data.title}</div>
+                <div class="d-tool">晒单时间：{$data.dateline|date:Y-m-d}&nbsp;&nbsp;晒单用户：<a href="/index.php?m=member&userid={$user.userid}">{$user.nickname}</a></div>
+                <div class="d-content">{$data.content}</div>
+                
+                    <!--评论开始-->
+<div style="height:5px; width:100%;"></div>
+<div  style="margin-bottom:10px;" >
+<form method="post" id="comment_form"  >
+<input type="hidden" name="pid" id="comment_pid" value="0" />
+<input type="hidden" name="object_id" id="comment_object_id" value="{$comment_object_id}" />
+<input type="hidden" name="f_userid" id="comment_f_userid" value="{$comment_f_userid}" />
+<input type="hidden" name="referer" id="comment_referer" value="{if $comment_referer}{$comment_referer}{else}{$smarty.server.REQUEST_URI}{/if}" />
+ <textarea name="content" id="comment_content"  style="width:90%; height:60px;"></textarea>
+    
+   <div style="clear:both; padding-top:10px; height:50px;"> <input type="button" name="button" id="comment_submit" value="评论" class="btn btn-success btn-larger" /> 
+   </div>
+   
+
+</form>
+</div>
+<div class="clearfix"></div>
+
+<div class="breadcrumb">评论列表：</div>
+<div id="comment_list" class="group_clist">
+{if $comment_list}
+<style>
+.group_clist .item{ margin-bottom:10px;}
+.group_clist .item .hd{height:30px; line-height:30px; background-color:#f0f0f0; padding:0px 8px 0px 5px;}
+.group_clist .item .hd .time{color:#aaa; float:right;}
+.group_clist .item .hd .comment_reply_btn{color:#F60;}
+.group_clist .item .content{padding:10px; border:1px solid #ccc; background-color:#fff;}
+</style>
+{foreach item=c from=$comment_list}
+<div class="item">
+	<div class="hd"><span class="comment_sortkey red"></span>.{if $c.nickname}{$c.nickname}{else}游客{/if}  <span class="time">时间：{$c.dateline|timeago} <a href="javascript:;" class="comment_reply_btn" pid="{$c.id}" title="回复@{$c.nickname}" reply_text="回复@{$c.nickname}" >回复</a></span></div>
+    <div class="content pd-5">{$c.content}</div>
+     
+</div>
+ 
+{/foreach}
+{if $pagelist}
+<div>{$pagelist}</div>
+{/if}
+{else}
+<h2 id="comment_none">暂无评论</h2>
+{/if}
+</div> 
+<script language="javascript">
+var editor;
+$(".comment_sortkey").each(function(i){
+	$(this).html(i+1);
+});
+$(function(){
+	$("#comment_submit").click(function(){
+		$.post("/index.php?m=goldorder_shaidan_comment&a=insert&ajax=1",$("#comment_form").serialize(),function(data){
+			if(data.error==0){
+				str='<div class="item">'
+				+'<div class="hd"><span class="comment_num red">1</span>.'+(data.message.nickname)+'  <span style="float:right">刚刚</span></div>'
+				+'<div class="content">'+data.message.content+'</div></div>';
+				$("#comment_list").prepend(str);
+				$("#comment_content").val("");
+				if($("#comment_none")){
+					$("#comment_none").remove();
+				}
+				$(".comment_sortkey").each(function(i){
+					$(this).html(i+2);
+				});
+				skyToast("评论成功");
+			}else{
+				
+				if(data.nologin !=undefined){
+					loginbox();
+				}else{
+					
+					alert(data.message);
+				}
+			}
+		},"json")
+	})
+	
+	$(".comment_reply_btn").bind("click",function(){
+		
+		$("#comment_pid").val($(this).attr("pid"));
+		$("#comment_content").focus().val($(this).attr("reply_text") + " ");
+		 
+	});
+
+});
+</script>
+ 
+<!--评论结束-->
+                
+            </div>
+            <div class="col-7-2">
+            	<div class="w98 right">
+                <div class="skypanel">
+            	<div class="hd">晒单产品</div>
+                	<div class="con" style="height:120px;">
+                    <a href="/index.php?m=show&id={$goldgoods.id}">
+                		<img src="{$goldgoods.imgurl|IMAGES_SITE}.100x100.jpg">
+                        <div style="float:right; width:140px;">
+                        	<div class="">{$goldgoods.title|cutstr:40}</div>
+                            <div class=""><span style="text-decoration:line-through">￥{$goldgoods.price}</span> 金币：{$goldgoods.gold}</div>
+                            <div><div class="btn btn-success">立即兑换</div></div>
+                        </div>
+                    </a>    
+                	</div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="footer.html"}
+</div>
+
+</body>
+</html>

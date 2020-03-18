@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"><div class="header">
+<a  class="left-btn" href="/index.php?m=goldorder&a=my"><span class="iconfont icon-back"></span></a>
+<div class="title">兑换订单详情</div>
+</div> 
+  <div class="main-body">
+    <div class="row-box">  
+      <table class="table table-bordered" width="100%">
+        <tr>
+          <td>订单编号：{$data.orderno}</td>
+        </tr>
+        <tr>
+          <td>订单类型：{$order_type_list[$data.type_id]}</td>
+        </tr>
+        <tr>
+          <td>订单价格：{$data.money}</td>
+        </tr>
+        <tr>
+          <td>下单时间：{$data.dateline|date:Y-m-d H:i}</td>
+        </tr>
+        <tr>
+          <td>支付状况：{$order_ispay[$data.ispay]} {if $data.unpay}货到付款{/if}</td>
+        </tr>
+        <tr>
+          <td>订单状态：{$order_status_list[$data.status]}</td>
+        </tr>
+        <tr>
+          <td style="line-height:22px;"><strong>联系方式:</strong> {$addr.p_c_t}{$addr.address} 邮编：{$addr.zip_code} 姓名：{$addr.truename} 手机：{$addr.telephone} </td>
+        </tr>
+        <tr>
+          <td  ><strong>物流信息：</strong>{$data.shipping_info}</td>
+        </tr>
+        <tr>
+          <td  ><strong>收货:</strong>{if $data.isreceived eq 2}已收货{elseif $data.status > 2}<a href="{R("/index.php?m=order&a=Receive&order_id=$data.order_id")}" class="btn  btn-default">确认收货</a>{else}未收货{/if}</td>
+        </tr>
+      </table>
+      <h3>商品详情</h3>
+      <table class="table table-bordered" width="100%">
+ 
+        <tr>
+          <td style="width:50px;"><a href="{R("/index.php?m=show&id=$goods.id")}" ><img src="{$goods.imgurl}.100x100.jpg" width="50" /></a></td>
+          <td style="line-height:22px;">
+          	<div class="title"><a href="{R("/index.php?m=show&id=$goods.id")}" >{$goods.title}</a>
+            {if $goods.attr}
+              <span style="color:red">{$goods.attr}</span> 
+              {/if}
+            </div>
+              <div>金币：{$goods.gold} {if $data.price>0}+{$data.price}{/if} x  <span>1</span>
+              </div>
+              <div>市场价：￥{$goods.market_price}</div>
+               
+              </td>
+           
+        </tr>
+      </table>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  {include file="footer.html"} </div>
+</body>
+</html>

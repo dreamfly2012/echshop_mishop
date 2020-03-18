@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+    <div class="row box960">
+      	 {include file="inc/list_breadcrumb.html"}
+         
+         
+         	<div class="sd-list row">
+        	{foreach item=c from=$list}
+            <div class="item">
+            	<div class="pd">
+                    <div class="img"><a href="/index.php?m=goldorder_shaidan&a=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}.small.jpg"></a></div>
+                    <div class="title"><a href="/index.php?m=goldorder_shaidan&a=show&id={$c.id}">{$c.title}</a></div>
+                </div>
+            </div>
+            
+            {/foreach}
+        </div>
+            <div>{$pagelist}</div>
+          
+         
+         
+      
+    </div>
+  </div>
+  {include file="footer.html"} </div>
+</body>
+</html>

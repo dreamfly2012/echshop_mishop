@@ -1,0 +1,83 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file="attr/nav.html"}
+<form method="post" action="{$appadmin}?m=attribute&a=save">
+<input type="hidden" name="id" value="{$data.id}" />
+<table class="table table-bordered" width="100%">
+<tr>
+	<td width="18%">属性名称：</td>
+    <td width="82%"><input type="text" name="title" value="{$data.title}" /></td>
+</tr>
+
+<tr>
+	<td>所属类别：</td>
+    <td><select name="cat_id">
+    {foreach item=c key=k from=$attr_cat}
+    <option value="{$k}" {if $k eq $data.cat_id or get('cat_id') eq $k} selected="selected"{/if}>{$c}</option>
+    {/foreach}
+    </select></td>
+</tr>
+
+<tr>
+	<td>属性类型：</td>
+    <td>
+    {foreach item=c key=k from=$attr_type_list}
+    <input type="radio" name="attr_type"  value="{$k}" {if $data.attr_type eq $k} checked="checked"{/if} /> {$c}
+    {/foreach}
+    <br />
+    (注：唯一属性用户只能查看，唯一属性、多选属性用户可以选择，可以根据属性设置价格等)
+    
+    </td>
+</tr>
+<tr>
+  <td>对应字段：</td>
+  <td>
+  <select name="col_name">
+  	<option value="">非字段属性</option>
+    <option value="attr_1" {if $data.col_name eq 'attr_1'} selected="selected"{/if}>attr_1</option>
+    <option value="attr_2" {if $data.col_name eq 'attr_2'} selected="selected"{/if}>attr_2</option>
+    <option value="attr_3" {if $data.col_name eq 'attr_3'} selected="selected"{/if}>attr_3</option>
+    <option value="attr_4" {if $data.col_name eq 'attr_4'} selected="selected"{/if}>attr_4</option>
+  </select>
+   </td>
+</tr>
+<tr>
+  <td>排序：</td>
+  <td><input type="text" name="orderindex"  value="{$data.orderindex}" /></td>
+</tr>
+
+<tr>
+	<td>录入方式：</td>
+    <td><input type="radio" name="input_type" value="1" {if $data.input_type eq 1} checked="checked"{/if} />手动输入 
+    <input type="radio" name="input_type" value="2" {if $data.input_type eq 2} checked="checked"{/if} />列表选择
+    
+    (<span style="color:red">注：字段属性只能使用列表选择</span>)
+    </td>
+</tr>
+
+<tr>
+	<td>使用编辑器</td>
+    <td><input type="radio" name="ishtml" value="0" {if $data.ishtml eq 0} checked="checked"{/if}  />否
+     <input type="radio" name="ishtml" value="1" {if $data.ishtml eq 1} checked="checked"{/if}  />是</td>
+</tr>
+
+<tr>
+  <td>属性内容：</td>
+  <td>
+  （注：每行一个<br /> 1=白色<br /> 2=黑色 ）<br />
+  <textarea name="content" style="width:200px; height:200px;">{$data.content}</textarea>
+  
+  </td>
+</tr>
+
+<tr>
+	<td></td>
+    <td><input type="submit" value="保存" class="btn btn-success" /></td>
+</tr>
+
+</table>
+</form>
+</div>
+</div>
+{include file="footer.html"}

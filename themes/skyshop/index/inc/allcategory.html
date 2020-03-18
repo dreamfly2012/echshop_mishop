@@ -1,0 +1,62 @@
+{get data=cats model=category fun=children(2,MODEL_PRODUCT_ID)}
+<style>
+	.allcatbox{position:absolute; display:none; top:100%; left:0px;     background: rgba(0,0,0,0.5); border:1px solid #f90; z-index:9999 !important;  }
+	.allcatbox .pd{ padding:20px 0px;}
+	.allcatbox.index{ display:block;height:460px;}
+	.allcatbox .cat1{display:block; width:264px; }
+	
+	
+	.allcatbox .cat1>a{padding:11px 10px; display:block; text-decoration:none;color:#fff;}
+	.allcatbox .cat1>a .iconfont{float:right;}
+	.allcatbox .cat1:hover{ background-color:#ff6700;}
+	.allcatbox .cat1:hover>a{color:#fff;}
+	.allcatbox .childbox{ display:none; position:absolute; left:235px; top:0px; bottom:0px; background-color:#fff; width:200px; border:1px solid #eee; padding:20px;}
+	.allcatbox .child{display:block;  height:50px; line-height:50px; margin-bottom:10px;}
+	.allcatbox .child .img img{width:40px; float:left; margin-right:20px;}
+</style>
+<div class="allcatbox {if get('m') eq 'index'}index{/if}">
+	<div class="pd">
+	{foreach item=c key=k from=$cats}
+    {if $k lt 9}
+        <div class="cat1" v="{$c.catid}"><a href="/index.php?m=list&catid={$c.catid}">{$c.cname} <i class="iconfont icon-you"></i></a>
+         {if $c.child}
+            <div class="childbox childbox{$c.catid}" >
+            {foreach item=cc from=$c.child}
+                <a href="/index.php?m=list&catid={$cc.catid}" class="child"><span class="img"><img src="{$cc.imgurl}.100x100.jpg"></span> <span class="text">{$cc.cname}</span></a>
+            {/foreach}
+            </div>
+        {else}
+            {get data=pros model=product fun=getListByCat("$c.catid")}    
+            <div class="childbox  childbox{$c.catid}">
+            {foreach item=cc from=$pros}
+                <a href="/index.php?m=show&id={$cc.id}" class="child"><span class="img"><img src="{$cc.imgurl}.100x100.jpg"></span>  {$cc.title|cutstr:18} </a>
+            {/foreach}
+            </div>
+        {/if}
+        </div>
+   {/if}
+    {/foreach}
+</div>
+</div>
+
+<script>
+	$(document).on("mouseenter",".showallcatbox",function(){
+		$(".allcatbox").show();
+	});
+	$(document).on("mouseleave",".showallcatbox",function(){
+		$(".allcatbox").hide();
+	});
+	$(document).on("mouseenter",".allcatbox .cat1",function(){
+		var v=$(this).attr("v");
+		$(".childbox").hide();
+		$(".childbox"+v).show();
+		
+	});
+	
+	$(document).on("mouseleave",".allcatbox .cat1",function(){
+ 
+		$(".childbox").hide();
+ 
+		
+	});
+</script>

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理后台</title>
+<link type="text/css" rel="stylesheet" href="{$skins}css.css?v={$smarty.now}" />
+<script language="javascript" src="/plugin/jquery/jquery.js"></script>
+<script language="javascript">
+$(document).ready(function()
+{
+	$(".mtitle").click(function()
+	{
+		if($(this).next(".menu").css("display")=="block")
+		{
+			$(".menu").css("display","none")
+		 
+		}else
+		{
+			$(".menu").css("display","none")
+			$(this).next(".menu").css({display:"block"});
+		}
+	});
+	if($("a:eq(0)").attr("href")!='/admin.php?m=iframe&a=main'){
+		parent['main-frame'].location.href=$("a:eq(0)").attr("href");
+	}
+	$("ul li a:eq(0)").addClass('on'); 
+	$('ul li a').click(function(){
+		$('ul li a').removeClass('on');
+		$(this).addClass('on');
+	});
+});
+</script>
+</head>
+
+<body id="menu-body">
+{if !$data}
+<div class="mtitle"><a href="{$appadmin}?m=iframe&a=main" target="main-frame">{$lang.admin_main}</a></div>
+{/if}
+{foreach item=c from=$data}
+<div class="mtitle">{$c.title}</div>
+<div class="menu" {if $smarty.get.id eq $c.id} style="display:block"{/if}>
+<ul>
+{foreach item=cc from=$c.child}
+<li><a href="{$appadmin}{$cc.link_url}"  target="main-frame">{$cc.title}</a></li>
+{/foreach}
+</ul>
+</div>
+{/foreach}
+<div class="mtitle"><a href="{$appadmin}?m=ifram&a=main"></a></div>
+<div style="display:none;">
+<div class="ztitle">版权声明</div>
+<div class="zbox" style="">
+
+版权归<a href="http://www.deitui.com" target="_blank">得推网络</a>所有<br>
+</div>
+</div>
+</body>
+</html>

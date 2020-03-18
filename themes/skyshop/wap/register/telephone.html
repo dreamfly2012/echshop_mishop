@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div data-role="page">
+<div class="header">
+    <a  class="left-btn" href="/index.php"><span class="iconfont icon-back"></span></a>
+    <div class="title">用户注册</div>
+     
+  </div>
+  
+   
+    <div class="loginbox">
+      <div class="f_padding">
+      <div class="steps" >
+    	 <a href="/index.php?m=reg&a=telephone">发送短信验证</a> >> 填写用户信息 >> 注册完成
+    </div>
+      <div id="step1" class="rgbox" style="display:block">
+      		<ul class="form" >
+            	<li>
+                    <input class="inp" id="ctelephone" type="text" style="" placeholder="请填手机号码">
+                  </li>
+                  <li>
+                  	<span style="float:left;"><input type="text" id="cyzm" style="width:60px; line-height:30px; height:30px; text-align: center; border: 1px solid #ccc; border-radius: 5px;"></span>
+                    <span  type="button"  id="getYzm"  style="width:80px; border:0px; float:right; cursor:pointer; border-radius:5px; display:block; font-size:.8em; text-align:center; height:30px; background-color:#82F46B; line-height:30px; color:#fff;">获取验证</span>
+                  </li>
+       			<li><button type="button" id="gostep2"  class="btn">验证</button></li>	
+            </ul>
+      </div>
+     
+      <div id="step2" class="rgbox">
+      <form id="reg-form">
+     	 <input  name="telephone" type="hidden"  value="" id="telephone">
+         <input type="hidden" name="yzm" value="" id="yzm">
+        <ul class="form" >
+          
+          <li>
+            <input class="inp" name="username" type="text" placeholder="请填写用户名（2-15位）">
+          </li>
+          <li>
+            <input class="inp" name="password" type="password" placeholder="请填写密码（至少6位）">
+          </li>
+          <li>
+            <input class="inp" name="password2" type="password" placeholder="重复密码">
+          </li>
+          
+          <li>
+            <button  type="button" id="reg-submit" class="btn" >立即注册</button>
+          </li>
+           
+           
+        </ul>
+        </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" class="jsa-text">
+$(function(){
+	$(document).on("click","#getYzm",function(){
+		$.get("/index.php?m=register&a=SendSms&ajax=1",{telephone:$("#ctelephone").val()},function(data){
+			skyToast(data.message);
+		},"json");
+		
+	});
+	$(document).on("click","#gostep2",function(){
+		$.get("/index.php?m=register&a=yzSms&ajax=1",{
+				telephone:$("#ctelephone").val(),
+				yzm:$("#cyzm").val()
+			},function(data){
+			if(data.error){
+				skyToast(data.message);
+			}else{
+				$("#step1").hide();	
+				$("#telephone").val($("#ctelephone").val());
+				$("#yzm").val($("#cyzm").val());
+				$("#step2").show();
+			}
+		},"json");
+		
+	});
+	var ispost=false;
+	$(document).on("click","#reg-submit",function(){
+		if(ispost==true) return false;
+		ispost=true;
+		setTimeout(function(){
+			ispost=false;
+		},1000);
+		$.post("/index.php?m=register&a=regPhone&ajax=1",$("#reg-form").serialize(),function(data){
+			if(data.error){
+				skyToast(data.message);
+			}else{
+				skyToast("注册成功");
+				setTimeout(function(){
+					window.location="/index.php";
+				},700);
+			}
+		},"json");
+	});
+});
+</script>
+</body>
+</html>

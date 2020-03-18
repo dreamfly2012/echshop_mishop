@@ -1,0 +1,153 @@
+<html>
+{include file="head.html"}
+<body>
+
+<div class="page">
+{include file="header.html"}
+<div class="main-body">
+<div class="box960">
+	
+    <div class="row mgb-10">
+    	<div class="col-3-1">
+        	<div class="w98">
+        	<div class="skypanel">
+        	<div class="hd">品牌排行</div>
+            <ul class="nav-stacked">
+            	<li><a href="#"><img src="/static/images/paihang/index/1.gif" > 品品香</a></li>
+                <li><a href="#"><img src="/static/images/paihang/index/2.gif" > 绿雪芽</a></li>
+                <li><a href="#"><img src="/static/images/paihang/index/3.gif" > 鼎白茶叶</a></li>
+                <li><a href="#"><img src="/static/images/paihang/index/4.gif" > 柏柳茶业</a></li>
+                <li><a href="#"><img src="/static/images/paihang/index/5.gif" > 天鼎茶业</a></li>
+                <li><a href="#"><img src="/static/images/paihang/index/6.gif" > 古德茶叶</a></li>
+                <li><a href="#"><img src="/static/images/paihang/index/7.gif" > 天毫茶业</a></li>
+                <li><a href="#"><img src="/static/images/paihang/index/8.gif" > 吾要茶业</a></li>
+                <li><a href="#"><img src="/static/images/paihang/index/9.gif" > 裕荣香茶业</a></li>
+                <li><a href="#"><img src="/static/images/paihang/index/10.gif" > 天湖茶叶</a></li>
+            </ul>
+            </div>
+            </div>
+        </div>
+        
+        <div class="col-3-1">
+        {api data=t_c control=productapi fun=select(array("limit"=>10,"where"=>" title like '%银针%' "))}
+        <div class="w98">
+        	<div class="skypanel">
+        	<div class="hd">白毫银针排行榜</div>
+            <ul class="nav-stacked">
+            	{foreach item=c key=k from=$t_c}
+            	<li><a href="{R("/index.php?m=show&id=$c.id")}"><img src="/static/images/paihang/index/{$k+1}.gif" > {$c.title|cutstr:42}</a></li>
+                {/foreach}
+            </ul>    
+            </div>
+            </div>
+        </div>
+        
+        <div class="col-3-1">
+        {api data=t_c control=productapi fun=select(array("limit"=>10,"where"=>" title like '%白牡丹%' "))}
+        <div class="w98">
+        	<div class="skypanel">
+        	<div class="hd">白牡丹排行榜</div>
+            <ul class="nav-stacked">
+            	{foreach item=c key=k from=$t_c}
+            	<li><a href="{R("/index.php?m=show&id=$c.id")}"><img src="/static/images/paihang/index/{$k+1}.gif" > {$c.title|cutstr:42}</a></li>
+                {/foreach}
+            </ul> 
+            </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="row mgb-10">
+    {api data=t_c control=productapi fun=select(array("limit"=>10,"where"=>" title like '%银针%' "))}
+    	<div class="col-3-1">
+        	<div class="w98">
+                <div class="skypanel">
+                    <div class="hd">1000元以上白毫银针</div>
+                    <ul class="nav-stacked">
+            	{foreach item=c key=k from=$t_c}
+            	<li><a href="{R("/index.php?m=show&id=$c.id")}"><img src="/static/images/paihang/index/{$k+1}.gif" > {$c.title|cutstr:42}</a></li>
+                {/foreach}
+            </ul> 
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-3-1">
+        	<div class="w98">
+                <div class="skypanel">
+                    <div class="hd">600-1000元白毫银针</div>
+                    <ul class="nav-stacked">
+            	{foreach item=c key=k from=$t_c}
+            	<li><a href="{R("/index.php?m=show&id=$c.id")}"><img src="/static/images/paihang/index/{$k+1}.gif" > {$c.title|cutstr:42}</a></li>
+                {/foreach}
+            </ul> 
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-3-1">
+        	<div class="w98">
+                <div class="skypanel">
+                    <div class="hd">600元以下白毫银针</div>
+                    <ul class="nav-stacked">
+            	{foreach item=c key=k from=$t_c}
+            	<li><a href="{R("/index.php?m=show&id=$c.id")}"><img src="/static/images/paihang/index/{$k+1}.gif" > {$c.title|cutstr:42}</a></li>
+                {/foreach}
+            </ul> 
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="row mgb-10">
+    {api data=t_c control=productapi fun=select(array("limit"=>10,"where"=>" title like '%白牡丹%' "))}
+    	<div class="col-3-1">
+        	<div class="w98">
+                <div class="skypanel">
+                    <div class="hd">1000元以上白牡丹</div>
+                    <ul class="nav-stacked">
+            	{foreach item=c key=k from=$t_c}
+            	<li><a href="{R("/index.php?m=show&id=$c.id")}"><img src="/static/images/paihang/index/{$k+1}.gif" > {$c.title|cutstr:42}</a></li>
+                {/foreach}
+            </ul> 
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-3-1">
+        	<div class="w98">
+                <div class="skypanel">
+                    <div class="hd">400-1000元白牡丹</div>
+                    <ul class="nav-stacked">
+            	{foreach item=c key=k from=$t_c}
+            	<li><a href="{R("/index.php?m=show&id=$c.id")}"><img src="/static/images/paihang/index/{$k+1}.gif" > {$c.title|cutstr:42}</a></li>
+                {/foreach}
+            </ul> 
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-3-1">
+        	<div class="w98">
+                <div class="skypanel">
+                    <div class="hd">400元以下白牡丹</div>
+                    <ul class="nav-stacked">
+            	{foreach item=c key=k from=$t_c}
+            	<li><a href="{R("/index.php?m=show&id=$c.id")}"><img src="/static/images/paihang/index/{$k+1}.gif" > {$c.title|cutstr:42}</a></li>
+                {/foreach}
+            </ul> 
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+</div>
+{include file="footer.html"}
+</div>
+
+</body>
+</html>

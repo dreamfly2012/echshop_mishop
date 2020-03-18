@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> {include file="header.html"}
+  <div class="main-body" style="padding-top:10px; background:none;">
+    <div class="row box960 " style=" width:960px; background-color:#f8f8f8;">
+      	<div class="row">
+        	<div class="col-5-2">
+        <form method="post" autoComplete="off" action="/index.php?m=register&a=regsave" style="padding-top:20px;padding-bottom:20px;">
+          <table class=" form-table">
+            <tr>
+              <td  style="width:100px; text-align:right; height:40px;">用户名：</td>
+              <td><input type="text" name="nickname" class="input-text w200" value="" placeholder="请输入用户名"></td>
+            </tr>
+            
+            <tr>
+              <td  style="width:100px; text-align:right; height:40px;">邮箱：</td>
+              <td><input type="text" name="email" class="input-text w200" value="" placeholder="请输入邮箱"></td>
+            </tr>
+            
+            <tr>
+              <td  style="width:100px; text-align:right; height:40px;">密码：</td>
+              <td><input type="password" name="password" class="input-text w200" value="" placeholder="请输入密码"></td>
+            </tr>
+            
+            
+            <tr>
+              <td  style="width:100px; text-align:right; height:40px;">重复密码：</td>
+              <td><input type="password" name="password2" class="input-text w200" value="" placeholder="请输入密码"></td>
+            </tr>
+            
+            <tr>
+            	<td colspan="2">
+                	<div class="form-submit">
+                    	<button type="submit" class="btn btn-success btn-larger">注册</button>
+                        <a href="/index.php?m=login" class="btn btn-info btn-larger" >有账号，直接登陆-&gt;&gt </a>
+                    </div>
+                </td>
+            </tr>
+            
+          </table>
+        </form>
+        </div>
+        <div class="col-5-3">
+        	<img src="{$skins}images/images/banner.jpg" style="width:96%; margin-top:10px;"></div>
+        </div>
+        </div>
+      
+    </div>
+  </div>
+  {include file="footer.html"} </div>
+</body>
+</html>

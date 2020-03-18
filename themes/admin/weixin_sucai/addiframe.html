@@ -1,0 +1,81 @@
+{include file="header.html"}
+<form method='post' id="f1" name="f1"  action='admin.php?m=weixin_sucai&a=save'>
+      <input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+      <input type="hidden" name="wid" value="{if $data}{$data.wid}{else}{$weixin.id}{/if}" />
+      <input type="hidden" name="pid" value="{$pid}">
+      <table class='table table-bordered' width='100%'>
+         
+        <tr>
+          <td width="100">标题：</td>
+          <td><input type='text' name='title' id='title' value='{$data.title}' ></td>
+        </tr>
+        
+        <tr>
+        	<td>链接：</td>
+            <td><input type="text" name="linkurl" value="{$data.linkurl}"  /></td>
+        </tr>
+        
+        <tr>
+    <td align="right">封面：</td>
+    <td>
+    <div id="up1" url="/index.php?m=upload&a=uploadtao&dir=weixin_sucai&id={$data.id}">
+    	<div class="btn-upload">
+          <input type="file" name="upimg" id="ud"  class="btn-upload-file" onChange="uploadimg('up1')">
+         </div>
+ 
+          <input type="hidden" name="imgurl" class="imgurl" value="{$data.imgurl}">
+          <span class="imgShow">
+          {if $data.imgurl}
+          <img src="{$data.imgurl|images_site}.100x100.jpg">
+          {/if}
+          </span>
+      </div>
+      </td>
+  </tr>
+       
+        
+        {if $data.dateline}
+        <tr>
+          <td>添加时间：</td>
+          <td>{$data.dateline|date:Y-m-d H:i:s}</td>
+        </tr>
+        {/if}
+         
+        
+        <tr>
+	
+    <tr>
+    	<td>描述</td>
+    	<td><textarea name="description" style="width:90%; height:50px;">{$data.description}</textarea></td>
+    </tr>
+  
+  
+        
+        <tr><td>内容</td><td>
+		 
+		<script id="content" name="content" style="width:100%; height:400px;">{$data.content}</script></td></tr>
+        <tr>
+          <td></td>
+          <td><input type='submit' value='保存' class='btn btn-success'></td>
+        </tr>
+      </table>
+    </form>
+
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+
+<script language="javascript">
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&siteid={const.SITEID}&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&siteid={const.SITEID}&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&siteid={const.SITEID}&id={$data.id}",
+		{include file="ueditor_simple.html"}
+		 
+};
+var editor=UE.getEditor('content',options)
+</script>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript" src="/static/js/upload.js"></script>
+ 
+{include file="footer.html"}

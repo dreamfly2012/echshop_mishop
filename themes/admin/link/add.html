@@ -1,0 +1,41 @@
+{include file='header.html'}
+{include file="link/nav.html"}
+
+<div class="rbox">
+<form method="post" action="{$appadmin}?m=link&a=save">
+<input type="hidden" name="id" value="{$data.id}" />
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="21%" align="right">{$lang.name}：</td>
+    <td width="79%"><input name="title" type="text" id="title" value="{$data.title}"></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.link_url}：</td>
+    <td><input name="link_url" type="text" id="link_url"  class="w400" value="{$data.link_url}"></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.link_img}：</td>
+    <td><input name="link_img" type="text" id="link_img" class="w400" value="{$data.link_img}"></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.link_type}：</td>
+    <td>
+    <select name="type_id" id="type_id">
+        <option value="2" {if $data.type_id eq 2} selected {/if}>{$lang.common_link}</option>
+        <option value="1" {if $data.type_id eq 1} selected {/if}>{$lang.index_link}</option>
+    </select></td>
+  </tr>
+  <tr>
+    <td align="right">{$lang.sort}：</td>
+    <td><input name="orderindex" type="text" id="orderindex" value="{$data.orderindex}"></td>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td><input type="submit" name="button" class="btn" id="button" value="{$lang.submit}"></td>
+  </tr>
+</table>
+
+
+</form>
+</div>
+{include file='footer.html'}

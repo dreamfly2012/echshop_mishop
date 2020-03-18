@@ -1,0 +1,66 @@
+{include file="header.html"}
+<div class="row">
+  <div class="span12"> {include file='weixin_command/nav.html'}
+    <form method='post' action='admin.php?m=weixin_command&a=save'>
+     <input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+     <input type="hidden" name="wid" value="{if $data}{$data.wid}{else}{$weixin.id}{/if}" />
+      <table class='table table-bordered' width='100%'>
+ 
+        <tr>
+          <td>命令名称：</td>
+          <td><input type='text' name='title' id='title' value='{$data.title}' ></td>
+        </tr>
+        
+        <tr>
+        	<td>默认命令：</td>
+            <td><input type="radio" name="isdefault" value="1" {if $data.isdefault} checked="checked"{/if} />是 <input type="radio" name="isdefault" value="0"  {if !$data.isdefault} checked="checked"{/if} />否</td>
+        </tr>
+        
+        <tr>
+          <td>命令：</td>
+          <td><input type='text' name='command' id='command' value='{$data.command}' ></td>
+        </tr>
+        
+        <tr>
+        	<td>方法：</td>
+            <td><select name="fun">
+            <option value="">无</option>
+            {foreach item=c key=k from=$fun_list}
+            <option value="{$k}" {if $k eq $data.fun} selected="selected"{/if}>{$c}</option>
+            {/foreach}
+            </select></td>
+        </tr>
+        
+        <tr>
+          <td>命令类型：</td>
+          <td><select name="type_id">
+          	{foreach item=c key=k from=$type_list}
+            <option value="{$k}" {if $k eq $data.type_id} selected="selected"{/if}>{$c}</option>
+            {/foreach}
+          </select></td>
+        </tr>
+        
+        <tr>
+        	<td>素材：</td>
+            <td><input type="text" name="sc_id" value="{$data.sc_id}" /> 素材id</td>
+        </tr>
+        
+        <tr>
+          <td>内容：</td>
+          <td><textarea name='content' id='content' style="width:600px; height:300px;" >{$data.content}</textarea> </td>
+        </tr>
+        {if $data.dateline}
+        <tr>
+          <td>添加时间：</td>
+          <td>{$data.dateline|date:Y-m-d H:i:s}</td>
+        </tr>
+        {/if}
+        <tr>
+          <td></td>
+          <td><input type='submit' value='保存' class='btn btn-success'></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+{include file="footer.html"}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+
+<div class="page">
+{include file="header.html"}
+<div class="main-body">
+<div class="box960 bg-fff">
+
+<div class="row">
+	<div class="col-2-1">
+    	<div style="position:relative; width:100%;  height:250px; background-color:#eee; margin:0 auto;">
+        <ul class="slider_pic" id="slider_pic" style="background-color:#eee;">
+          {api data=t_c control=adapi fun=listbyno("index_flash",4)}
+          {foreach item=c from=$t_c name=t1}
+          <li ><a href="{$c.link1}" target="_blank"><img src="{$c.imgurl|IMAGES_SITE}"  /></a></li>
+          {/foreach}
+        </ul>
+        <div id="slider-num" class="slider-num"></div>
+    <div id="slider-prev" class="slider-prev"><i class="iconfont icon-zuo"></i></div>
+            <div id="slider-next" class="slider-next"><i class="iconfont icon-you"></i></div>
+      </div>
+      <script src="/plugin/jquery/cycle/jquery.cycle.all.js"></script>
+      <script>
+     	$("#slider_pic li").css("width",$("#slider_pic li").parents("div").width());
+		
+		$("#slider_pic img").css("height",$("#slider_pic li").parents("div").height());
+		$('#slider_pic').cycle({
+			fx: 'scrollLeft', 
+			timeout: 5000,
+			pager:'#slider-num',
+			prev:'#slider-prev',
+			next:'#slider-next'
+		}); 
+	 
+    </script>
+    </div>
+    <div class="col-2-1">
+    	<style>
+			.bbshot-item{width:460px; margin:0 auto; font-size:14px;}
+        	.bbshot-item .hd{border-bottom:2px solid #F60; font-size:16px; line-height:30px; margin-bottom:2px; font-weight:500;}
+			.bbshot-item li{line-height:28px; height:28px; display:block; font-size:14px; border-bottom:1px #ccc dotted; margin-bottom:1px;}
+			.bbshot-item li .title{width:360px; float:left;}
+			.bbshot-item li .author{width:90px; padding-right:10px; overflow:hidden; float:right; text-align:right;}
+        </style>
+    	<div class="bbshot-item">
+        	<div class="hd">热帖排行</div>
+            <ul>
+            	{api data=tc control=forumapi fun=recommend(0,8)}
+                {foreach item=c from=$tc}
+                <li>
+                	<div class="title"><a href="/index.php?m=show&id={$c.id}">{$c.title|cutstr:42:..}</a></div>
+                	<div class="author"><a href="/index.php?m=member&userid={$c.userid}">{$c.nickname|cutstr:12}</a></div>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--END 导航-->
+ <div style="height:10px;"></div>
+ <div class="row">
+ <style>
+ 	.bk-list .hd{border-bottom:2px solid #F60; padding-left:10px; font-size:16px; font-weight:700; line-height:30px; margin-bottom:10px; color:#3184db;}
+ 	.bk-list .item{width:50%; float:left; height:100px; margin-bottom:10px; padding:10px 0px; border-bottom: 1px #ccc dotted; font-size:14px;}
+	.bk-list .item .img{height:80px; width:80px; float:left; margin-left:5px;}
+	.bk-list .item .img img{height:72px; width:72px;}
+	.bk-list .item .title{ font-size:14px; margin-bottom:5px;}
+	.bk-list .item .description{color:#999; line-height:20px; margin-bottom:5px;}
+	.bk-list .item .topic-num{line-height:30px;}
+	.bk-list .item .info{margin-left:10px; float:left; width:360px;}
+	.bk-list .item .info .topic{line-height:30px;}
+	.bk-list .item .info .topic a{color:#3184db;}
+	.bk-list .item .info .topic .time{ margin-left:20px;}
+ </style>
+ {get data=tc model=category fun=children(0,MODEL_FORUM_ID)}
+ 	{foreach item=c key=k from=$tc}
+    {if $k eq 1}
+    {api data=t_c control=adapi fun=listbyno("forum_index_cat_banner",1)}
+    <div class="row"><img src="{$t_c[0].imgurl|IMAGES_SITE}" style="height:120px; width:100%" /></div>
+    {/if}
+ 	<div class="bk-list">
+    	<div class="hd">{$c.cname}</div>
+        {if $c.child}
+        {foreach item=c from=$c.child}
+        <div  class="item">
+        	<div class="img">
+            <a href="/index.php?m=list&catid={$c.catid}"><img src="{$c.logo|IMAGES_SITE}" /></a>
+            </div>
+            <div class="info">
+                <div class="title"><a href="/index.php?m=list&catid={$c.catid}">{$c.cname}</a></div>
+                <div class="description">{$c.description}</div>
+                <div class="topic_num">主题数：{$c.topic_num} 帖子数:{$c.comment_num}</div>
+                <div class="topic">{api data=tp control=forumapi fun=onlist("$c.catid",1)}
+                {if $tp}<a href="/index.php?m=show&id={$tp[0].id}">{$tp[0].title|cutstr:33:...}</a> 				
+                <span class="time">{$tp[0].dateline|timeago} <a href="/index.php?m=member&userid={$tp[0][userid]}">{$tp[0].nickname}</a></span>
+                
+                {/if}
+                </div>
+            </div>
+        </div>
+        {/foreach}
+        {/if}
+    </div>
+    {/foreach}
+ </div> 
+ 
+
+ 
+
+</div>
+{include file="footer.html"}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+{include file='header.html'}
+
+{include file='goldgoods/nav.html'}
+<div class="rbox">
+<ul class="nav nav-tabs" id="myTab" style="margin-top:10px;">
+<li class="active"><a href="#p_base"  data-toggle="tab" >基本信息</a></li>
+<li><a href="#p_other"  data-toggle="tab" >扩展信息</a></li>
+<li><a href="#p_attr"  data-toggle="tab" >属性信息</a></li> 
+</ul>
+{if $data.catid}
+<div class="pd-5"><a href="/index.php?m=show&id={$data.id}" target="_blank" class="btn btn-success">查看前台</a></div> 
+{/if} 
+<form method="post" action="{$appadmin}?m=goldgoods&a=save">
+<input type="hidden" name="id" value="{$data.id}" />
+<div class="tab-content"> 
+<div class="tab-pane active" id="p_base"> 
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="100" align="right"> 标题：</td>
+    <td  ><input name="title" type="text" id="title" value="{$data.title}" size="80"></td>
+  </tr>
+  <tr>
+    <td align="right">分类：</td>
+    <td>
+    <select name="catid" class="w150">
+    <option value="0">请选择</option>
+    {foreach item=c from=$cat_list}
+                <option value="{$c.catid}" {if $data.catid eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                {foreach item=c_2 from=$c.child}
+                	<option value="{$c_2.catid}" {if $data.catid eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                    {foreach item=c_3 from=$c_2.child}
+                    <option value="{$c_3.catid}" {if $data.catid eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+    </select>
+    
+    
+    
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="right">图片：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="upimg" onChange="uploadgoodsimg()">
+      </div>
+      <label  id="loading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="imgurl" id="imgurl" value="{$data.imgurl}">
+      <span id="imgShow">
+      {if $data.imgurl}
+          <img src="{$data.imgurl|images_site}.100x100.jpg">
+          {/if}
+      </span>
+      </td>
+  </tr>
+  
+  <tr>
+    <td align="right">seo关键字：</td>
+    <td><input name="keywords" type="text" id="keywords" value="{$data.keywords}" class="w600" /></td>
+  </tr>
+  <tr>
+    <td align="right">seo描述：</td>
+    <td><textarea name="description" id="description" class="w600 h40">{$data.description}</textarea></td>
+  </tr>
+  <tr>
+    <td align="right">内容：</td>
+    <td><script type="text/plain" id="content" name="content" >{$data.content}</script></td>
+  </tr>
+  
+</table>
+</div>
+<!--扩展信息-->
+<div class="tab-pane active" id="p_other">
+<table class="table">
+<tr>
+	<td width="100">市场价：</td>
+    <td><input type="text" name="market_price" id="market_price" value="{$data.market_price}" /></td>
+</tr>
+
+<tr>
+	<td>所需金币：</td>
+    <td><input type="text" name="gold" id="gold" value="{$data.gold}" /></td>
+</tr>
+
+<tr>
+	<td>所需人民币：</td>
+    <td><input type="text" name="price" value="{$data.price}" /></td>
+</tr>
+
+<tr>
+	<td>赞助商：</td>
+    <td><input type="text" name="shop_name" value="{$data.shop_name}" /></td>
+</tr>
+
+<tr>
+	<td>赞助链接:</td>
+    <td><input type="text" name="shop_url" value="{$data.shop_url}" /></td>
+</tr>
+
+<tr>
+          <td>开始时间：</td>
+          <td><input type='text' name='starttime' id='starttime' value='{if $data.starttime}{$data.starttime|date:Y-m-d H:m:s}{/if}' onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" ></td>
+        </tr>
+        <tr>
+          <td>结束时间：</td>
+          <td><input type='text' name='endtime' id='endtime' value='{if $data.endtime}{$data.endtime|date:Y-m-d H:m:s}{/if}' onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" ></td>
+        </tr>
+  <tr>
+	<td>库存数量：</td>
+    <td><input type="text" name="total_num" value="{$data.total_num}" /></td>
+</tr>      
+        <tr>
+	<td>销售数：</td>
+    <td>{$data.buy_num}</td>
+</tr>
+
+<tr>
+    <td align="right">图集：</td>
+    <td>
+    <div id="webuploader" url="/admin.php?m=imgs&tablename=product_zhtj&object_id={$data.id}" class="webuploader">
+        <!--用来存放item-->
+        
+        <div  class="webuploader-select">选择图片</div>
+    	<div  class="webuploader-list"></div>
+        <div class="ks-list" >
+                    <div class="item">
+                    </div>
+                    <div class="clearfix"></div>
+         </div>
+     </div>
+    
+ 
+    </td>
+  </tr>
+  
+  
+   
+        
+</table>
+</div>
+
+<!--End 扩展信息-->
+
+  <!--属性开始-->
+  <div class="tab-pane active" id="p_attr"  >
+  <table class="table">
+  	<tr><td width="100">产品属性</td><td>
+    <select name="attr_cat_id" name="attr_cat_id" id="attr_cat_id">
+    <option value="0">请选择</option>
+    {foreach item=c key=k from=$attr_cat}
+    <option value="{$k}" {if $data.attr_cat_id eq $k} selected="selected"{/if}>{$c}</option>
+    {/foreach}
+    </select></td></tr>
+  </table>
+   <div id="attr_html"></div>
+  </div>
+  <!--end属性-->
+
+ 
+
+</div>
+<div class="form-btns">
+ <input type="submit" name="button" id="button" class="btn" value="提交"> 
+</div>
+</form>
+</div>
+<link href="/plugin/webuploader/webuploader.css" rel="stylesheet">
+<script src="/plugin/webuploader/webuploader.min.js"></script>
+ <script src="/plugin/webuploader/app.js"></script>
+<script>
+
+$(function(){
+	modImgsList('webuploader');
+	 
+	wbupload('webuploader',"goldgoods","{$data.id}",function(){modImgsList('webuploader')});	
+	
+});
+
+  $('#myTab a').click(function (e) {
+  	e.preventDefault();
+  	$(this).tab('show');
+	})
+	
+	/*初始化载入属性*/
+	$.get("{$appadmin}?m=goldgoods&a=attr&id={$data.id}&cat_id="+$("#attr_cat_id").val(),function(data){
+				$("#attr_html").html(data);	
+				ajax_jsa();	
+		});
+	/*属性载入完毕*/
+	
+	$("#attr_cat_id").bind("change",function(){
+		$.get("{$appadmin}?m=goldgoods&a=attr&id={$data.id}&cat_id="+$(this).val(),function(data){
+				$("#attr_html").html(data);	
+				ajax_jsa();	
+		});
+	});
+	
+	$(".attr_item_add").live("click",function(e){
+		var obj=$(this).parent(".attr_item");
+		var o_t=obj.find(".attr_item_list");
+		var a_len=obj.find(".attr_item_li").length;
+		var html=obj.find(".attr_item_copy").html();
+		html = html.replace(/\[@\]/,"["+a_len+"]");
+		obj.find(".attr_item_list").append('<div class="attr_item_li">'+html+'</li>');
+	});
+	
+	$(".attr_item_remove").live("click",function(e){
+		$(this).parents(".attr_item_li").remove();
+	});
+	
+	 
+	 
+</script>
+<script>
+$(function(){
+	$("#market_price").bind("keyup",function(){
+		var p=parseInt($("#market_price").val());
+		var v=(p+15)*11;
+		$("#gold").val(v);
+	});
+});
+</script>
+
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+
+<script language="javascript">
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&siteid={const.SITEID}&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&siteid={const.SITEID}&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&siteid={const.SITEID}&id={$data.id}"
+		 
+};
+
+</script>
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#loading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=uploadtao&dir=product&siteid={const.SITEID}&id={$data.id}&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='/"+data.imgurl+".100x100.jpg' width='100'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+<script language="javascript" src="/plugin/My97DatePicker/WdatePicker.js"></script>
+{include file='footer.html'}

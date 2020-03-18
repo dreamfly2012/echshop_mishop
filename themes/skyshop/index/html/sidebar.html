@@ -1,0 +1,33 @@
+
+ 
+{if $cat.model_id}
+  {get model=category data=c_data fun=children(0,"$cat.model_id")}
+ {else}
+ {get model=category data=c_data fun=children(0,MODEL_ARTICLE_ID)}
+ {/if} 
+ <div class="cat-list"> 
+           <div class="hd" style=""><span>栏目推荐</span></div>
+           {foreach item=c key=k from=$c_data}
+              <div  class="item {if get('catid') eq $c.catid}active{/if}"><a href="{R("/index.php?m=list&catid=$c.catid")}" >{$c.cname}</a></div>
+                {if $c.child}
+                <div class="cat-list-2nd">
+                  {foreach item=cc from=$c.child}
+                  <div  class="item {if get('catid') eq $cc.catid}active{/if}"><a href="{R("/index.php?m=list&catid=$cc.catid")}">{$cc.cname}</a></div>
+                  {/foreach}
+                </div>
+                {/if} 
+                 
+              {/foreach}
+            </div>  
+ 
+{api data=t_c control=articleapi fun=recommend("$cat.catid",10)}
+<table class="table table-bordered">
+  <tr class="primary">
+    <th>推荐文章</th>
+  </tr>
+  {foreach item=c from=$t_c}
+  <tr>
+    <td><a href="index.php?m=show&id={$c.id}">{$c.title|cutstr:36:..}</a></td>
+  </tr>
+  {/foreach}
+</table>

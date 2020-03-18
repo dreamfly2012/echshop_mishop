@@ -1,0 +1,18 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='guest/nav.html'}
+<ul class="nav nav-tabs">
+{foreach item=c key=k from=$type_list}
+<li><a href="{$appadmin}?m=guest&type_id={$k}">{$c}</a></li>
+{/foreach}
+</ul>
+ {if get('type_id') eq 6}
+ {include file="guest/list_6.html"}
+ {else}
+ {include file="guest/list.html"}
+ {/if}
+<div>{$pagelist}</div>
+</div>
+</div>
+{include file="footer.html"}

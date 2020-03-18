@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+ 
+<body>
+<div class="page">
+{include file="header.html"}
+<div class="main-body box960">
+<div class="row"><ul class="breadcrumb">
+  <li><a href="{R("/index.php?m=forum")}">论坛</a> <span class="divider">/</span></li>
+  <li><a href="{R("/index.php?m=list&catid=$cat_top.catid")}">{$cat_top.cname}</a> <span class="divider">/</span></li>
+  {if $cat_2nd}
+  <li><a href="{R("/index.php?m=list&catid=$cat_2nd.catid")}">{$cat_2nd.cname}</a><span class="divider">/</span></li>
+  {/if}
+  {if $cat_3nd}
+   <li><a href="{R("/index.php?m=list&catid=$cat_3nd.catid")}">{$cat_3nd.cname}</a><span class="divider">/</span></li>
+  {/if}
+  <li class="active">{$data.title|cutstr:60}</li>
+      
+</ul></div>
+<div class="row">
+<div style=" height:40px; margin-bottom:10px; padding:0px   10px 0px 30px;">
+<a href="{R("/index.php?m=forum&a=add&catid=$cat.catid")}" class="btn btn-primary btn-larger">发帖</a>
+<a href="{R("/index.php?m=list&catid=$cat.catid")}" class="btn btn-warning right btn-larger">&lt;&lt;返回列表</a>
+</div> 
+</div>
+ 
+<div class="row">
+
+
+<style>
+.post_list .item{background-color:#E5EDF2;}
+.post_list .item .userinfo{text-align:center;  margin:0 auto;  padding-bottom:10px; border-bottom:1px solid #ccc;}
+.post_list .item .userinfo .view{ text-align:center; line-height:30px; border-bottom:1px solid #ccc; margin-bottom:10px;}
+.post_list .item .userinfo .user_head{text-align:center; margin-bottom:5px; line-height:25px;}
+.post_list .item .userinfo .num{text-align:center; margin-bottom:10px;}
+.post_list .item .userinfo .pm{text-align:center; display:none;}
+.post_list .post{ padding:0px; background-color:#fff;}
+.post_list .item .post .title{ padding-left:10px; font-size:16px; line-height:30px; color:#333;}
+.post_list .post .cont{ margin-left:30px; min-height:230px;}
+.post_list .post .cont .time{height:30px; line-height:30px;}
+.hr{border-bottom:1px dotted #ccc; margin-bottom:10px;}
+</style>
+<div id="post_list" class="post_list">
+<div class="item">
+ 
+<div class="row">
+<div class="col-7-1 userinfo" >
+<div>
+<div class="view" style="color:#B3B3B3">查看 {$data.view_num} | 回复 {$data.comment_num}</div>
+<div class="user_head"><a href="{R("/index.php?m=member&userid=$data[author][userid]")}" target="_blank" class="user_card" ajax-href="/index.php?m=member&a=userinfo&userid={$data['author']['userid']}"><img src="{$data['author']['user_head']|IMAGES_SITE}.100x100.jpg" style="width:100px;" onerror="err_user_head(this)" /></a>
+<br />
+ <a href="{R("/index.php?m=member&userid=$data[author][userid]")}" target="_blank" class="user_card" ajax-href="/index.php?m=member&a=userinfo&userid={$data['author']['userid']}">{$data['author']['nickname']|cutstr:12}</a> 
+</div>
+
+<div class="num">
+<div class="row">
+<div class="col-3-1">{$data['author']['topic_num']}<br />主题</div>
+<div class="col-3-1">{$data['author']['comment_num']}<br />帖子</div>
+<div class="col-3-1">{$data['author']['grade']}<br />积分</div>
+</div>
+</div>
+<div class="pm"><a href="javascript:sendPm('{$data['userid']}');"><img src="/static/images/pmto.gif"  />发消息</a></div>
+</div>
+</div>
+<div class="col-7-6 post">
+<div>
+
+<div class="cont">
+<div style="font-size:14px; line-height:25px; height:25px;border-bottom: 1px solid #ccc;
+padding-bottom: 5px;
+"><a href="{R("/index.php?m=show&id=$data.id")}">{$data.title}</a></div>
+<div class="d-tool">&nbsp;&nbsp;&nbsp;发表于{$data.dateline|date:Y-m-d}</div> 
+<div class="d-content">{$data.content}</div></div>
+</div>
+</div>
+</div>
+{foreach item=c from=$comment_list}
+<div class="item row">
+<div class="col-7-1 userinfo">
+<div class="user_head"><a href="{R("/index.php?m=member&userid=$c[author][userid]")}" target="_blank" class="user_card" ajax-href="/index.php?m=member&a=userinfo&userid={$c['author']['userid']}"><img src="{$c['author']['user_head']|IMAGES_SITE}.100x100.jpg" style="width:100px;"  onerror="err_user_head(this)" /></a>
+<br />
+<a href="{R("/index.php?m=member&userid=$c[author][userid]")}" class="user_card" ajax-href="/index.php?m=member&a=userinfo&userid={$c['userid']}">{$c['author']['nickname']|cutstr:12}</a>
+</div>
+<div class="num">
+<div class="row">
+<div class="col-3-1">{$c['author']['topic_num']}<br />主题</div>
+<div class="col-3-1">{$c['author']['comment_num']}<br />帖子</div>
+<div class="col-3-1">{$c['author']['grade']}<br />积分</div>
+</div>
+</div>
+<div class="pm"><a href="javascript:sendPm('{$c['author']['userid']}');"><img src="/static/images/pmto.gif"  />发消息</a></div>
+</div>
+
+<div class="col-7-6 post d-content">
+<div class="cont">
+<span class="time">发表于： {$c.dateline|date:Y-m-d H:m:s} <a href="javascript:;" class="comment_reply_btn" pid="{$c.id}" title="回复@{$c.nickname}" reply_text="回复@{$c.nickname}" >回复</a></span>
+<div class="skyline"></div>
+{if $c.pid}
+<script src="/index.php?m=commentapi&a=GetParent&object_id={$data.id}&id={$c.pid}"></script>
+{/if}
+<div class="d-content">{$c.content}</div>
+</div>
+</div>
+</div>
+{/foreach}
+
+
+</div>
+</div>
+
+</div>
+
+<div class="row" style="margin-bottom:10px;"><div class="col-7-1"></div><div class="col-7-6">{$pagelist}</div></div>
+
+<!--评论框-->
+<div class="row">
+<div class="col-7-1">
+<img src="{$ssuser.user_head|IMAGES_SITE}.100x100.jpg" onerror="this.src='/static/images/user_head.jpg.100x100.jpg'" style="float:right; width:100px;" />
+</div>
+<div class="col-7-6">
+<div class="w98 right">
+<div id="comment_form_r" >
+<form method="post" id="comment_form"  >
+<input type="hidden" name="pid" id="comment_pid" value="0" />
+<input type="hidden" name="tablename"  id="tablename" value="{$comment_tablename}" />
+<input type="hidden" name="object_id" id="comment_object_id" value="{$comment_object_id}" />
+ 
+<input type="hidden" name="f_userid" id="comment_f_userid" value="{$comment_f_userid}" />
+ 
+<input type="hidden" name="referer" id="comment_referer" value="{if $comment_referer}{$comment_referer}{else}{$smarty.server.REQUEST_URI}{/if}" />
+ <textarea name="content" id="comment_content"  style="width:90%; height:100px;"></textarea>
+    <br /> 
+    <input type="button" name="button" id="comment_submit" value="回帖" class="btn btn-larger btn-success" /> 
+   
+
+</form>
+</div>
+</div>
+</div>
+</div>
+<!--End评论框-->
+
+</div>
+
+<script language="javascript">
+	var editor;
+$(".comment_sortkey").each(function(i){
+	$(this).html(i+1);
+});
+$(function(){
+
+	$("#comment_submit").click(function(){
+		$.post("/index.php?m=comment&a=insert",$("#comment_form").serialize(),function(data){
+			if(data.error==0){
+				skyToast("发布成功");
+				window.location.reload();
+			}else{
+				if(data.nologin!=undefined){
+					loginbox();
+				}else{
+					alert(data.message);
+				}
+			}
+		},"json")
+	})
+	
+	$(".comment_reply_btn").bind("click",function(){
+			
+			$("#comment_pid").val($(this).attr("pid"));
+			$("#comment_content").val($(this).attr("reply_text") + " ");
+			editor.setContent($(this).attr("reply_text") + ": ");
+			
+	});
+
+});
+</script>
+
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+
+<script language="javascript">
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&id={$data.id}",
+		{include file="inc/ueditor_simple.html"}
+		 
+};
+editor=UE.getEditor('comment_content',options)
+</script>
+{include file="hightlight.html"}
+</div>
+
+</div>
+{include file="footer.html"}
+</div>
+</body>
+</html>

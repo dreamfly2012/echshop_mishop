@@ -1,0 +1,44 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+ <ul class="nav nav-tabs">
+<li><a href="{$appadmin}?m=gold_log">金币记录</a></li>
+ <li><a href="{$appadmin}?m=gold_log&a=man">人工充金币</a></li>
+</ul>
+<form class="search-form" action="{$appadmin}">
+<input type="hidden" name="m" value="gold_log" />
+	用户Id：<input type="text" name="userid"  value="{$smarty.get.userid}" />
+    <input type="submit" class="btn " />
+</form>
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+   <td>时间</td>
+   <td>用户id</td>
+   <td>操作类型</td>
+   <td>收支类型</td>
+   <td>日志内容</td>
+ 
+   <td>金钱</td>
+ 
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   <td>{$c.userid}:{$c.nickname}</td>
+   <td>{$config[gold_log_type_list][$c[type_id]]}</td>
+   <td>{$config[gold_log_ispay][$c[ispay]]}</td>
+   <td>{$c.content}</td>
+ 
+   <td>{$c.money}</td>
+   
+<td> <a href="javascript:;" class="delete" url="admin.php?m=gold_log&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+</div>
+{include file="footer.html"}

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+    <div class="row box960">
+      	 <div class="col-5-1">
+         	{include file="article/sidebar.html"}
+         </div> 
+         <div class="col-5-4">
+         	<div class="w98 right">
+         	<ul class="data-list" >
+            	{api data=data control=articleapi fun=onList()}
+            	{foreach item=c from=$data}
+                {include file="inc/li_item.html"}
+                {/foreach}
+            </ul>
+            </div>
+         </div>
+         
+         
+      
+    </div>
+  </div>
+  {include file="footer.html"} </div>
+</body>
+</html>

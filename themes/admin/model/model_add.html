@@ -1,0 +1,31 @@
+{include file='header.html'}
+<ul class="nav nav-tabs">
+<li><a href="{$appadmin}?m=model">{$lang.model_admin}</a></li>
+<li class="active"><a href="{$appadmin}?m=model&a=add">{$lang.model_add}</a></li>
+</ul>
+
+<div class="rbox">
+<form method="post" action="{$appadmin}?m=model&a=save&id={$data.id}">
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="19%" align="right">名称：</td>
+    <td width="81%"><label for="title"></label>
+      <input name="title" type="text" id="title" value="{$data.title}"></td>
+  </tr>
+  <tr>
+    <td align="right">表名：</td>
+    <td><label for="tablename"></label>
+      {if $data.tablename}{$data.tablename}{else}<input name="tablename" type="text" id="tablename" value="{$data.tablename}">{/if}</td>
+  </tr>
+ 
+   
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td><input type="submit" name="button" id="button" class="btn" value="{$lang.submit}"></td>
+  </tr>
+</table>
+
+
+</form>
+</div>
+{include file='footer.html'}

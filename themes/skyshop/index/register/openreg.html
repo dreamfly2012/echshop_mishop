@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+    <div class="row box960  bg-primary">
+      	<div class="row">
+        	<div class="col-5-2">
+        <form method="post" autoComplete="off" action="/index.php?m=register&a=openregsave" style="padding-top:20px;padding-bottom:20px;">
+          <table class=" form-table">
+            <tr>
+              <td class="td-1">用户名：</td>
+              <td>{$ssuser.nickname}</td>
+            </tr>
+            
+            <tr>
+              <td class="td-1">邮箱：</td>
+              <td><input type="text" name="email" class="input-text w200" value="" placeholder="请输入邮箱"></td>
+            </tr>
+            
+            <tr>
+              <td class="td-1">密码：</td>
+              <td><input type="password" name="password" class="input-text w200" value="" placeholder="请输入密码"></td>
+            </tr>
+            
+            
+            <tr>
+              <td class="td-1">重复密码：</td>
+              <td><input type="password" name="password2" class="input-text w200" value="" placeholder="请输入密码"></td>
+            </tr>
+            
+            <tr>
+            	<td colspan="2">
+                	<div class="form-submit">
+                    	<button type="submit" class="btn btn-success btn-larger">绑定账号</button>
+                        <a href="/index.php" class="btn btn-info btn-larger" >跳过绑定-&gt;&gt </a>
+                    </div>
+                </td>
+            </tr>
+            
+          </table>
+        </form>
+        </div>
+        <div class="col-5-3">
+        	<img src="{$skins}images/images/banner.jpg" style="width:96%; margin-top:10px;"></div>
+        </div>
+        </div>
+      
+    </div>
+  </div>
+  {include file="footer.html"} </div>
+</body>
+</html>

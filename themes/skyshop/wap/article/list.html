@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page">
+
+{include file="article/panel.html"}
+<div class="header" style="">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">{$cat.cname}</div>
+<div class="right-btn panel-btn"><span class="iconfont icon-menu"></span></div>
+</div>
+<div class="main-body">
+<ul class="data-list">
+ 
+          {foreach item=c from=$list}
+          {include file="li_item.html"}
+          {/foreach}
+</ul>
+<div class="pages">{$pagelist}</div>
+</div>
+
+{include file="footer.html"}
+</div>
+</body>
+</html>

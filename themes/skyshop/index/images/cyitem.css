@@ -1,0 +1,82 @@
+.mod-title {
+	width: 100%;
+	height: 32px;
+}
+.mod-title h2 {
+	font-size: 20px;
+	float: left;
+	color: #000;
+	line-height: 32px;
+}
+.mod-title .title-sub {
+	float: right;
+	padding: 6px 0px;
+}
+.title-sub {
+	font-size: 14px;
+	height: 20px;
+	line-height: 20px;
+}
+.title-sub a {
+	vertical-align: middle;
+	margin: 0px 5px;
+	font-weight: 900;
+	font-size: 12px;
+}
+
+.cyitem-box{
+	border:1px solid #ccc; background-color:#fff; width:98%; margin:0 auto;
+}
+
+.cyitem-box .hd{line-height:30px; width:90%; margin:0 auto;}
+.cyitem-box .c-status{height:30px; padding:10px;}
+.cyitem-box .c-status .status{background-color:#39C; float:right; padding:3px 5px; color:#fff;}
+.cyitem-box .btns{line-height:20px; width:98%; padding:10px; margin:0 auto;}
+
+.projects_type a {
+display: inline-block;
+height: 42px;
+line-height: 42px;
+text-align: center;
+}
+.projects_type a:hover {
+color: #249ff1;
+}
+
+.projects_type a.current {
+font-weight: bold;
+color: #1292c9;
+}
+
+.project_menu {
+font-size: 14px;
+}
+
+.project_menu li {
+text-indent: 20px;
+background: #EEEBEC;
+margin-bottom: 8px;
+}
+
+.project_menu li a, project_menu li span {
+color: #7e7e7e;
+}
+ul{list-style-type:none;}
+
+
+.tag {
+position: relative;
+width: 90px;
+height: 30px;
+color: #FFF;
+font-size: 16px;
+line-height: 30px;
+text-align: center;
+text-shadow: 2px 2px 1px rgba(0,0,0,0.1);
+}
+
+.bg-red {
+background: #FF6559;}
+
+.project_menu a{cursor:pointer;}
+ 

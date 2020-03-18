@@ -1,0 +1,144 @@
+<div class="header" style="background-color:#fff;">
+	<div class="nav-top">
+        	<div class="box960">
+            	欢迎使用SKYSHOP商城系统
+                <div class="right">
+                {if $ssuser}
+            
+            <div class="item">
+            	<div class="dropdown">
+                  <a data-toggle="dropdown" href="#">{$ssuser.nickname}<b class="caret"></b></a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                   <li><a href="{R("/index.php?m=user")}">用户信息</a></li>
+                   <li><a href="{R("/index.php?m=order&a=my")}">我的订单</a></li>
+                   <li><a href="{R("/index.php?m=guest&a=my")}">我的预约</a></li>
+                   <li><a href="{R("/index.php?m=login&a=logout")}">退出登陆</a></li>
+                  </ul>
+				</div>
+                
+            </div>
+             
+            
+            {else}
+           <div class="item"><a href="/index.php?m=register">注册</a></div>
+           <div class="item"><a href="/index.php?m=login">登陆</a></div>
+            {/if}
+             <div class="item item-cart"><a href="/index.php?m=order_cart"><i class="iconfont icon-cart"></i> 购物车 <span class="cart-num" id="top_cart_num">( <span>0</span> )</span></a></div>
+                 
+                </div>
+            </div>
+        </div>
+         
+		<style>
+		.nav-top{color: #fff;background: #333; font-size:12px;}
+		.nav-top .item{float:left; margin-right:20px;}
+		.nav-top .item-cart{ background-color:#f60; padding:0px 20px; font-size:12px;}
+		.nav-top .item-cart .icon-cart{font-size:18px;}
+		.nav-top .dropdown>a{ color:#fff;}
+		.nav-top .item>a{color:#fff;}
+		img{border:0px;}
+		.minav{ background-color:#fff; position:relative; padding: 12px 0 0 30px;    font-size: 16px;}
+		.minav .logo{float:left; margin-right:20px;}
+	 	.minav .item{float:left;}
+		.minav .item>a{    display: block;
+    padding: 26px 18px 38px;
+    color: #333;}
+	.minav .item>a:hover{color:#ff6700;}
+        </style>
+        <div class=" box960">
+        <div class="minav">
+        	
+        	<div class="logo "><a href="/index.php"><img src="{$site.logo|images_site}" style="height:55px;    margin-top: 10px;" /></a></div>
+            <div class="item {if get('m') neq 'index'}showallcatbox{/if}">
+            	<a href="javascript:;">全部商品分类</a>
+                {include file="inc/allcategory.html"}
+            </div>
+            {foreach item=c key=k from=$cats}
+            	{if $k lt 3}
+             <div class="item"><a href="/index.php?m=list&catid={$c.catid}">{$c.cname}</a></div>
+             {/if}
+            {/foreach}
+           <div class="item"><a href="/index.php?m=goldgoods">积分商城</a></div>
+            <div class="item"><a href="/index.php?m=article">资讯服务</a></div>
+            <div class="item"><a href="/index.php?m=forum">社区</a></div>
+           
+          
+            
+            <div class="item">
+            	<div style="position:absolute; right:10px; top:30px;">
+                	<div class="search-bar">
+                        <input type="text" class="search-input" id="search-word" style="width:200px; height:40px;" value="{$smarty.get.keyword|html}">
+                        <button type="button" class="search-btn btn-warning" style="background-color: #fff; height:42px;
+  color: #666; border:1px solid #aaa; cursor:pointer;" id="search-submit" ><i class="iconfont  icon-search"></i></button>
+                        <div class="clearfix"></div>
+                    
+               		</div>
+                    <ul class="search-like" style="display: none;">
+                    
+                   <li><a href="/index.php?m=search&type=product&keyword={$smarty.get.keyword|urlencode}">搜索<font color="red"> {$smarty.get.keyword|html} </font>相关产品</a></li>
+                    <li><a href="/index.php?m=search&type=article&keyword={$smarty.get.keyword|urlencode}">搜索<font color="red"> {$smarty.get.keyword|html} </font>相关文章</a></li>
+                   </ul>
+                
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>	 	 
+    </div>
+    
+<script>
+	function top_cart_num(){
+		$.get("/index.php?m=ajax&a=cart_num",function(data){
+			if(data>0){
+				$("#top_cart_num span").html(data).show();
+			}else{
+				$("#top_cart_num").hide();
+			}
+		});
+	}
+$(document).ready(function(){
+	var sarr=new Array(
+	
+	{url:"/index.php?m=search&type=product",word:"产品"},
+		{url:"/index.php?m=search&type=article",word:"文章"},
+		{url:"/index.php?m=search&type=forum",word:"帖子"}
+	);
+	var keywords;
+	$("#search-word").keyup(function(){
+		keywords=$("#search-word").val();
+		str="";
+		for(var i=0;i<sarr.length;i++){ 
+			str+="<li><a href='"+sarr[i].url+"&keyword="+keywords+"'>搜索<font color='red'> "+keywords+" </font>相关"+sarr[i].word+"</a></li>";
+		}
+		
+		$(".search-like li").remove();
+		$(".search-like").append(str).show();
+	})
+	$("#search-word").bind("focus click",function(){
+		keywords=$("#search-word").val();
+		if(keywords!=''){ 
+		str="";
+			for(var i=0;i<sarr.length;i++){ 
+				str+="<li><a href='"+sarr[i].url+"&keyword="+encodeURI(keywords)+"'>搜索<font color='red'> "+keywords+" </font>相关"+sarr[i].word+"</a></li>";
+			}
+		$(".search-like li").remove();
+		$(".search-like").append(str).show();
+		}
+	})
+	
+	$(".search-like").on("mouseleave focusout",function(){
+		$(".search-like").hide();
+	});
+	
+	$("#search-submit").on("click",function(){
+		keywords=$("#search-word").val();
+		if(keywords!=''){ 
+			window.location.href="/index.php?m=search&type=product&keyword="+encodeURI(keywords);		
+		}
+	});
+	
+	top_cart_num();
+	
+});
+</script>

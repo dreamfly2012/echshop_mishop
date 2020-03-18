@@ -1,0 +1,43 @@
+{include file="header.html"}
+<div>
+<ul class="nav nav-tabs">
+<li><a href="{$appadmin}?m=getweb">系统生成</a></li>
+<li class="active"><a href="{$appadmin}?m=getweb&a=add">添加系统</a></li>
+</ul>
+<form method="post" action="{$appadmin}?m=getweb&a=save">
+<input type="hidden" name="id" value="{$data.id}">
+<table class="table">
+<tr>
+	<td width="100">生成说明</td>
+    <td>选择你所需的模块生成</td>
+</tr>
+
+
+
+<tr>
+	<td>站点目录</td>
+    <td><input type="text" name="title" value="{$data.title}"></td>
+</tr>
+
+<tr>
+	<td>描述</td>
+    <td><input type="text" name="description" value="{$data.description}"></td>
+</tr>
+{foreach item=c key=k from=$mod_list}
+	<tr>
+    	<td width="100">{$c.name}</td>
+    	<td><input  name="mod[{$k}]"  {if $c.selected} checked {/if} type="checkbox"  value="{$k}" >{$c.description}</td>
+    </tr>
+{/foreach}    
+     
+    
+    <tr>
+    	<td></td>
+        <td><button type="submit" class="btn btn-success">添加</button></td>
+    </tr>
+    
+</table>
+
+</form>
+</div>
+{include file="footer.html"}

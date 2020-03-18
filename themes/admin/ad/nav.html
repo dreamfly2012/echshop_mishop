@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs">
+<li {if get('m') eq 'ad' && get('a') eq 'default'} class="active"{/if}><a href="{$appadmin}?m=ad&tag_id={php echo get_post('tag_id')}&tag_2nd_id={php echo get_post('tag_2nd_id')}">广告管理</a></li>
+<li {if get('m') eq 'ad' && get('a') eq 'add'} class="active"{/if}><a href="{$appadmin}?m=ad&a=add&tag_id={php echo get_post('tag_id')}&tag_2nd_id={php echo get_post('tag_2nd_id')}">广告添加</a></li>
+<li {if get('m') eq 'ad_tags' && get('a') eq 'default'} class="active"{/if}><a href="{$appadmin}?m=ad_tags">广告分类管理</a></li>
+<li {if get('m') eq 'ad_tags' && get('a') eq 'ad'} class="active"{/if}><a href="{$appadmin}?m=ad_tags&a=add">广告分类添加</a></li>
+</ul>

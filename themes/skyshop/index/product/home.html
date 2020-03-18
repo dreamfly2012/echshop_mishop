@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.html"}
+<body>
+<div class="page">
+	{include file="u_header.html"}
+    <div class="main-body">
+    <div class="box960">
+    <div class="row">
+	<div class="col-7-1">
+    	{include file="member/left.html"}
+    </div>
+	<div class="col-7-6">
+    <div class="w98 right">
+ <div style="padding:10px;"><a href="{R("/index.php?m=product&a=add")}" class="btn btn-success">发布产品</a></div>
+ <div class="row">
+{foreach item=c from=$data}
+<div class="col-4-1" >
+<p><a href="{R("/index.php?m=show&id=$c.id")}" target="_blank"><img src="{$c.imgurl}.small.jpg" /></a></p>
+<p><a href="index.php?m=show&id={$c.id}" target="_blank">{$c.title}</a></p></div>
+    {/foreach}  
+</div>
+</div>
+</div>
+<div >{$pagelist}</div>
+</div>
+</div>
+</div>
+{include file='footer.html'}
+</div>
+</body>
+</html>

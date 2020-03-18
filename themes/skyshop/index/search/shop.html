@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="page">
+{include file="header.html"}
+<div class="main-body">
+<div class="box960">
+<div class="row">
+{include file="search/nav.html"}
+<div class="span12">
+{if get('keyword')}<h3>搜索“<span style="color:red;">{$smarty.get.keyword|html}</span>”的相关信息</h3>{/if}
+{if $data}
+<ul class="data-list">
+{foreach item=c key=k from=$data}
+<li class="hasimg">
+<a href="{R("/index.php?m=shop&shopid=$c.shopid")}" target="_blank">
+<img src="{$c.logo|IMAGES_SITE}.100x100.jpg">
+<dl>
+<dt>{$c.shopname}</dt>
+<dd class="content">{$c.info}</dd>
+</dl>
+</a>
+</li>
+
+{/foreach}
+</ul>
+<div>{$pagelist}</div>
+{/if}
+</div>
+<div class="span3"></div>
+</div>
+</div>
+</div>
+{include file="footer.html"}
+</div>
+</body>
+</html>

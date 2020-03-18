@@ -1,0 +1,20 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='ad_tags/nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr><td>tag_id：</td><td>{$data.tag_id}</td></tr>
+  <tr><td>标题：</td><td>{$data.title}</td></tr>
+  <tr><td>排序：</td><td>{$data.orderindex}</td></tr>
+  <tr><td>上级分类：</td><td>{$data.pid}</td></tr>
+  <tr><td>状态：</td><td>{$data.status}</td></tr>
+  <tr><td>添加时间：</td><td>{$data.dateline}</td></tr>
+  <tr><td>m：</td><td>{$data.m}</td></tr>
+  <tr><td>a：</td><td>{$data.a}</td></tr>
+  <tr><td>宽度：</td><td>{$data.width}</td></tr>
+  <tr><td>高度：</td><td>{$data.height}</td></tr>
+ </table>
+
+</div>
+</div>
+{include file="footer.html"}

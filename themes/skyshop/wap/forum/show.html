@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page">
+
+{include file="forum/panel.html"}
+<div class="header" style="">
+<div  class="left-btn goback"><span class="iconfont icon-back"></span></div>
+<div class="title">帖子内容</div>
+<div class="right-btn bg"><a href="/index.php?m=comment&tablename=forum&object_id={$data.id}">{$data.comment_num}</a></div>
+</div>
+<div class="main-body">
+<h3 class="h3 text-center">{$data.title}</h3>
+<div class="d-tool"> {$data['author']['nickname']}&nbsp;&nbsp; {$data.dateline|timeago} 
+{if $data.userid eq $ssuser.userid}<a href="/index.php?m=forum&a=add&id={$data.id}">编辑</a>{/if}</div>
+{get data=imgsdata model=imgs fun=get("forum","$data.id")}
+{include file="imgs/inc_common.html"}
+<div class="d-content">
+{$data.content}
+</div>
+
+{include file="comment/inc_common.html"}
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

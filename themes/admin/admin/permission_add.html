@@ -1,0 +1,36 @@
+{include file='header.html'}
+<ul class="nav nav-tabs">
+<li {if get('op') eq ''}class="active"{/if}><a href="{$appadmin}?m=admin&a=permission">{$lang.permission_admin}</a> </li>
+<li {if get('op') eq 'add'}class="active"{/if}><a href="{$appadmin}?m=admin&a=permission&op=add">{$lang.permission_add}</a></li>
+<li {if get('op') eq 'saveonfig'}class="active"{/if}><a href="{$appadmin}?m=admin&a=permission&op=saveconfig">{$lang.permission_write}</a></li>
+</ul>
+
+<div class="rbox">
+<form method="post" action="{$appadmin}?m=admin&a=permission&op=save">
+<input type="hidden" name="id" value="{$data.id}" />
+<table width="100%"  class="table table-bordered">
+  <tr>
+    <td width="17%" align="right">{$lang.name}：</td>
+    <td width="83%" align="left"><input name="title" type="text" id="title" value="{$data.title}" /></td>
+    </tr>
+ 
+  <tr>
+    <td align="right">m：</td>
+    <td align="left"><label for="m"></label>
+      <input name="m" type="text" id="m" value="{$data.m}" /></td>
+    </tr>
+   
+  <tr>
+    <td align="right">{$lang.permission}：</td>
+    <td align="left"><label for="access"></label>
+      <input name="access" type="text" id="access" value="{$data.access}" class="w600" /></td>
+    </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td align="left"><input type="submit" name="button" id="button" value="{$lang.submit}" class="btn" /></td>
+  </tr>
+  </table>
+</form>
+</div>
+
+{include file='footer.html'}

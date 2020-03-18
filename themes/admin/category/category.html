@@ -1,0 +1,65 @@
+{include file='header.html'}
+{include file="category/category_nav.html"}
+<div class="tabs-border mgb-10"> 
+{foreach key=k item=c from=$modellist}
+<a class="item  {if $smarty.get.model_id eq $k}active{/if}" href="{$appadmin}?m=category&model_id={$k}">{$c}</a>
+{/foreach}
+<span class="item"><a href="{$appadmin}?m=category&pid={$nextpid}&model_id={$model_id}">&lt;&lt; {$lang.go_last}</a></span>
+
+</div>
+<div class="rbox">
+ 
+<table width="100%" class="table table-bordered">
+<tr>
+<td width="82" align="center">{$lang.category}ID</td>
+<td width="265" align="center">{$lang.name}</td>
+<td width="97" align="center">{$lang.category_level}</td>
+ 
+<td width="100" align="center">{$lang.model}</td>
+<td width="49" align="center">{$lang.sort}</td>
+<td width="71" align="center">{$lang.show}</td>
+<td width="203" align="center">{$lang.operation}</td>
+</tr>
+{foreach item=c from=$catlist}
+<tr>
+  <td align="center">{$c.catid}</td>
+  <td align="left"><a href="{$appadmin}?m=category&pid={$c.catid}&model_id={$c.model_id}">{$c.cname}</a>  </td>
+  <td align="center">{$c.level}</td>
+  
+  <td align="center">{$modellist[$c.model_id]}</td>
+  <td align="center"><input type="text" class="w50 blur_update" value="{$c.orderindex}" size="6"   url="{$appadmin}?m=category&a=orderindex&catid={$c.catid}&model_id={$c.model_id}" /></td>
+  <td align="center">{if $c.status eq 1}<img class="ajax_no" src="static/images/yes.gif" url="{$appadmin}?m=category&a=changestatus&catid={$c.catid}&status=2" rurl="{$appadmin}?m=category&a=changestatus&catid={$c.catid}&status=1" />{else}<img class="ajax_yes" src="static/images/no.gif" url="{$appadmin}?m=category&a=changestatus&catid={$c.catid}&status=1" rurl="{$appadmin}?m=category&a=changestatus&catid={$c.catid}&status=2" />{/if}</td>
+  <td align="center"> 
+  <a href="{$appadmin}?m=category&a=add&pid={$c.catid}&model_id={$c.model_id}" style="color:red;">{$lang.add_child}</a>
+  <a href="{$appadmin}?m=category&a=addmore&catid={$c.catid}&model_id={$c.model_id}" style="color:red;">{$lang.add_more_child}</a>  
+  <a href="index.php?m=list&catid={$c.catid}" target="_blank">{$lang.look}</a> <a href="{$appadmin}?m=category&a=add&catid={$c.catid}&model_id={$c.model_id}">{$lang.edit}</a> 
+  <a href="javascript:;" class="del" url="{$appadmin}?m=category&a=delete&catid={$c.catid}">{$lang.delete}</a></td>
+</tr>
+{if $c.child}
+{foreach item=cc from=$c.child}
+<tr>
+  <td align="center">{$cc.catid}</td>
+  <td align="left">|__<a href="{$appadmin}?m=category&pid={$cc.catid}&model_id={$cc.model_id}">{$cc.cname}</a></td>
+  <td align="center">{$cc.level}</td>
+ 
+  <td align="center">{$modellist[$cc.model_id]}</td>
+  <td align="center"><input type="text" class="w50 blur_update" value="{$cc.orderindex}" size="6"   url="{$appadmin}?m=category&a=orderindex&catid={$cc.catid}&model_id={$cc.model_id}" /></td>
+  <td align="center">{if $cc.status eq 1}<img class="ajax_no" src="static/images/yes.gif" url="{$appadmin}?m=category&a=changestatus&catid={$cc.catid}&status=2" rurl="{$appadmin}?m=category&a=changestatus&catid={$cc.catid}&status=1" />{else}<img class="ajax_yes" src="static/images/no.gif" url="{$appadmin}?m=category&a=changestatus&catid={$cc.catid}&status=1" rurl="{$appadmin}?m=category&a=changestatus&catid={$cc.catid}&status=2" />{/if}</td>
+  <td align="center">
+   <a href="{$appadmin}?m=category&a=add&pid={$cc.catid}&model_id={$cc.model_id}" style="color:red;">{$lang.add_child}</a>
+   <a href="{$appadmin}?m=category&a=addmore&catid={$cc.catid}&model_id={$cc.model_id}" style="color:red;">{$lang.add_more_child}</a>  
+  <a href="index.php?m=list&catid={$cc.catid}" target="_blank">{$lang.look}</a> 
+  <a href="{$appadmin}?m=category&a=add&catid={$cc.catid}&model_id={$cc.model_id}">{$lang.edit}</a>
+  <a href="javascript:;" class="del" url="{$appadmin}?m=category&a=delete&catid={$cc.catid}&model_id={$cc.model_id}">{$lang.delete}</a>
+  </td>
+</tr>
+{/foreach} 
+
+{/if}
+
+{/foreach} 
+</table>
+
+</div>
+
+{include file='footer.html'}

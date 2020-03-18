@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="page">
+{include file="header.html"}
+<div class="main-body box960">
+	<div class="row ">
+ 
+			<ul class="breadcrumb">
+            	<li><a href="/index.php">首页</a> <span class="divider">/</span></li>
+                <li><a href="/index.php?m=goldorder_shaidan">晒单</a></li>
+                
+            </ul>
+        </div>
+         
+        <div class="sd-list row">
+        	{foreach item=c from=$data}
+            <div class="item">
+            	<div class="pd">
+                    <div class="img"><a href="/index.php?m=goldorder_shaidan&a=show&id={$c.id}"><img src="{$c.imgurl|IMAGES_SITE}.small.jpg"></a></div>
+                    <div class="title"><a href="/index.php?m=goldorder_shaidan&a=show&id={$c.id}">{$c.title}</a></div>
+                    <div class="time">{$c.dateline|timeago} by {$c.nickname|cutstr:12}</div>
+                </div>
+            </div>
+            
+            {/foreach}
+        </div>
+        <div>{$pagelist}</div> 
+</div>
+{include file="footer.html"}
+</div>
+<script src="/plugin/skyweb/masonry.pkgd.min.js"></script>
+       <script src="/plugin/skyweb/imagesloaded.pkgd.min.js"></script>
+       <script>
+	   $(function(){
+		   var c=$('.sd-list').masonry({	  
+		 		 itemSelector: '.item'
+			});
+			c.imagesLoaded( function() {
+			 	 c.masonry();
+			});
+	   });
+       </script>  
+</body>
+</html>

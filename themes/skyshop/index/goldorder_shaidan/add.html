@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<script language="javascript" src="/plugin/jquery/ajaxfileupload.js"></script>
+<script language="javascript">
+   function uploadgoodsimg()
+    {
+        //starting setting some animation when the ajax starts and completes
+        $("#imgloading")
+        .ajaxStart(function(){
+            $(this).show();
+        })
+        .ajaxComplete(function(){
+            $(this).hide();
+        });
+
+        $.ajaxFileUpload
+        (
+            {
+                url:'/index.php?m=upload&a=uploadtao&dir=product&id={$data.id}&t='+Math.random(), 
+                secureuri:false,
+                fileElementId:'upimg',
+                dataType: 'json',
+                success: function (data, status)
+                {
+                    if(typeof(data.error) != 'undefined')
+                    {
+                        if(data.error != '')
+                        {
+                           alert(data.msg);
+                        }else
+                        {
+                             $("#imgShow").html("<img src='/"+data.imgurl+".100x100.jpg' width='100'>");
+							 $("#imgurl").val(data.imgurl);
+                        }
+                    }
+                },
+                error: function (data, status, e)
+                {
+					alert(data.msg)
+  
+                }
+            }
+        )
+        
+        return false;
+
+    }
+</script>
+<body>
+<div class="page">
+	{include file="header.html"}
+    <div class="main-body box960">
+    	<div class="row">
+    	<div class="col-6-1">{include file="inc/user_left.html"}</div>
+    	<div class="col-6-5">
+        	<ul class="nav nav-tabs">
+            	<li class="active">
+                <a href="#">趣购晒单</a>
+                </li>
+            </ul>
+            
+             
+            <form method="post" action="/index.php?m=goldorder_shaidan&a=save">
+            <input type="hidden" name="order_id" value="{$order.order_id}">
+            <input type="hidden" name="id" value="{$data.id}">
+            <table class="table">
+            	<tr><td width="100" align="right">晒单产品：</td><td><a href="/index.php?m=show&id={$qugou.id}&itemid={$win.item_id}" target="_blank"> {$goldgoods.title}</a></td></tr>
+            	<tr><td align="right">主题：</td><td><input type="text" name="title" class="w300" value="{$data.title}"></td></tr>
+            	<tr>
+            	  <td align="right">描述：</td>
+            	  <td><textarea name="description" class="w300 h50">{$data.description}</textarea></td>
+          	  </tr>
+              <tr>
+    <td align="right">图片：</td>
+    <td>
+    <div class="btn-upload">
+      <input type="file" name="upimg" class="btn-upload-file" id="upimg" onChange="uploadgoodsimg()">
+      </div>
+      <label  id="imgloading" style="color:red; display:none;">正在上传中...</label>
+      <input type="hidden" name="imgurl" id="imgurl" value="{$data.imgurl}">
+      <span id="imgShow">
+      {if $data.imgurl}
+          <img src="{$data.imgurl|images_site}.100x100.jpg">
+          {/if}
+      </span>
+      </td>
+  </tr>
+            	<tr>
+            	  <td align="right">内容：</td>
+            	  <td><script id="content" name="content" style="height:400px;">{$data.content}</script></td>
+          	  </tr>
+            	 
+            	<tr>
+            	  <td align="right">&nbsp;</td>
+            	  <td><button type="submit" class="btn btn-success btn-larger">发布晒单</button></td>
+          	  </tr>
+            </table>
+            
+            </form>
+            
+        </div>
+    	</div>
+    
+    </div>
+    {include file="footer.html"}
+    
+</div>
+
+<script type="text/javascript" src="/plugin/ueditor/ueditor.config.js"></script>
+<script language="javascript" src="/plugin/ueditor/ueditor.all.min.js"></script>
+
+<script language="javascript">
+options={
+		initialFrameWidth:"100%",
+		imageUrl:"/index.php?m=upload&a=UeImg&dir=product&id={$data.id}" ,
+		fileUrl:"/index.php?m=upload&a=UeFile&dir=product&id={$data.id}",
+		catcherUrl:"/index.php?m=upload&a=UeRemote&dir=product&id={$data.id}",
+		{include file="inc/ueditor_simple.html"}
+		 
+};
+var editor=UE.getEditor('content',options)
+</script>
+</body>
+</html>

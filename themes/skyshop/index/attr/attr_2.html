@@ -1,0 +1,40 @@
+{if $c.input_type eq 2}
+<!--列表选择-->
+<div class="attr_item">
+<a href="javascript:;" class="attr_item_add">增加</a>
+<div class="attr_item_list">
+
+    {if $attr[$c.id]}  
+        {foreach item=a_c key=k from=$attr[$c[id]][value]}
+        <div class="{if $k eq 0}attr_item_copy{/if} attr_item_li">
+         
+        <select name="attr[{$c.id}][value][]"   class="attr_value" >
+        {foreach item=cc key=kk from=$c.select}
+                <option value="{$kk}" {if $kk eq $a_c} selected="selected"{/if}>{$cc}</option>
+        {/foreach}
+        </select>
+        价格：<input type="text" name="attr[{$c.id}][price][]" value="{$attr[$c[id]][price][$k]}" class="attr_price" />
+        
+        <a href="javascript:;" class="attr_item_remove"><i class="icon-remove"></i></a>
+        </div>
+        {/foreach}
+    {else}
+        <div class="attr_item_copy attr_item_li"  >
+        <select name="attr[{$c.id}][value][]"   class="attr_value" >
+        {foreach item=cc key=kk from=$c.select}
+                <option value="{$kk}" >{$cc}</option>
+        {/foreach}
+        </select>
+        价格：<input type="text" name="attr[{$c.id}][price][]"  value="" class="attr_price" />
+        <a href="javascript:;" class="attr_item_remove"><i class="icon-remove"></i></a>
+        </div>
+    {/if}
+</div>
+</div>
+{else}
+<select name="attr[{$c.id}]" >
+{foreach item=cc key=kk from=$c.select}
+		<option value="{$kk}" {if $kk eq $attr[$c.id]} selected="selected"{/if}>{$cc}</option>
+{/foreach}
+</select> 
+{/if}

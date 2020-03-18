@@ -1,0 +1,29 @@
+<script class="jsa-text">
+var optionssimple={
+		initialFrameWidth:"100%",
+		{include file="inc/ueditor_simple.html"}
+		 
+};
+</script>
+<input type="hidden" name="attr_cat_id" id="attr_cat_id" value="{$attr_cat_id}" />
+<table class="table table-bordered" width="100%">
+{foreach item=c from=$data}
+<tr>
+<td width="100">{$c.title}</td>
+<td>
+
+{if $c.attr_type  eq 2}
+<!--单选属性-->
+{include file="attr/attr_2.html"}
+ 
+{else}
+{include file="attr/attr_1.html"}
+{/if}  
+</td>
+</tr>
+{/foreach}
+
+</table>
+<style type="text/css">
+.attr_item_copy .attr_item_remove{display:none;}
+</style>

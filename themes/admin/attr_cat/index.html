@@ -1,0 +1,31 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='attr_cat/nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>ID</td>
+   <td>名称</td>
+   <td>状态</td>
+   <td>分组</td>
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.cat_id}</td>
+   <td>{$c.title}</td>
+   <td>{if $c.status eq 1}
+           <img src="/static/images/yes.gif" class="ajax_no"  rurl="{$appadmin}?m=attribute_cat&a=status&cat_id={$c.cat_id}&status=1" url="{$appadmin}?m=attribute_cat&a=status&cat_id={$c.cat_id}&status=0" />
+           {else}
+           <img src="/static/images/no.gif"  class="ajax_yes" url="{$appadmin}?m=attribute_cat&a=status&cat_id={$c.cat_id}&status=1" rurl="{$appadmin}?m=attribute_cat&a=status&cat_id={$c.cat_id}&status=0" />  
+          {/if}</td>
+   <td>{$c.attr_group}</td>
+<td><a href="admin.php?m=attribute_cat&a=add&cat_id={$c.cat_id}">编辑</a> <a href="admin.php?m=attribute_cat&a=show&cat_id={$c.cat_id}">查看</a> 
+<a href="javascript:;" class="delete" url="admin.php?m=attribute_cat&a=delete&cat_id={$c.cat_id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+</div>
+{include file="footer.html"}

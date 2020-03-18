@@ -1,0 +1,10 @@
+<?php
+/*用户相关*/
+$lang['email_error']="邮箱格式不正确";
+$lang['username_gt2']="昵称要大于2个字";
+$lang['password_neq']="两次密码输入不一致";
+/*标题相关*/
+$lang['title_die_empty']="标题不能为空";
+$lang['please_login']="请先登录";
+$lang['birthday_die_empty']='出生日期不能为空';
+?>

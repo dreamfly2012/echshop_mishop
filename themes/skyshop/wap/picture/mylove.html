@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+
+<div class="page" id="page">
+{include file="common.html"}
+{assign var="tb" value="我的收藏"}
+{include file="toolbar.html"}
+<div id="content" data-role="content">
+<div class="wrapper-y">
+<div class="scroller-y">
+<div id="datalist">
+    <table class='table table-bordered' width='100%'>
+     
+      
+        {foreach item=c from=$list}
+        <tr class="sky-row" ><td width="50"><a href="{R("/index.php?m=show&id=$c.id")}" class="aurl"><img src="{const.IMAGES_SITE}{$c.imgurl}.100x100.jpg" style="width:50px;"></a></td>
+        
+        <td style="position:relative"><a href="{R("/index.php?m=show&id=$c.id")}" class="aurl">{$c.title}</a><p style="color:#999">{$c.zhuliao}</p>
+        <a href="javascript:;" url="/index.php?m=love&model_id={$c.model_id}&type_id=1&object_id={$c.id}" msg="确定删除吗？" class="sky-delete" style=" position:absolute; top:1px; right:1px;">删除</a>
+        </td></tr>
+        {/foreach}
+         
+      </table>
+</div>
+<div class="pages">{$pagelist}</div>
+</div>
+</div> 
+ 
+</div>
+{include file="footer.html"}
+</div>
+<script type="text/javascript" class="jsa-text">
+$(function(){
+	SkyPhone.scroll.scroll_y(".wrapper-y");
+});
+</script>
+</body>
+</html>

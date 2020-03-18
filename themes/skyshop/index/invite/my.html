@@ -1,0 +1,40 @@
+{include file="header.html"}
+<script language="javascript" src="/static/js/zclip/jquery.zclip.min.js"></script>
+<script language="javascript">
+$(function(){
+	$('#copy').zclip({
+		path:'/js/zclip/ZeroClipboard.swf',
+		copy:$('#copyText').text()
+	});
+	 
+	 
+
+});
+</script>
+<div class="container"><div class="row">
+<div class="span2">{include file="inc/user_left.html"}</div>
+<div class="span10">
+<h3>我的邀请</h3>
+
+<div class="wb">
+<h4>我的邀请链接：<span id="copyText">http://{$smarty.server.HTTP_HOST}{R("/index.php?m=invite&a=reg&userid=$ssuser.userid")}</span> <span class="btn btn-primary" id="copy">复制链接</span></h4>
+</div>
+<div class="wb">
+<div class="panel panel-primary"  >
+<div class="panel-heading"><strong class="panel-title"><i class="icon-user icon-white"></i> 我邀请到的好友</strong></div>
+<div class="panel-body"><div style="width:100%;">
+{foreach item=c from=$data}
+<div class="wb8 left">
+<p><a href="{R("/index.php?m=member&a=home&userid=$c.userid")}" target="_blank"><img src="{$c.user_head|IMAGES_SITE}.100x100.jpg" /></a></p>
+<p><a href="{R("/index.php?m=member&a=home&userid=$c.userid")}" target="_blank">{$c.nickname}</a></p>
+</div>
+{/foreach}
+</div></div>
+</div>
+</div> 
+
+ 
+
+</div>
+</div>
+{include file="footer.html"}

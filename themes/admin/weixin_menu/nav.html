@@ -1,0 +1,34 @@
+ <ul class="nav nav-tabs">
+ 		<li><a href="{$appadmin}?m=weixin_menu&wid={$weixin.id}">菜单管理</a></li>
+      	<li><a href="{$appadmin}?m=weixin_menu&a=add&wid={$weixin.id}"  >菜单添加</a></li> 
+        <li><a href="{$appadmin}?m=weixin_menu&a=CreateMenu&wid={$weixin.id}" class="  CreateMenu">生成菜单</a></li>
+        <li> <a href="{$appadmin}?m=weixin_menu&a=DeleteMenu&wid={$weixin.id}" class=" DeteleMenu">删除菜单</a></li> 
+      </ul>
+      
+<script>
+$(function(){
+	$(".CreateMenu").bind("click",function(e){
+		e.preventDefault();
+		$.get("{$appadmin}?m=weixin_menu&a=createmenu&wid={$smarty.get.wid}",function(data){
+			if(data.errcode==0){
+				alert('生成成功');
+			}else{
+				alert('生成失败');
+			}
+		},"json");
+	});
+	
+	$(".DeteleMenu").bind("click",function(e){
+		e.preventDefault();
+		$.get("{$appadmin}?m=weixin_menu&a=deletemenu&wid={$smarty.get.wid}",function(data){
+			if(data.errcode==0){
+				alert('删除成功');
+			}else{
+				alert('删除失败');
+			}
+		},"json");
+	});
+	
+	
+});
+</script>      

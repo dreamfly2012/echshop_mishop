@@ -1,0 +1,29 @@
+{include file="header.html"}
+<script language="javascript" src="/plugin/My97DatePicker/WdatePicker.js"></script>
+<div class="row">
+<div class="span12">
+<ul class="nav nav-tabs">
+<li><a href="{const.APPADMIN}?m=cron">计划管理</a></li>
+<li class="active"><a href="{const.APPADMIN}?m=cron&a=add">计划添加</a></li>
+</ul>
+<form method='post' action='{const.APPADMIN}?m=cron&a=save'>
+<input type='hidden' name='id' id='id' value='{$data.id}' >
+ <table class='table table-bordered' width='100%'>
+ 
+  <tr><td height="26">计划名称：</td><td><input type='text' name='title' id='title' value='{$data.title}' ></td></tr>
+  <tr><td>执行事件：</td><td><input type='text' name='url' id='url' value='{$data.url}' class="w400" > <br>
+  （cron.ctrl.php 中的函数或者网址 如：http://www.xingfunv.com ）</td></tr>
+  <tr><td>开始时间：</td><td><input type='text' name='start_time' id='start_time' value='{$data.start_time|date:Y-m-d H:i:s}' onClick="WdatePicker({dateFmt:'yyyy-MM-dd  HH:mm:ss'})" ></td></tr>
+  
+  <tr><td>结束时间：</td><td><input type='text' name='end_time' id='end_time' value='{$data.end_time|date:Y-m-d H:i:s}' onClick="WdatePicker({dateFmt:'yyyy-MM-dd  HH:mm:ss'})" ></td></tr>
+  <tr><td>几分钟执行一次：</td><td><input type='text' name='minute' id='minute' value='{$data.minute}' ></td></tr>
+  <tr><td>上次次执行时间：</td><td>{$data.last_time|date:Y-m-d H:i:s}</td></tr>
+  <tr><td>下次执行时间：</td><td>{$data.next_time|date:Y-m-d H:i:s}</td></tr>
+  <tr><td>添加时间：</td><td>{$data.dateline|date:Y-m-d}</td></tr>
+<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> </table>
+</form>
+
+
+</div>
+</div>
+{include file="footer.html"}

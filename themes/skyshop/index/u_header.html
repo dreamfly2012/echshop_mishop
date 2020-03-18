@@ -1,0 +1,40 @@
+<style>
+.header{background-color:#fff;padding-bottom:10px;}
+.nav{ background-color:#000; }
+</style>
+ 
+ 
+    <div class="nav" style=" background-color:#E25A25;">
+        	<ul class="navbar box960">
+            	<li {if get('m') eq 'index' or get('m') eq ''} class="active"{/if}><a href="{R("/index.php")}"><span>首页</span></a></li>
+                <li {if get('m') eq 'caipu'} class="active"{/if}><a href="{R("/index.php?m=caipu")}"><span>家常菜谱</span></a></li>
+                 <li {if get('m') eq 'article'} class="active"{/if}><a href="{R("/index.php?m=list&catid=1")}"><span>饮食健康</span></a></li>
+                <!--<li {if get('m') eq 'product'} class="active"{/if}><a href="{R("/index.php?m=product")}"><span>美食商城</span></a></li>-->
+               
+                <li><a href="{R("/index.php?m=goldgoods")}"><span>积分商城</span></a></li>
+                <li {if get('m') eq 'forum'} class="active"{/if}><a href="{R("/index.php?m=forum")}"><span>美食论坛</span></a></li>
+                 <li {if get('a') eq 'aboutus'} class="active"{/if}><a href="{R("/index.php?m=html&a=aboutus")}"><span>关于我们</span></a></li>
+                <!--<li><a href="{R("/index.php?m=order_cart")}"><span>购物车</span></a></li>-->
+                {if $ssuser}
+            
+            <li class="right-y">
+            	<div class="dropdown">
+                  <a data-toggle="dropdown" href="#">{$ssuser.nickname}<b class="caret"></b></a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                   <li><a href="{R("/index.php?m=user&a=info")}">用户信息</a></li>
+                   <li><a href="{R("/index.php?m=order&a=my")}">我的订单</a></li>
+                   <li><a href="{R("/index.php?m=guest&a=my")}">我的预约</a></li>
+                   <li><a href="{R("/index.php?m=login&a=logout")}">退出登陆</a></li>
+                  </ul>
+				</div>
+                
+            </li>
+             
+            
+            {else}
+            <li class="right-y"><a href="/index.php?m=register&a=reg">注册</a></li>
+            <li class="right-y"><a href="/index.php?m=login">登陆</a></li>
+            {/if}
+            </ul>
+        </div>
+    

@@ -1,0 +1,50 @@
+{include file="header.html"}
+<div> 
+{include file='goldorder_shaidan/nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+ 
+  
+   <td>主题</td>
+   <td>封面图</td>
+    <td>时间</td>
+ 
+   
+   
+   <td>评论数</td>
+   <td>查看数</td>
+   <td>状态</td>
+   <td>推荐</td>
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+  <td>{$c.title}</td>
+    <td><img src="{$c.imgurl}.100x100.jpg" width="30" /></td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+  
+ 
+ 
+ 
+   <td>{$c.comment_num}</td>
+   <td>{$c.view_num}</td>
+     <td align="center"> 
+    {if $c.status eq 2}
+   <img src='{$skins}images/yes.gif' class="ajax_no" url='{$appadmin}?m=goldorder_shaidan&a=status&id={$c.id}&status=98' rurl='{$appadmin}?m=goldorder_shaidan&a=status&id={$c.id}&status=2'>
+    {else}
+    <img src='{$skins}images/no.gif' class="ajax_yes" url='{$appadmin}?m=goldorder_shaidan&a=status&id={$c.id}&status=2' rurl='{$appadmin}?m=goldorder_shaidan&a=status&id={$c.id}&status=98'>
+    {/if}</td>
+    <td>{if $c.isrecommend eq 1}
+   <img src='{$skins}images/yes.gif' class="ajax_no" url='{$appadmin}?m=goldorder_shaidan&a=recommend&id={$c.id}&isrecommend=0' rurl='{$appadmin}?m=goldorder_shaidan&a=recommend&id={$c.id}&isrecommend=2'>
+    {else}
+    <img src='{$skins}images/no.gif' class="ajax_yes" url='{$appadmin}?m=goldorder_shaidan&a=recommend&id={$c.id}&isrecommend=1' rurl='{$appadmin}?m=goldorder_shaidan&a=recommend&id={$c.id}&isrecommend=0'>
+    {/if}</td>
+<td><a href="admin.php?m=goldorder_shaidan&a=add&id={$c.id}">编辑</a> <a href="/index.php?m=goldorder_shaidan&a=show&id={$c.id}" target="_blank">查看</a> <a href="javascript:;" class="delete" url="admin.php?m=goldorder_shaidan&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}

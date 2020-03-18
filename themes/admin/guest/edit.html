@@ -1,0 +1,47 @@
+{include file='header.html'}
+<ul class="nav nav-tabs">
+<li class="active"><a href="{$appadmin}?m=guest">留言管理</a></li>
+</ul>
+</div>
+
+<div class="rbox">
+<form method="post" action="{$appadmin}?m=guest&a=save">
+<input type="hidden" name="id" value="{$data.id}">
+<table width="100%" border="0" class="table table-bordered">
+  <tr>
+    <td width="20%" align="right">主题：</td>
+    <td width="80%">{$data.title}</td>
+  </tr>
+  <tr>
+    <td align="right">昵称：</td>
+    <td>{$data.nickname}</td>
+  </tr>
+  <tr>
+    <td align="right">内容：</td>
+    <td>{$data.content}</td>
+  </tr>
+  <tr>
+    <td align="right">qq：</td>
+    <td>{$data.qq}</td>
+  </tr>
+  <tr>
+    <td align="right">email：</td>
+    <td>{$data.email}</td>
+  </tr>
+  <tr>
+    <td align="right">telephone：:</td>
+    <td>{$data.telephone}</td>
+  </tr>
+  <tr>
+    <td align="right">回复：</td>
+    <td><textarea name="reply_content" id="reply_content" cols="45" rows="5">{$data.reply_content}</textarea></td>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td><input type="submit" name="button" id="button" class="btn" value="提交"></td>
+  </tr>
+</table>
+
+</form>
+</div>
+{include file='footer.html'}

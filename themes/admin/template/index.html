@@ -1,0 +1,37 @@
+{include file='header.html'}
+<div class="row">
+<div class="span12">
+<ul class="nav nav-tabs">
+<li class="active"><a href="{const.APPADMIN}?m=template">本地模板</a></li>
+<li><a href="{const.APPADMIN}?m=template&a=online">在线模板</a></li>
+</ul>
+<div class="row">
+{foreach item=t from=$skinslist}
+<div class="col-3-1"> 
+<table  class="table table-bordered">
+  <tr>
+    <td height="166"><a href="{$t.skinsimg}" target="_blank"><img src="{$t.skinsimg}" style="width:200px; height:160px;"  /></a></td>
+    </tr>
+  <tr>
+    <td height="20">&nbsp;&nbsp;风格名称：{$t.skinsname}</td>
+    </tr>
+  <tr>
+  <tr>
+  	<td height="20">&nbsp;&nbsp;价格：{if $t.skinsprice}{$t.skinsprice}{else}免费{/if}</td>
+  </tr>
+    <td height="20">&nbsp;&nbsp;风格作者：<a href="{$t.skinsauthorsite}" target="_blank">{$t.skinsauthor}</a></td>
+  </tr>
+  <tr>
+    <td height="20">&nbsp;&nbsp;适合版本：{$t.skinsversion} {if $t.skinstype eq 'wap'}手机版{/if}</td>
+  </tr>
+  <tr>
+    <td height="20">&nbsp;&nbsp;{$t.using}  </td>
+  </tr>
+</table>
+
+</div>
+{/foreach}
+</div>
+</div>
+</div> 
+{include file='footer.html'}

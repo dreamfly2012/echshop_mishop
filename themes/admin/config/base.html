@@ -1,0 +1,52 @@
+<table class="table table-bordered">
+	
+    <tr>
+    	<td>页面压缩：</td>
+        <td>
+        	<input type="radio" name="ob_gzip" value="0" {if !$data.ob_gzip} checked="checked"{/if}/>关闭
+            <input type="radio" name="ob_gzip" value="1" {if $data.ob_gzip} checked="checked"{/if}/>开启
+            （该功能需要开启Gzip）
+        
+        </td>
+    </tr>
+    <tr>
+    	<td>评论设置：</td>
+        <td>
+        <input type="radio" name="comment_status_check" value="0" {if !$data.comment_status_check} checked="checked"{/if}  />先发后审
+        <input type="radio" name="comment_status_check" value="1" {if $data.comment_status_check} checked="checked"{/if} />先审后发
+        </td>
+    </tr>
+    
+    <tr>
+    	<td>活动主题设置：</td>
+        <td>
+        <input type="radio" name="activity_topic_status_check" value="0" {if !$data.activity_topic_status_check} checked="checked"{/if}  />先发后审
+        <input type="radio" name="activity_topic_status_check" value="1" {if $data.activity_topic_status_check} checked="checked"{/if} />先审后发
+        </td>
+    </tr>
+    
+<tr>
+	<td>百度地图：</td>
+    <td><input type="text" name="bdmapkey" value="{$data.bdmapkey}" /> <a href="http://developer.baidu.com/map/" target="_blank">点击申请</a></td>
+</tr>
+  <tr>
+    <td>伪静态：</td>
+    <td><input name="rewrite_on" type="radio" id="radio" value="0" {if $data['rewrite_on'] neq 1 } checked="checked" {/if} />
+      关闭
+      <input type="radio" name="rewrite_on" id="radio2" {if $data['rewrite_on'] eq 1 } checked="checked" {/if} value="1" />
+      开启</td>
+  </tr>
+  <tr>
+    <td>伪静态类型</td>
+    <td><select name="rewrite_type">
+        <option value="pathinfo" {if $data.rewrite_type eq 'pathinfo'} selected="selected"{/if}>pathinfo</option>
+        <option value="rewrite" {if $data.rewrite_type eq 'rewrite'} selected="selected"{/if}>rewrite</option>
+      </select></td>
+  </tr>
+  
+  <tr>
+  	<td>热门搜索</td>
+    <td><input type="text" name="hotsearch" value="{$data.hotsearch}" style="width:600px;" /> (用空格隔开)</td>
+  </tr>
+  
+</table>

@@ -1,0 +1,31 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='guest/nav.html'}
+{if $data.type_id eq 6}
+{include file="guest/show_6.html"}
+{else}
+ <table class='table table-bordered' width='100%'>
+ 
+ 
+  <tr><td width="100">标题：</td><td>{if $data.title}{$data.title}{else}无主题{/if}</td></tr>
+ 
+ 
+  <tr><td>昵称：</td><td>{$data.nickname}</td></tr>
+  
+  <tr><td>邮箱：</td><td>{$data.email}</td></tr>
+  <tr><td>电话：</td><td>{$data.phone2}</td></tr>
+  <tr><td>手机：</td><td>{$data.telephone}</td></tr>
+  <tr><td>qq:</td><td>{$data.qq}</td></tr>
+  {if $data.type_id eq 6}<tr><td>公司名称：</td><td>{$data.company}</td></tr>
+  <tr><td>地址：</td><td>{$data.address}</td></tr>
+ 
+  <tr><td>邮编：</td><td>{$data.zipcode}</td></tr>
+   {/if}
+  <tr><td>发布时间：</td><td>{$data.dateline|date:Y-m-d H:i:s}</td></tr>
+  <tr><td>内容：</td><td>{$data.content}</td></tr>
+ </table>
+{/if}
+</div>
+</div>
+{include file="footer.html"}

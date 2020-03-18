@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+	<div class="header">
+<a  class="left-btn" href="/index.php?m=user"><span class="iconfont icon-back"></span></a>
+<div class="title">用户信息</div>
+</div> 
+  <div class="main-body">
+<div class="row-box">
+ <form method="post" action="/index.php?m=user&a=save">
+ 
+<table class="table table-border-row" width="100%">
+	<tr>
+    	<td width="18%">昵称：</td>
+        <td width="82%"><input type="text" name="nickname" value="{$data.nickname}"></td>
+    </tr>
+    
+    <tr>
+    	<td>邮箱</td>
+        <td>{$data.email}</td>
+    </tr>
+    <tr>
+    	<td>余额：</td>
+        <td>{$data.money}元</td>
+    </tr>
+    
+    <tr>
+    	<td>积分：</td>
+        <td>{$data.grade}分</td>
+    </tr>
+    
+    <tr>
+    	<td>金币：</td>
+        <td>{$data.gold}个</td>
+    </tr>
+    
+    <tr>
+    	<td>性别：</td>
+        <td>{if $data.gender eq 1}男{else}女{/if}</td>
+    </tr>
+   
+    
+</table>
+ 
+ 
+<div class="form-btns"> <button type="submit" name="button" id="button" class="btn btn-success btn-row btn-larger" >保存</button> </div>
+</form>
+ 
+ </div>
+</div>
+ 
+{include file="footer.html"}
+ 
+</body>
+</html>

@@ -1,0 +1,30 @@
+{include file='header.html'}
+{include file='admin/admin_nav.html'}
+
+<div class="rbox">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="table table-bordered">
+  <tr>
+    <td width="92" height="30" align="center">ID</td>
+    <td width="231" align="center">组名</td>
+    <td width="204" align="center">操作</td>
+  </tr>
+  {foreach item=t from=$zulist}
+  <tr>
+    <td height="25" align="center">{$t.id}</td>
+    <td align="center">{$t.title}</td>
+    <td align="center"><a href="{$appadmin}?m=admin&a=group&op=add&id={$t.id}">编辑</a> <a href="javascript:;" url="{$appadmin}?m=admin&a=group&op=del&id={$t.id}"  class="del" >删除</a></td>
+  </tr>
+  {/foreach}
+  {if $pagelist}
+  <tr>
+    <td height="25" colspan="7" align="center">{$pagelist}</td>
+    </tr>
+{/if}
+  
+</table>
+
+
+</div> 
+
+{include file='footer.html'}

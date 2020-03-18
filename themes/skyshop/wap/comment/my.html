@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+	<div class="header">
+<a  class="left-btn" href="/index.php?m=user"><span class="iconfont icon-back"></span></a>
+<div class="title">我的评论</div>
+</div> 
+  <div class="main-body">
+ 
+<div class="uclist">
+{foreach item=c from=$comment_list}
+	<div class="item">
+    	<div class="hd">
+        <div class="left">{$c.dateline|date:Y-m-d}</div> 
+        <div class="right"><a href="javascript:;" class="delete" url="{$appindex}?m=comment&a=delete&id={$c.id}">{$lang.delete}</a></div>
+        </div>
+        <div class="content">
+        	{$c.content} &nbsp;&nbsp;<a href="{$c.referer}" >查看</a>
+        </div>
+    </div>
+ 
+  {/foreach}
+</div>
+{$pagelist}
+</div>
+</div>
+</div>
+{include file="footer.html"} </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<div>
+<form method="post" action="/index.php?m=order&a=product_comment_save">
+<input type="hidden" name="order_id" value="{$smarty.get.order_id|intval}">
+<input type="hidden" name="id" value="{$smarty.get.id|intval}">
+<br>
+<div style="height:40px;">
+分数：<input type="radio" name="grade" value="5" /> 5&nbsp; 
+<input type="radio" name="grade" value="4" /> 4&nbsp; 
+<input type="radio" name="grade" value="3" /> 3&nbsp; 
+<input type="radio" name="grade" value="2" /> 2&nbsp; 
+<input type="radio" name="grade" value="1" /> 1&nbsp; 
+<input type="radio" name="grade" value="0" /> 0
+</div>
+<div class=""><textarea style="width:80%; height:60px;" name="content"></textarea></div>
+<div class="form-submit">
+	<button type="submit" class="bt btn-larger btn-success">评价</button>
+</div>
+</form>
+</div>

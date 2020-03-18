@@ -1,0 +1,109 @@
+{include file='header.html'}
+{include file='forum/nav.html'}
+<div class="search-form">
+<form method="get" action="{$appadmin}">
+<input type="hidden" name="m" value="forum" />
+ID:<input type="text" name="id" value="{$smarty.get.id|intval}" class="w50" />
+状态：<select name="status" class="w100">
+	<option value="0">选择</option>
+	<option value="1" {if get('status') eq 1 }selected="selected"{/if}>未审核</option>
+    <option value="2" {if get('status') eq 2 }selected="selected"{/if}>已审核</option>
+    <option value="98" {if get('status') eq 98 }selected="selected"{/if}>已禁止</option>
+</select>
+分类：    <select name="catid" class="w100">
+    <option value="0">请选择</option>
+    {foreach item=c from=$cat_list}
+                <option value="{$c.catid}" {if get('catid') eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                {foreach item=c_2 from=$c.child}
+                	<option value="{$c_2.catid}" {if get('catid') eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                    {foreach item=c_3 from=$c_2.child}
+                    <option value="{$c_3.catid}" {if get('catid') eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+    </select>
+主题：<input type="text" name="title" value="{$smarty.get.title}" class="w200" />
+推荐：<select name="s_recommend" class="w100">
+<option value="0">请选择</option>
+<option value="1" {if get('s_recommend') eq 1} selected="selected"{/if}>是</option>
+<option value="2" {if get('s_recommend') eq 2} selected="selected"{/if}>否</option>
+</select>
+图片：<select name="s_is_img" class="w100">
+<option value="0">请选择</option>
+<option value="1" {if get('s_is_img') eq 1} selected="selected"{/if}>有</option>
+<option value="2" {if get('s_is_img') eq 2} selected="selected"{/if}>无</option>
+</select>
+<input type="submit" value="搜索" class="btn" />
+</form>
+</div>
+<div class="rbox">
+<form method="post" action="{$appadmin}?m=forum&a=category">
+<table width="100%"  class="table table-bordered">
+  <tr>
+    <td width="4%" align="center">id <input type="checkbox" id="chkall"  /></td>
+    <td width="18%" align="center">标题</td>
+    <td width="23%" align="center">分类</td>
+    <td width="21%" align="center">作者</td>
+    <td width="11%" align="center">时间</td>
+    <td width="5%" align="center">审核</td>
+    <td width="5%">推荐</td>
+    <td width="5%">最新</td>
+    <td width="13%" align="center">操作</td>
+  </tr>
+  {foreach item=c from=$data}
+  <tr>
+    <td align="center"><input type="checkbox" class="ids"  name="ids[]" value="{$c.id}" /> {$c.id}</td>
+    <td align="center">{$c.title}{if $c.imgurl}<img src="{$c.imgurl|images_site}.100x100.jpg" style="width:50px" />{/if}</td>
+    <td align="center"><a href="{R("/index.php?m=list&catid=$c.catid")}" target="_blank">{$c.cname}{if $c.cname_2nd}>{$c.cname_2nd}{/if}{if $c.cname_3nd}>{$c.cname_3nd}{/if}</a></td>
+    <td align="center">{if $c.nickname}{$c.nickname}{else}管理员{/if}</td>
+    <td align="center">{$c.dateline|date:Y-m-d}</td>
+    <td align="center"> 
+    {if $c.status eq 2}
+   <img src='{$skins}images/yes.gif' class="ajax_no" url='{$appadmin}?m=forum&a=status&id={$c.id}&status=98' rurl='{$appadmin}?m=forum&a=status&id={$c.id}&status=2'>
+    {else}
+    <img src='{$skins}images/no.gif' class="ajax_yes" url='{$appadmin}?m=forum&a=status&id={$c.id}&status=2' rurl='{$appadmin}?m=forum&a=status&id={$c.id}&status=98'>
+    {/if}</td>
+    <td>{if $c.is_recommend eq 1}
+   <img src='{$skins}images/yes.gif' class="ajax_no" url='{$appadmin}?m=forum&a=recommend&id={$c.id}&is_recommend=0' rurl='{$appadmin}?m=forum&a=recommend&id={$c.id}&is_recommend=2'>
+    {else}
+    <img src='{$skins}images/no.gif' class="ajax_yes" url='{$appadmin}?m=forum&a=recommend&id={$c.id}&is_recommend=1' rurl='{$appadmin}?m=forum&a=recommend&id={$c.id}&is_recommend=0'>
+    {/if}</td>
+    <td>{if $c.isnew eq 1}
+   <img src='{$skins}images/yes.gif' class="ajax_no" url='{$appadmin}?m=forum&a=new&id={$c.id}&isnew=0' rurl='{$appadmin}?m=forum&a=new&id={$c.id}&isnew=1'>
+    {else}
+    <img src='{$skins}images/no.gif' class="ajax_yes" url='{$appadmin}?m=forum&a=new&id={$c.id}&isnew=1' rurl='{$appadmin}?m=forum&a=new&id={$c.id}&isnew=0'>
+    {/if}</td>
+    <td align="center"><a href="index.php?m=show&id={$c.id}&model_id={$c.model_id}" target="_blank">查看</a>  <a href='{$appadmin}?m=forum&a=add&id={$c.id}'>编辑</a> <a href="javascript:;" class="del" url="{$appadmin}?m=forum&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+  {/foreach}
+ 
+</table>
+<div style="padding:10px;">
+	分类：    <select name="catid" class="w100">
+    <option value="0">请选择</option>
+    {foreach item=c from=$cat_list}
+                <option value="{$c.catid}" {if get('catid') eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                {foreach item=c_2 from=$c.child}
+                	<option value="{$c_2.catid}" {if get('catid') eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                    {foreach item=c_3 from=$c_2.child}
+                    <option value="{$c_3.catid}" {if get('catid') eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+    </select>
+    
+    <input type="submit" class="btn" value="修改分类" />
+</div>
+</form>
+{$pagelist}
+</div>
+<script>
+$("#chkall").click(function(){
+	if($(this).attr("checked")=="checked"){
+		$(".ids").attr("checked",true);
+	}else{
+		$(".ids").attr("checked",false);
+	}
+});
+</script>
+{include file='footer.html'}

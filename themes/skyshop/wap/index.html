@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+ 
+<div class="page">
+  <div class="header"  style="">
+   
+    <div class="title">首页</div>
+     
+  </div>
+  <div id="slides-flash"  style="height:248px; background-color:#bbb;" class="swipejs"> {api data=t_c control=adapi fun=listbyno("index_flash")}
+    <div class='swipejs-wrap'> {foreach item=c from=$t_c name=t1}
+      <div class="item" style="height:248px;"><a href="{$c.link1}" style="text-align:center;" ><img class="img" src="{const.IMAGES_SITE}{$c.imgurl}" style=" max-width:100%;  max-height:248px;"  ></a>
+        <div class="bg"></div>
+        <div class="title">{$c.title}</div>
+      </div>
+      {/foreach} </div>
+    <div class="swipejs-num"></div>
+    <div class="swipejs-prev" onclick='mySwipe.prev()'><i class="iconfont icon-zuo"></i></div>
+    <div   class="swipejs-next" onclick='mySwipe.next()'><i class="iconfont icon-you"></i></div>
+    <div class="swipejs-nav-bg"></div>
+    <div class="swipejs-nav"><span class="index">1</span> / <span class="total"></span></div>
+  </div>
+ <style>
+ 	.navItem{padding:10px 0px; background-color:#fff;}
+ 	.navItem .item{float:left; width:33.3333%;   margin-bottom:10px;}
+	.navItem .item .pd{ padding:10px; text-align:center;}
+	.navItem .item .pd img{width:90%; margin-bottom:5px;}
+	.navItem .item .pd .t .iconfont{font-size:22px;}
+	.navItem .item .pd .t{padding-top:20px; font-size:14px;}
+ </style>
+ <div class="navItem">
+ 	<div class="item">
+    	<div class="pd">
+        	<a href="/index.php?m=product"><img src="{$skins}images/product.png"><br>产品</a>
+        </div>    
+     </div>
+    <div class="item">
+    	<div class="pd">
+        	<a href="/index.php?m=goldgoods"><img src="{$skins}images/goldgoods.png"><br>积分兑换</a>
+        </div>    
+     </div>
+     <div class="item">
+    	<div class="pd">
+        	<a href="/index.php?m=article"><img src="{$skins}images/article.png"><br>资讯</a>
+        </div>    
+     </div>
+     <div class="item">
+    	<div class="pd">
+        	<a href="/index.php?m=forum"><img src="{$skins}images/forum.png"><br>论坛</a>
+        </div>    
+     </div>
+     <div class="item">
+    	<div class="pd">
+        	<a href="/index.php?m=order_cart"><img src="{$skins}images/cart.png"><br>购物车</a>
+        </div>    
+     </div>
+     <div class="item">
+    	<div class="pd">
+        	<a href="/index.php?m=user"><img src="{$skins}images/user.png"><br>用户</a>
+        </div>    
+     </div>
+    <div class="clearfix"></div>
+ </div>
+ 
+  <style>
+  .index-tabs li{width:25%; text-align:center; }
+  .index-tabs li a{height:39px; line-height:39px; padding:0px;}
+  .index-tabs li a.active{border-bottom:1px solid #f60;}
+  </style>
+ 
+  <div class="tabs-box" id="index-tabs-box">
+  	<ul class="tabs index-tabs">
+    	
+        <li><a href="#product" class="active">产品</a></li>
+        <li><a href="#article" >资讯</a></li>
+        
+        <li><a href="#forum">论坛</a></li>
+        <li><a href="#picture">兑换</a></li>
+    </ul> 
+    
+    <div class="tabs-item active" id="product">
+    	{api data=tc control=productapi fun=onList(0,50)}
+             <div class="data-list"> 
+             {foreach item=c from=$tc}
+            {include file="li_item_pro.html"}
+            {/foreach} 
+            </div>
+    </div>
+    
+    <div class="tabs-item " id="article">
+    	{api data=tc control=articleapi fun=onList(0,50)}
+             <div class="data-list"> 
+             {foreach item=c from=$tc}
+            {include file="li_item.html"}
+            {/foreach} 
+            </div>
+    </div>
+    
+    
+    
+    <div class="tabs-item" id="picture">
+    	{api data=tc control=goldgoodsapi fun=onList(0,50)}
+             <div class="data-list"> 
+             {foreach item=c from=$tc}
+            {include file="li_item.html"}
+            {/foreach} 
+            </div>
+    </div>
+    
+    <div class="tabs-item" id="forum">
+    	{api data=tc control=forumapi fun=onList(0,50)}
+             <div class="data-list"> 
+             {foreach item=c from=$tc}
+            {include file="li_item.html"}
+            {/foreach} 
+            </div>
+    </div>
+  </div>
+ 
+   
+</div>
+<link href="/plugin/skyweb/swipe/swipe.css" rel="stylesheet">
+<script src="/plugin/skyweb/swipe/swipe.js"></script> 
+<script>
+   
+	 $(function() {
+		var elem = document.getElementById('slides-flash');
+		window.mySwipe_total=$("#slides-flash .item").length;
+		
+		$("#slides-flash .total").html(mySwipe_total);
+		for(var i=0;i<mySwipe_total;i++){
+			$("#slides-flash .swipejs-num").append("<i></i>");
+		}
+		$("#slides-flash .swipejs-num i").eq(0).addClass("active");
+		window.mySwipe = Swipe(elem, {
+		  startSlide: 0,
+		  auto: 3000,
+		   callback: function(pos, element) {
+			    if (mySwipe_total < 3) {
+                            i = ((pos + 1) > 2) ? (pos - 1) : (pos + 1)
+                        } else {
+                            i = pos + 1;
+                        }
+				$("#slides-flash .swipejs-num i").removeClass("active");		
+				$("#slides-flash .swipejs-num i").eq(i-1).addClass("active")		
+				$("#slides-flash .index").html(i);
+				  
+			}
+		});
+		
+		 
+	}); 
+   
+  </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page"> {include file="header.html"}
+  <div class="main-body ">
+     
+    <div class="box960">
+    <h3>
+		收货地址&nbsp; <a  class="small right" id="add_address">新增地址</a>     
+     </h3>
+     <div class="skyline"></div> 
+<form method="post" action="/index.php?m=order&a=order">
+<input type="hidden" name="back_url" value="{$back_url}" />
+ 
+<ul class="data-list"  id="address_list">
+
+{foreach item=c key=k from=$address}
+
+<li class="item"> <input type="radio" class="user_address_id" name="user_address_id" {if $k eq 0} checked{/if} value="{$c.id}"> 地址：{$dist_list[$c.province_id]} {$dist_list[$c.city_id]} {$dist_list[$c.town_id]} {$c.address}  姓名：{$c.truename} 手机：{$c.telephone}
+</li>
+    {/foreach}
+</ul>
+ 
+<h3 >确认订单信息 <a  class="small right" href="/index.php?m=order_cart">去修改购物车</a></h3>
+<div class="skyline"></div> 
+ 
+<table class="cartlist">
+	<thead>
+	<tr class="hd">
+    	<th>商品图片</th>
+    	<th>商品名称</th>
+         
+        <th>数量</th>
+        <th>价格</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+{foreach item=c from=$prolist}
+    <tr>
+    	<td><input type="hidden" name="cart_id[]" value="{$c.id}" /><a href="{R("/index.php?m=show&id=$c.object_id")}" target="_blank"><img src="{$c.imgurl|images_site}.100x100.jpg" width="50"></a></td>
+        <td><a href="{R("/index.php?m=show&id=$c.object_id")}" target="_blank">{$c.title}</a><span>{$c.ks_title}</span></td>
+         
+        <td><div class="orderCartNum_row">
+        	 
+                <span class="orderCartNum">{$c.amount}</span> 
+             </td>
+        <td>{$c.price}</td>
+        <td><a href="javascript:;" class="delete" url="/index.php?m=order_cart&a=delete&id={$c.id}">删除</a></td>
+    </tr>
+{/foreach}
+</div>
+</table>
+<div class="row mgt-10 h40"><div class="right ">商品：￥<span id="goods_money">{$goods_money}</span>  
+ 
+   
+  邮费：￥<span id="express_fee">{$express_fee}</span>   
+  总价：￥<span id="total_money">{$total_money}</span>
+    账户余额：{$user.money}元</div>
+</div>
+<h3>支付方式</h3>
+<div class="skyline"></div>
+<div class="paylist row mgb-10" id="paylist">
+    	{foreach item=c key=k name=p from=$pay_type_list}
+        {if $smarty.foreach.p.first}
+        <input type="hidden" name="pay_type" id="pay_type" value="{$k}">
+         <div class="item active" v="{$k}">{$c}</div>
+        {else}
+        <div class="item" v="{$k}">{$c}</div> 
+        {/if}
+        
+        {/foreach}
+ </div>
+ <div class="skyline"></div>       
+<div style="height:60px; margin-top:10px; margin-bottom:10px;">备注：&nbsp;<textarea name="comment"  style="width:600px; height:60px;"></textarea></div>
+<div class="skyline"></div> 
+<div class="form-submit">
+<button class="btn btn-success btn-larger w100" type="submit">确认购买</button>
+</div>
+</form>
+</div>
+
+</div>
+<script  language="javascript">
+
+	function setTotalMoney(){
+			var goods_money=Math.round($("#goods_money").text(),1);
+			var express_money=Math.round($("#express_fee").text(),1);
+			$("#total_money").html(goods_money+express_money);
+	}
+$(document).ready(function(data){
+	$("#add_address").bind("click",function(){
+		$.get("/index.php?m=user_address&a=add&ajax=1",function(data){
+			showbox("添加收获地址",data,500,200);
+		});
+	});
+	
+	$(document).on("click",".user_address_id",function(){
+		$.get("/index.php?m=express_fee&ajax=1&a=getmoney&weight="+$("#weight").val()+"&user_address_id="+$(this).val(),function(data){
+			$("#express_fee").html(data.data);
+			setTotalMoney();
+		},"json");
+	});
+	
+	$(document).on("click","#paylist .item",function(){
+		$("#paylist .item").removeClass("active");
+		$("#pay_type").val($(this).attr("v"));
+		$(this).addClass("active");
+	});
+	
+	$(document).on("click","#save_address",function(){
+		$.post("/index.php?m=user_address&a=save&ajax=1",$(this).parents("form").serialize(),function(data){
+			if(data.error==1){
+				alert(data.message);
+			}else{
+				var html='<li  class="radio"><input type="radio" name="user_address_id" {if $k eq 0} checked{/if} value="'+data['data'].id+'">地址：'+data['data'].province+' '+data['data'].city+' '+data['data'].town+' '+data['data'].address+' 邮编：'+data['data'].zip_code+' 姓名：'+data['data'].truename+' 手机：'+data['data'].telephone+'</li>';
+				
+				$("#address_list").append(html);
+				
+				showboxClose();
+			}
+		},"json")
+	});
+});
+	
+</script>
+{include file="footer.html"} </div>
+</body>
+</html>

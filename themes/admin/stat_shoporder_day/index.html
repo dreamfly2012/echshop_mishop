@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="header" >
+  <div class="title">每日营业额</div>
+  <a class="right-btn" href="{$appadmin}?m=stat_shoporder_day&a=chart&k={$k}">图表</a> </div>
+<div class="tabs-border">
+  <div class="item active"><a href="{$appadmin}?m=stat_shoporder_day&k={$k}">每日营业额</a></div>
+  <div class="item"><a href="{$appadmin}?m=stat_shoporder_week&k={$k}">每周营业额</a></div>
+  <div class="item"><a href="{$appadmin}?m=stat_shoporder_month&k={$k}">每月营业额</a></div>
+</div>
+<style>
+		.searchform{margin-top:10px;}
+    	.searchform .l160{width:160px; float:left;}
+		.searchform .l60{width:60px; float:left;}
+		.searchform .input-row{margin-bottom:3px;}
+    </style>
+<form method="get" class="row searchform">
+	<input type="hidden" name="m" value="stat_shoporder_day">
+    <input type="hidden" name="t" value="rang">
+  <div class="l160">
+    <div class="input-row">
+      <label>开始</label>
+      <input type="text" value="{$smarty.get.startday}" name="startday" onClick="WdatePicker({dateFmt:'yyyyMMdd'})">
+    </div>
+  </div>
+  <div class="l160">
+    <div class="input-row">
+      <label>结束</label>
+      <input type="text" value="{$smarty.get.endday}" name="endday" onClick="WdatePicker({dateFmt:'yyyyMMdd'})">
+    </div>
+  </div>
+  <div class="l60">
+    <button type="submit" class="btn btn-row">查询</button>
+  </div>
+</form>
+<div class="pd-10">总计营业额{$total_money|intval}元</div>
+
+<div class="uclist"> {foreach item=c from=$list}
+  <div class="item">
+    <div class="content pd-5">{$c.kday}  营业额￥<span class="money">{$c.money}</span>元</div>
+  </div>
+  {/foreach} </div>
+<div>{$pagelist}</div>
+{include file="footer.html"}
+<script language="javascript" src="/plugin/My97DatePicker/WdatePicker.js"></script>
+</div>
+</body>
+</html>

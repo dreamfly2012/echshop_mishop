@@ -1,0 +1,27 @@
+<table class='table table-bordered' width='100%'>
+ 
+ 
+  <tr><td width="100">商家名称：</td><td>{$data.title}</td></tr>
+ 
+ 
+
+   <tr><td>联系人：</td><td>{$data.nickname}</td></tr>
+<tr><td>手机：</td><td>{$data.telephone}</td></tr>
+   
+     <tr><td>qq:</td><td>{$data.qq}</td></tr>
+ <tr>
+ 	<td>宝贝链接：</td>
+    <td><a href="{$data.linkurl}" target="_blank">{$data.linkurl}</a></td>
+ </tr>
+ 
+ <tr>
+ 	<td>赞助数量</td>
+    <td>{$data.num}份</td>
+ </tr>
+  
+ 
+
+ 
+  <tr><td>发布时间：</td><td>{$data.dateline|date:Y-m-d H:i:s}</td></tr>
+  <tr><td>内容：</td><td>{$data.content}</td></tr>
+ </table>
